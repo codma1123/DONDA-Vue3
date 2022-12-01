@@ -1,53 +1,85 @@
 import axios from 'axios';
 import { defineStore } from "pinia";
-import { computed, reactive, readonly, ref } from "vue";
-import { getStockUrl } from '../api/api';
-import { StockType } from "../models/stock";
+import { reactive } from "vue";
+import { DondaType, EvaluationDailyType, EvaluationType, GraphAllType, GraphDefaultType, IndicatorDailyType, IndicatorSectorDailyType, IndicatorSectorType, IndicatorType, NewsType, SimilarType, StatementAllType, StatementType, StateType, StocksType, StockType, VolumeType } from "../models/stock";
+import { AsnyPayload } from './payload';
 
-type State<T> = {
+export type AsyncState<T extends StateType = any> = {
   loading: boolean
   data: T | {}
   error: any
 }
 
 const utils = {
-  initial: <T = any>(initialData?: any): State<T> => ({
+  initial: <T extends StateType>(initialData?: any): AsyncState<T> => ({
     loading: false,
-    data: initialData,
+    data: initialData || null,
     error: null
   })
 }
 
 export const useStockStore = defineStore('stock', () => {
-  const test = ref<string>('test')
-  const computedTest = computed<string>(() => 'computedTest')
 
-  const stock = reactive<State<StockType>>(utils.initial())
+  const store = useStockStore()
+
+  const stock = reactive<AsyncState<StockType>>(utils.initial())
+  const stockGraphVolume = reactive<AsyncState<VolumeType>>(utils.initial())
+  const stockGraphDefault = reactive<AsyncState<GraphDefaultType>>(utils.initial())
+  const stockGraphAll = reactive<AsyncState<GraphAllType>>(utils.initial())
+  const stockEvaluation = reactive<AsyncState<EvaluationType>>(utils.initial())
+  const stockEvaluationDaily = reactive<AsyncState<EvaluationDailyType>>(utils.initial())
+  const similarContents = reactive<AsyncState<SimilarType>>(utils.initial())
+  const news = reactive<AsyncState<NewsType>>(utils.initial())
+  const statement = reactive<AsyncState<StatementType>>(utils.initial())
+  const statementAll = reactive<AsyncState<StatementAllType>>(utils.initial())
+  const indicator = reactive<AsyncState<IndicatorType>>(utils.initial())
+  const indicatorSector = reactive<AsyncState<IndicatorSectorType>>(utils.initial())
+  const indicatorDaily = reactive<AsyncState<IndicatorDailyType>>(utils.initial())
+  const indicatorSectorDaily = reactive<AsyncState<IndicatorSectorDailyType>>(utils.initial())
+  const stockDonda = reactive<AsyncState<DondaType>>(utils.initial())
+  const recommendStocks = reactive<AsyncState<StocksType>>(utils.initial())
+  const recommendStockCodes = reactive<AsyncState<any>>(utils.initial())
   
-
-  const actionTest = (arg: string) => {
-      test.value = arg
-  }
-
-  const requestTest = async (): Promise<any> => {
-    stock.loading = true
+  const requestTest = async (payload: AsnyPayload): Promise<void> => {    
+    const { state, url, callback } = payload
+    
+    const targetState = store[state]
 
     try {
-      const res = await axios.get(getStockUrl('005930'))      
-      stock.data = res.data
-      stock.loading = false
+
+      const res = await axios.get(url)   
+
+      targetState.data = callback(res)
+      targetState.loading = false
+
     } catch (e) {
-      stock.error = e
-      stock.loading = false
+
+      targetState.error = e
+      targetState.loading = false
+      
     }
     
   }
 
   return {
-    test,
+    requestTest,
+
     stock,
-    computedTest,
-    actionTest,
-    requestTest
+    stockGraphVolume,
+    stockGraphDefault,
+    stockGraphAll,
+    stockEvaluation,
+    stockEvaluationDaily,
+    similarContents,
+    news,
+    statement,
+    statementAll,
+    indicator,
+    indicatorSector,
+    indicatorDaily,
+    indicatorSectorDaily,
+    stockDonda,
+    recommendStocks,
+    recommendStockCodes,
   }
 })

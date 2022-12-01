@@ -52,3 +52,21 @@ export type IndicatorSectorDailyType = {
 }
 export type DondaType = IStockEvaluationDailyResponse
 export type StocksType = IStockResponse[]
+
+export type StateType = 
+StockType |
+VolumeType |
+GraphDefaultType |
+GraphAllType |
+EvaluationType |
+EvaluationDailyType |
+SimilarType |
+NewsType |
+StatementType |
+StatementAllType |
+IndicatorType |
+IndicatorSectorType |
+IndicatorDailyType |
+IndicatorSectorDailyType |
+DondaType |
+StocksType

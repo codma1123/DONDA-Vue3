@@ -8,9 +8,10 @@
     </v-sheet>
   </v-sheet>
 </template>
-
+ 
 <script setup lang="ts">
 import { onMounted, toRefs } from 'vue';
+import { getStock } from '../store/payload';
 import { useStockStore } from '../store/stock';
 
 const { stock, requestTest } = useStockStore()
@@ -19,7 +20,7 @@ const { data, loading, error } = toRefs(stock)
 
 
 onMounted(async () => {
-  await requestTest()
+  await requestTest(getStock('005930'))
 })
 
 
