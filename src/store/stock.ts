@@ -1,4 +1,4 @@
-import { MarketType } from './../models/stock';
+import { MarketType, MarketValuationType } from './../models/stock';
 import axios from 'axios';
 import { defineStore } from "pinia";
 import { reactive } from "vue";
@@ -24,6 +24,7 @@ export const useStockStore = defineStore('stock', () => {
   const store = useStockStore()
 
   const market = reactive<AsyncState<MarketType>>(utils.initial())
+  const marketValuation = reactive<AsyncState<MarketValuationType>>(utils.initial())
 
   const stock = reactive<AsyncState<StockType>>(utils.initial())
   const stockGraphVolume = reactive<AsyncState<VolumeType>>(utils.initial())
@@ -43,10 +44,12 @@ export const useStockStore = defineStore('stock', () => {
   const recommendStocks = reactive<AsyncState<StocksType>>(utils.initial())
   const recommendStockCodes = reactive<AsyncState<any>>(utils.initial())
   
-  const requestTest = async (payload: AsnyPayload): Promise<void> => {    
+  const request = async (payload: AsnyPayload): Promise<void> => {    
 
     const { state, url, callback } = payload    
     const targetState = store[state]
+
+    targetState.loading = true
 
     try {
 
@@ -54,6 +57,8 @@ export const useStockStore = defineStore('stock', () => {
 
       targetState.data = callback(res)
       targetState.loading = false
+
+      console.log(targetState)
 
     } catch (e) {
 
@@ -65,7 +70,7 @@ export const useStockStore = defineStore('stock', () => {
   }
 
   return {
-    requestTest,
+    request,
 
     stock,
     stockGraphVolume,
@@ -85,6 +90,7 @@ export const useStockStore = defineStore('stock', () => {
     recommendStocks,
     recommendStockCodes,
 
-    market
+    market,
+    marketValuation
   }
 })

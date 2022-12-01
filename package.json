@@ -12,6 +12,7 @@
     "@mdi/font": "5.9.55",
     "pinia": "^2.0.23",
     "roboto-fontface": "*",
+    "sass": "^1.56.1",
     "vue": "^3.2.41",
     "vue-router": "^4.1.6",
     "vuetify": "npm:@vuetify/nightly@next",

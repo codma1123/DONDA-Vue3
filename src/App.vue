@@ -1,32 +1,25 @@
 <template>  
-  <v-layout>
-    <v-app-bar height="22" color="grey-darken-3" elevation="0"></v-app-bar>
-    <v-navigation-drawer width="72" color="grey-darken-2" permanent></v-navigation-drawer>
-    <v-navigation-drawer width="150" color="grey-darken-1" permanent></v-navigation-drawer>
-    <v-app-bar height="48" color="grey" elevation="0"></v-app-bar>
-    <v-navigation-drawer location="right" width="150" color="grey-lighten-1" permanent></v-navigation-drawer>
-    <v-app-bar location="bottom" height="48" color="grey-lighten-2" elevation="0"></v-app-bar>
-    <v-main>
-      <router-view></router-view>
+  <v-layout>    
+    <v-main class="d-flex justify-center">
+      <v-sheet 
+        class="Home overflow-y-auto mt-5 d-flex flex-column align-center justify-center" 
+        rounded="xl"
+        :width="MAIN_WIDTH" 
+        :height="MAIN_HEIGHT" 
+      >
+        <router-view></router-view>
+      </v-sheet>
     </v-main>
   </v-layout>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-import HelloWorld from './components/HelloWorld.vue'
+<script lang="ts" setup>
+import { useLayout } from './mixins/layout';
 
-export default defineComponent({
-  name: 'App',
-
-  components: {
-    HelloWorld,
-  },
-
-  data () {
-    return {
-      //
-    }
-  },
-})
+const { MAIN_WIDTH, MAIN_HEIGHT } = useLayout()
 </script>
+<style lang="scss">
+::-webkit-scrollbar {
+  width: 0px;
+}
+</style>

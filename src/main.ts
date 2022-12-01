@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import { createApp, CreateAppFunction, VueElement } from 'vue'
 import App from './App.vue'
 import vuetify from './plugins/vuetify'
 import { loadFonts } from './plugins/webfontloader'
@@ -9,8 +9,14 @@ const pinia = createPinia()
 
 loadFonts()
 
-createApp(App)
-  .use(router)
-  .use(pinia)
-  .use(vuetify)
-  .mount('#app')
+const app = createApp(App)
+app.use(router)
+app.use(pinia)
+app.use(vuetify)
+app.mount('#app')
+
+
+
+app.directive('font-size', (el, binding) => {
+
+})

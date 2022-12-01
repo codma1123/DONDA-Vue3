@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios"
-import { getStockUrl, getTodayMarketUrl } from "../api/api"
+import { getMarketValuationUrl, getStockUrl, getTodayMarketUrl } from "../api/api"
 import { ResponseType, } from "../api/types"
 
 export type StoreStates = 
@@ -20,7 +20,8 @@ export type StoreStates =
 'stockDonda' | 
 'recommendStocks' | 
 'recommendStockCodes' |
-'market'
+'market' |
+'marketValuation'
 
 
 export type AsnyPayload = {
@@ -36,8 +37,12 @@ const createAsyncPayload = (state: StoreStates, url: string, callback?: any): As
 })
 
 const getStock = (code: string) => createAsyncPayload('stock', getStockUrl(code))
-const getTodayMarket = (code: string) =>createAsyncPayload('market', getTodayMarketUrl())
+const getTodayMarket = () => createAsyncPayload('market', getTodayMarketUrl())
+const getMarketValuation = () => createAsyncPayload('marketValuation', getMarketValuationUrl())
+
 
 export {
-  getStock
+  getStock,
+  getTodayMarket,
+  getMarketValuation
 }
