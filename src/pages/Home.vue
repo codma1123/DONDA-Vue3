@@ -10,11 +10,11 @@
       :key="content.market"
       @click="push(`/${content.market}`)"
     >
-      <v-card-title> 
-        {{ content.market }}
+      <v-card-title v-font-size="30"> 
+        {{ content.market }}        
       </v-card-title>
       <v-card-text class="d-flex align-center justify-center">
-        {{ content.weeklyTrend }}          
+        {{ content.weeklyTrend }}                  
       </v-card-text>
     </v-sheet>
   </div>    
@@ -22,14 +22,14 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue"
+import { computed, onMounted } from "vue"
 import { useRouter } from "vue-router"
 import { useLayout } from "../mixins/layout";
 import { getMarketValuation, getTodayMarket } from "../store/payload"
 import { useStockStore } from "../store/stock"
 
 const { market, marketValuation, request } = useStockStore()
-const { MAIN_WIDTH, MAIN_HEIGHT, CONTENT_WIDTH, CONTENT_HEIGHT } = useLayout()
+const { CONTENT_WIDTH, CONTENT_HEIGHT } = useLayout()
 const router = useRouter()
 
 const push = (path: string) => router.push(path)
@@ -38,7 +38,11 @@ onMounted(() => {
   if (market.data || market.loading) return
 
   request(getTodayMarket())
-  request(getMarketValuation())
+  request(getMarketValuation())  
+})
+
+const markets = computed(() => {
+    
 })
 </script>
 

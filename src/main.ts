@@ -15,8 +15,6 @@ app.use(pinia)
 app.use(vuetify)
 app.mount('#app')
 
-
-
 app.directive('font-size', (el, binding) => {
-
+  el.style.fontSize = binding.value + 'px'
 })
