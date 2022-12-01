@@ -17,10 +17,8 @@ import { useStockStore } from '../store/stock';
 const { stock, requestTest } = useStockStore()
 const { data, loading, error } = toRefs(stock)
 
-
-
-onMounted(async () => {
-  await requestTest(getStock('005930'))
+onMounted( () => {
+  requestTest(getStock('005930'))
 })
 
 

@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios"
-import { getStockUrl } from "../api/api"
+import { getStockUrl, getTodayMarketUrl } from "../api/api"
 import { ResponseType, } from "../api/types"
 
 export type StoreStates = 
@@ -19,7 +19,8 @@ export type StoreStates =
 'indicatorSectorDaily' | 
 'stockDonda' | 
 'recommendStocks' | 
-'recommendStockCodes'
+'recommendStockCodes' |
+'market'
 
 
 export type AsnyPayload = {
@@ -28,13 +29,14 @@ export type AsnyPayload = {
   callback: (response: AxiosResponse<ResponseType>) => any
 }
 
-const createPayload = (state: StoreStates, url: string, callback?: any): AsnyPayload => ({
+const createAsyncPayload = (state: StoreStates, url: string, callback?: any): AsnyPayload => ({
   state,
   url,
   callback: callback || (response => response.data)
 })
 
-const getStock = (code: string): AsnyPayload => createPayload('stock', getStockUrl(code))
+const getStock = (code: string) => createAsyncPayload('stock', getStockUrl(code))
+const getTodayMarket = (code: string) =>createAsyncPayload('market', getTodayMarketUrl())
 
 export {
   getStock

@@ -1,4 +1,6 @@
-import { IStockResponse, IStockEvaluationResponse, IStockEvaluationDailyResponse, IStockSimilarResponse, IStockNewsResponse, IStockIndicatorSectorResponse } from "../api/types"
+import { IStockResponse, IStockEvaluationResponse, IStockEvaluationDailyResponse, IStockSimilarResponse, IStockNewsResponse, IStockIndicatorSectorResponse, DailySimpleRankResponse, MarketValuationResponse } from "../api/types"
+
+type MarketTypes = 'kospi' | 'nasdaq' | 'usdkrw' | 'snp500' | 'us1yt' | 'us5yt' | 'us10yt' | 'usdkrw'
 
 export interface IStockIndicatorDailyModel {
   [indicatorType: string]: number[]
@@ -53,20 +55,56 @@ export type IndicatorSectorDailyType = {
 export type DondaType = IStockEvaluationDailyResponse
 export type StocksType = IStockResponse[]
 
+export type MarketType = {
+	[marketType in MarketTypes]?: {
+		labels?: string[]
+		values?: {
+			type?: MarketTypes
+			open?: number
+			close?: number
+			high?: number
+			low?: number
+			changes?: number
+			volume?: number
+		}[] | []
+	}
+}
+
+export type MarketValuationType = MarketValuationResponse
+export type DailySimpleRankType = DailySimpleRankResponse
+export type MarketRecentType = {
+	[marketType in MarketTypes]: {
+		close?: number
+		changes?: number
+		recent?: string
+	}
+}
+
+export interface CodeTitleMappingType {
+	[title: string]: string
+}
+
 export type StateType = 
-StockType |
-VolumeType |
-GraphDefaultType |
-GraphAllType |
-EvaluationType |
-EvaluationDailyType |
-SimilarType |
-NewsType |
-StatementType |
-StatementAllType |
-IndicatorType |
-IndicatorSectorType |
-IndicatorDailyType |
-IndicatorSectorDailyType |
-DondaType |
-StocksType
+  StockType |
+  VolumeType |
+  GraphDefaultType |
+  GraphAllType |
+  EvaluationType |
+  EvaluationDailyType |
+  SimilarType |
+  NewsType |
+  StatementType |
+  StatementAllType |
+  IndicatorType |
+  IndicatorSectorType |
+  IndicatorDailyType |
+  IndicatorSectorDailyType |
+  DondaType |
+  StocksType |
+
+  MarketType |
+  MarketValuationType |
+  MarketRecentType |
+  CodeTitleMappingType
+
+
