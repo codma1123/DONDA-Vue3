@@ -16,14 +16,14 @@ export default createVuetify(
   // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
   {
     theme: {
-      defaultTheme: 'dark',
+      defaultTheme: 'light',
       themes: {
-        dark: {
-          dark: true,
-          colors: {
-            cardlayout: '#333333'
-          }
-        }
+        // dark: {
+        //   dark: true,
+        //   colors: {
+        //     cardlayout: '#333333'
+        //   }
+        // }
       }
     }
   }

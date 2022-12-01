@@ -1,8 +1,8 @@
 export const useLayout = () => {
 
-  const MAIN_WIDTH = '500'
+  const MAIN_WIDTH = '430'
   const MAIN_HEIGHT = '95vh'
-  const CONTENT_WIDTH = '480'
+  const CONTENT_WIDTH = '400'
   const CONTENT_HEIGHT = '150'
 
   return {

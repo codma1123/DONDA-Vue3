@@ -1,24 +1,29 @@
 <template>
-  <div v-if="!market.loading && !marketValuation.loading">
-    <v-sheet
-      :width="CONTENT_WIDTH"
-      :height="CONTENT_HEIGHT"
-      class="MarketCard"      
-      color="cardlayout"
-      rounded="xl"
-      v-for="content in marketValuation.data"        
-      :key="content.market"
-      @click="push(`/${content.market}`)"
-    >
-      <v-card-title v-font-size="30"> 
-        {{ content.market }}        
-      </v-card-title>
-      <v-card-text class="d-flex align-center justify-center">
-        {{ content.weeklyTrend }}                  
-      </v-card-text>
-    </v-sheet>
-  </div>    
-  <v-progress-circular v-else :value="100" color="primary"></v-progress-circular>
+  <transition name="fade">
+    <div v-if="!market.loading && !marketValuation.loading">
+      <v-sheet
+        v-if="!market.loading && !marketValuation.loading"
+        :width="CONTENT_WIDTH"
+        :height="CONTENT_HEIGHT"
+        class="MarketCard"      
+        color="primary-darken-1"
+        rounded="xl"
+        v-for="content in marketValuation.data"        
+        :key="content.market"
+        @click="push(`/${content.market}`)"
+      >
+        <v-card-title v-font-size="30"> 
+          {{ content.market }}        
+        </v-card-title>
+        <v-card-text class="d-flex align-center justify-center">
+          {{ content.weeklyTrend }}                  
+        </v-card-text>
+      </v-sheet>
+    </div>    
+    <div v-else>
+      <v-progress-circular :value="100" color="primary" class="ProgressCircular"></v-progress-circular>
+    </div>
+  </transition>
 </template>
 
 <script setup lang="ts">
@@ -47,10 +52,10 @@ const markets = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-$margin-size : 1.5rem;
+$margin-size : 2rem;
 .MarketCard {  
   margin: $margin-size;
-  
+    
   cursor: pointer;
   transition: all .5s ease-in-out;
 
@@ -58,6 +63,32 @@ $margin-size : 1.5rem;
     font-size: 12px;
   }
 }
+
+.fade-enter-from {
+  opacity: 0;
+}
+.fade-etner-to {
+  opacity: 1;
+}
+.fade-enter-active {
+  transition: all .5s ease;
+}
+.fade-leave-from {
+  opacity: 1;
+}
+.fade-leave-to {
+  opacity: 0;
+}
+.fade-leave-active {
+  transition: all .5s ease;
+}
+
+
+.ProgressCircular {
+  position: absolute;
+  top: 50%;
+}
+
 
 .HomeLayout {
   display: flex;
