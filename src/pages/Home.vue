@@ -16,7 +16,7 @@
           {{ content.market }}        
         </v-card-title>
         <v-card-text class="d-flex align-center justify-center">
-          {{ content.weeklyTrend }}                  
+          {{ computedMarket }}
         </v-card-text>
       </v-sheet>
     </div>    
@@ -32,6 +32,9 @@ import { useRouter } from "vue-router"
 import { useLayout } from "../mixins/layout";
 import { getMarketValuation, getTodayMarket } from "../store/payload"
 import { useStockStore } from "../store/stock"
+import { MarketType, MarketTypes } from '../models/stock' 
+
+const marketTypes: MarketTypes[] = ['kospi', 'nasdaq', 'snp500', 'usdkrw']
 
 const { market, marketValuation, request } = useStockStore()
 const { CONTENT_WIDTH, CONTENT_HEIGHT } = useLayout()
@@ -40,14 +43,19 @@ const router = useRouter()
 const push = (path: string) => router.push(path)
 
 onMounted(() => {
-  if (market.data || market.loading) return
+  if (market.data || market.loading || marketValuation.data) return
 
   request(getTodayMarket())
   request(getMarketValuation())  
+
 })
 
-const markets = computed(() => {
-    
+const computedMarket = computed(() => {
+  const { data } = market
+  return marketTypes.map(market => ({
+    market,
+    close: (data as MarketType)[market].values?.at(-1)?.close    
+  }))
 })
 </script>
 

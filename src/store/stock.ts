@@ -14,7 +14,7 @@ export type AsyncState<T extends StateType = any> = {
 const utils = {
   initial: <T extends StateType>(initialData?: any): AsyncState<T> => ({
     loading: false,
-    data: initialData || null,
+    data: initialData,
     error: null
   })
 }
@@ -53,12 +53,11 @@ export const useStockStore = defineStore('stock', () => {
 
     try {
 
-      const res = await axios.get(url)   
-
+      const res = await axios.get(url)         
       targetState.data = callback(res)
       targetState.loading = false
-
-      console.log(targetState)
+      console.log(state, targetState.data)
+      
 
     } catch (e) {
 
