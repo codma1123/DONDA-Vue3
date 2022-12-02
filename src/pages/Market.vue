@@ -1,55 +1,58 @@
 <template>
-  <div>
+  <div>    
+    <div class="Title">
+      <v-card-title v-font-size="25">
+        시장 동향
+      </v-card-title>        
+      <v-card-subtitle> 주식 시장이 어떻게 변하고 있는지 알아보세요. </v-card-subtitle>      
+    </div>
     <v-sheet
-      :width="CONTENT_WIDTH"
-      :height="CONTENT_HEIGHT"
-      class="MarketCard"      
-      color="primary-darken-1"
-      rounded="lg"
       v-for="(content, i) in marketValuation.data"        
       :key="content.market"
-      @click="push(`/${content.market}`)"
+      class="MarketCard"      
+      :width="CONTENT_WIDTH"
+      :height="heights[i]"
+      color="cardlayout"
+      @click="extension(i)"
     >
-      <v-card-title class="text-h5"> 
-        시장 현황
-      </v-card-title>
-      <v-card-subtitle>
-        각종 시장 현황에 대해 알아보세요.
-      </v-card-subtitle>
+      <v-card-title> 
+        {{ content.market }}
+      </v-card-title>      
       <v-card-text class="d-flex align-center justify-center" v-font-size="20">
         종가 {{ computedMarket[i].close }}
       </v-card-text>
-      <v-card-actions>
-        <v-btn variant="text">
-          Listen Now
-        </v-btn>
-      </v-card-actions>
+
     </v-sheet>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from "vue"
-import { useRouter } from "vue-router"
-import { useLayout } from "../mixins/layout";
-import { useStockStore } from "../store/stock"
-import { MarketType, MarketTypes } from '../models/stock' 
+  import { computed, onMounted, ref } from "vue"
+  import { useRouter } from "vue-router"
+  import { useLayout } from "../mixins/layout";
+  import { useStockStore } from "../store/stock"
+  import { MarketType, MarketTypes } from '../models/stock' 
+  
+  const { market, marketValuation } = useStockStore()
+  const { CONTENT_WIDTH } = useLayout()
+  const router = useRouter()
 
-const marketTypes: MarketTypes[] = ['kospi', 'nasdaq', 'snp500', 'usdkrw']
 
-const { market, marketValuation, request } = useStockStore()
-const { CONTENT_WIDTH, CONTENT_HEIGHT } = useLayout()
-const router = useRouter()
+  const marketTypes: MarketTypes[] = ['kospi', 'nasdaq', 'snp500', 'usdkrw']
+  const heights = ref<number[]>([160, 160, 160, 160])
 
-const push = (path: string) => router.push(path)
 
-const computedMarket = computed<any>(() => {
-  const { data } = market
-  return marketTypes.map(market => ({
-    close: (data as MarketType)[market].values?.at(-1)?.close ?? 0,
-    changes: (data as MarketType)[market].values?.at(-1)?.changes ?? 0    
-  }))
-})
+  const push = (path: string) => router.push(path)
+
+  const extension = (i: number) => heights.value[i] = heights.value[i] === 160 ? 300 : 160
+
+  const computedMarket = computed<any>(() => {
+    const { data } = market
+    return marketTypes.map(market => ({
+      close: (data as MarketType)[market].values?.at(-1)?.close ?? 0,
+      changes: (data as MarketType)[market].values?.at(-1)?.changes ?? 0    
+    }))
+  })
 
 </script>
 
@@ -57,6 +60,8 @@ const computedMarket = computed<any>(() => {
 $margin-size : 1rem;
 .MarketCard {  
   margin: $margin-size;
+  border-radius: 1.2rem;
+  padding-top: 10px;
     
   cursor: pointer;
   transition: all .5s ease-in-out;
@@ -70,17 +75,11 @@ $margin-size : 1rem;
   }
 }
 
-
-.ProgressCircular {
-  position: absolute;
-  top: 50%;
+.Title {
+  margin-top: 75px;
+  margin-left: 15px;
 }
 
 
-.HomeLayout {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-}
+
 </style>

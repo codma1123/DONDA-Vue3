@@ -12,7 +12,7 @@ export type AsyncState<T extends StateType = any> = {
 }
 
 const utils = {
-  initial: <T extends StateType>(initialData?: any): AsyncState<T> => ({
+  initial: <T extends StateType, E = any>(initialData?: any): AsyncState<T> => ({
     loading: false,
     data: initialData ?? null,
     error: null

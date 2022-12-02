@@ -5,10 +5,10 @@
       height="120"
       class="MarketCard"
       theme="dark"
-      color="#333333"
+      color="cardlayout"
       elevation="3"
     >
-      <v-card-title class="mt-3"> 시장 동향 </v-card-title>
+      <v-card-title> 시장 동향 </v-card-title>
       <v-card-subtitle> 주식 시장이 어떻게 변하고 있는지 알아보세요. </v-card-subtitle>      
       <v-btn       
         class="vBtn"  
@@ -23,10 +23,10 @@
       height="130"
       class="MarketCard"      
       theme="dark"   
-      color="#333333"   
+      color="cardlayout"   
       elevation="3"
     >
-      <v-card-title class="mt-3"> 추천 종목 </v-card-title>
+      <v-card-title> 추천 종목 </v-card-title>
       <v-card-subtitle class="vCardSubtitle"> DONDA 가 기업 가치가 상대적으로 저평가된 종목들을 추천해줍니다.</v-card-subtitle>
       <v-btn       
         class="vBtn"  
@@ -54,7 +54,7 @@
       v-for="(rankContent, i) in rankContents"
       :key="i"
       :width="CONTENT_WIDTH"
-      height="80"
+      height="90"
       class="MarketCard"      
       theme="dark"
       color="#333333"
@@ -62,12 +62,12 @@
     >
       <v-card-subtitle v-font-size="15" class="mt-2"> {{ rankContent.market }} </v-card-subtitle>
       <div class="d-flex align-end justify-space-between">
-        <v-card-title v-font-size="18"> {{ rankContent.title }} </v-card-title>        
+        <v-card-title v-font-size="20"> {{ rankContent.title }} </v-card-title>        
         <div class="mr-3 mb-2"> 
-          <span v-font-size="18"> 
+          <span v-font-size="23"> 
             {{ rankContent.close }}  
           </span>
-          <span class="ml-3" v-font-size="13"> 
+          <span class="ml-3" v-font-size="12"> 
             {{ rankContent.prefix }}{{ rankContent.change }}
            </span>
         </div>
@@ -100,7 +100,7 @@
 
 
   const { market, marketValuation, rank, request } = useStockStore()
-  const { CONTENT_WIDTH, CENTER_CLASS, BETWEEN_CLASS } = useLayout()
+  const { CONTENT_WIDTH, CENTER_CLASS } = useLayout()
   const rankCount = ref<number>(8)
   const rankCountLoad = ref<boolean>(true)
 
@@ -147,15 +147,13 @@
 </script>
 
 <style lang="scss" scoped>
+
 $margin-size : 1rem;
 .MarketCard {  
   margin: $margin-size;
+  padding-top: 10px;
   border-radius: 1.2rem;
-    
-  font-family: 'Hahmlet', serif;
-  font-family: 'Noto Sans KR', sans-serif;
-  font-family: 'Poppins', sans-serif;
-      
+          
   transition: all .5s ease-in-out;
   cursor: pointer;
 
@@ -181,19 +179,10 @@ $margin-size : 1rem;
     right: 5px;
   }
 
-
-
 .ProgressCircular {
   position: absolute;
   top: 50%;
   left: 50%;
 }
 
-
-.HomeLayout {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-}
 </style>

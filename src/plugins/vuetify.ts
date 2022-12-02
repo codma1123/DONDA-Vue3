@@ -16,9 +16,9 @@ export default createVuetify(
   // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
   {
     theme: {
-      defaultTheme: 'light',
+      defaultTheme: 'dark',
       themes: {
-        light: {
+        dark: {
           dark: true,
           colors: {
             cardlayout: '#333333'
