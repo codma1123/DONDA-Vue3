@@ -7,16 +7,16 @@
         :height="CONTENT_HEIGHT"
         class="MarketCard"      
         color="primary-darken-1"
-        rounded="xl"
-        v-for="content in marketValuation.data"        
+        rounded="lg"
+        v-for="(content, i) in marketValuation.data"        
         :key="content.market"
         @click="push(`/${content.market}`)"
       >
         <v-card-title v-font-size="30"> 
-          {{ content.market }}        
+          시장 현황
         </v-card-title>
-        <v-card-text class="d-flex align-center justify-center">
-          {{ computedMarket }}
+        <v-card-text class="d-flex align-center justify-center" v-font-size="20">
+          종가 {{ computedMarket[i].close }}
         </v-card-text>
       </v-sheet>
     </div>    
@@ -50,13 +50,14 @@ onMounted(() => {
 
 })
 
-const computedMarket = computed(() => {
+const computedMarket = computed<any>(() => {
   const { data } = market
   return marketTypes.map(market => ({
-    market,
-    close: (data as MarketType)[market].values?.at(-1)?.close    
+    close: (data as MarketType)[market].values?.at(-1)?.close ?? 0,
+    changes: (data as MarketType)[market].values?.at(-1)?.changes ?? 0    
   }))
 })
+
 </script>
 
 <style lang="scss" scoped>

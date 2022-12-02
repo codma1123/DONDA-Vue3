@@ -29,6 +29,12 @@ const { MAIN_WIDTH, MAIN_HEIGHT } = useLayout()
 ::-webkit-scrollbar {
   width: 0px;
 }
+body {
+  background-color: bisque;
+  // font-family: 'Hahmlet', serif;
+  // font-family: 'Noto Sans KR', sans-serif;
+  font-family: 'Poppins', sans-serif;
+}
 
 .Home {
   z-index: 1;
