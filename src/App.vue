@@ -3,7 +3,7 @@
     <v-main class="d-flex justify-center">
       <v-sheet 
         class="Home overflow-y-auto mt-5 d-flex flex-column align-center justify-start" 
-        color="primary"
+        color="white"
         rounded="xl"
         :width="MAIN_WIDTH" 
         :height="MAIN_HEIGHT" 
@@ -31,8 +31,8 @@ const { MAIN_WIDTH, MAIN_HEIGHT } = useLayout()
 }
 body {
   background-color: bisque;
-  // font-family: 'Hahmlet', serif;
-  // font-family: 'Noto Sans KR', sans-serif;
+  font-family: 'Hahmlet', serif;
+  font-family: 'Noto Sans KR', sans-serif;
   font-family: 'Poppins', sans-serif;
 }
 

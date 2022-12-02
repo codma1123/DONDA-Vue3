@@ -18,12 +18,12 @@ export default createVuetify(
     theme: {
       defaultTheme: 'light',
       themes: {
-        // dark: {
-        //   dark: true,
-        //   colors: {
-        //     cardlayout: '#333333'
-        //   }
-        // }
+        light: {
+          dark: true,
+          colors: {
+            cardlayout: '#333333'
+          }
+        }
       }
     }
   }

@@ -1,11 +1,11 @@
 <template>
   <v-sheet 
     class="NavBar" 
-    color="primary" 
+    color="cardlayout" 
     width="430"
-    height="80"    
+    min-height="40"        
   > 
-    <v-btn flat icon color="primary" size="25" @click="$router.push('/')">
+    <v-btn flat icon color="cardlayout" size="25" @click="$router.push('/')">
       <v-icon x-small>mdi-home</v-icon>
     </v-btn>
   </v-sheet>

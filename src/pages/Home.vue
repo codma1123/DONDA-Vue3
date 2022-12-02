@@ -1,47 +1,57 @@
 <template>
-  <transition name="fade">
+  <transition name="fade">    
     <div v-if="!market.loading && !marketValuation.loading">
-      <v-sheet
-        v-if="!market.loading && !marketValuation.loading"
+      <v-card
         :width="CONTENT_WIDTH"
-        :height="CONTENT_HEIGHT"
+        height="120"
         class="MarketCard"      
-        color="primary-darken-1"
-        rounded="lg"
-        v-for="(content, i) in marketValuation.data"        
-        :key="content.market"
-        @click="push(`/${content.market}`)"
+        theme="dark"
+        color="#385F73"        
+        @click="router.push('/market')"
       >
-        <v-card-title v-font-size="30"> 
-          시장 현황
-        </v-card-title>
-        <v-card-text class="d-flex align-center justify-center" v-font-size="20">
-          종가 {{ computedMarket[i].close }}
-        </v-card-text>
-      </v-sheet>
+        <v-card-title> 시장 동향 </v-card-title>
+      </v-card>
+
+      <v-card
+        :width="CONTENT_WIDTH"
+        height="200"
+        class="MarketCard"      
+        theme="dark"
+        color="#952175"        
+      >
+        <v-card-title> 추천 종목 </v-card-title>
+      </v-card>
+
+
+      <v-card
+        :width="CONTENT_WIDTH"
+        height="500"
+        class="MarketCard"      
+        theme="dark"
+        color="error"        
+      >
+        <v-card-title> 추천 종목 </v-card-title>
+      </v-card>
+      
+
     </div>    
     <div v-else>
-      <v-progress-circular :value="100" color="primary" class="ProgressCircular"></v-progress-circular>
+      <v-progress-circular :value="100" color="black" class="ProgressCircular"></v-progress-circular>
     </div>
   </transition>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from "vue"
-import { useRouter } from "vue-router"
+import { onMounted } from "vue"
+import { useRouter } from "vue-router";
 import { useLayout } from "../mixins/layout";
 import { getMarketValuation, getTodayMarket } from "../store/payload"
 import { useStockStore } from "../store/stock"
-import { MarketType, MarketTypes } from '../models/stock' 
 
-const marketTypes: MarketTypes[] = ['kospi', 'nasdaq', 'snp500', 'usdkrw']
 
 const { market, marketValuation, request } = useStockStore()
-const { CONTENT_WIDTH, CONTENT_HEIGHT } = useLayout()
 const router = useRouter()
-
-const push = (path: string) => router.push(path)
-
+const { CONTENT_WIDTH } = useLayout()
 onMounted(() => {
   if (market.data || market.loading || marketValuation.data) return
 
@@ -50,20 +60,19 @@ onMounted(() => {
 
 })
 
-const computedMarket = computed<any>(() => {
-  const { data } = market
-  return marketTypes.map(market => ({
-    close: (data as MarketType)[market].values?.at(-1)?.close ?? 0,
-    changes: (data as MarketType)[market].values?.at(-1)?.changes ?? 0    
-  }))
-})
-
 </script>
 
 <style lang="scss" scoped>
-$margin-size : 2rem;
+$margin-size : 1rem;
 .MarketCard {  
   margin: $margin-size;
+  border-radius: .25rem;
+    
+  font-family: 'Hahmlet', serif;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-family: 'Poppins', sans-serif;
+
+  
     
   cursor: pointer;
   transition: all .5s ease-in-out;
@@ -82,15 +91,7 @@ $margin-size : 2rem;
 .fade-enter-active {
   transition: all .5s ease;
 }
-.fade-leave-from {
-  opacity: 1;
-}
-.fade-leave-to {
-  opacity: 0;
-}
-.fade-leave-active {
-  transition: all .5s ease;
-}
+
 
 
 .ProgressCircular {
