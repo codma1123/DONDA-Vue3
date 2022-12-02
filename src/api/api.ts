@@ -22,7 +22,7 @@ export const getSearchTableUrl = () => `${API}/krx-corps`
 export const getStockRecommendUrl = () => `${API}/daily/recommand`
 
 // 간단한 랭킹
-export const getDailySimpleRanksUrl = () => `${API}/daily/rank`
+export const getRankUrl = () => `${API}/daily/rank`
 
 
 

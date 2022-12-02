@@ -1,4 +1,12 @@
-import { IStockResponse, IStockEvaluationResponse, IStockEvaluationDailyResponse, IStockSimilarResponse, IStockNewsResponse, IStockIndicatorSectorResponse, DailySimpleRankResponse, MarketValuationResponse } from "../api/types"
+import { 
+  IStockResponse, 
+  IStockEvaluationResponse, 
+  IStockEvaluationDailyResponse, 
+  IStockSimilarResponse,
+  IStockNewsResponse,
+  IStockIndicatorSectorResponse,
+  MarketValuationResponse, RankResponse 
+} from "../api/types"
 
 export type MarketTypes = 'kospi' | 'nasdaq' | 'usdkrw' | 'snp500' | 'us1yt' | 'us5yt' | 'us10yt' | 'usdkrw'
 
@@ -71,7 +79,7 @@ export type MarketType = {
 }
 
 export type MarketValuationType = MarketValuationResponse
-export type DailySimpleRankType = DailySimpleRankResponse
+export type RankType = RankResponse
 export type MarketRecentType = {
 	[marketType in MarketTypes]: {
 		close?: number
@@ -85,6 +93,7 @@ export interface CodeTitleMappingType {
 }
 
 export type StateType = 
+  RankType |
   StockType |
   VolumeType |
   GraphDefaultType |

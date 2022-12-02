@@ -163,8 +163,8 @@ export type SearchTableResponse = {
  [code: string]: string 
 }
 
-export type DailySimpleRankResponse = {
-  [rankType in RankType]: (number | string)[]  
+export type RankResponse = {
+  [K in RankType]: (number | string)[][]
 }
 
 
@@ -189,4 +189,4 @@ export type ResponseType =
   MarketResponse | 
   MarketValuationResponse | 
   SearchTableResponse | 
-  DailySimpleRankResponse
+  RankResponse

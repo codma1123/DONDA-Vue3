@@ -1,3 +1,4 @@
+import { getRankUrl } from './../api/api';
 import { AxiosResponse } from "axios"
 import { getMarketValuationUrl, getStockUrl, getTodayMarketUrl } from "../api/api"
 import { ResponseType, } from "../api/types"
@@ -22,7 +23,8 @@ export type StoreStates =
 'recommendStocks' | 
 'recommendStockCodes' |
 'market' |
-'marketValuation'
+'marketValuation' | 
+'rank'
 
 
 export type AsnyPayload = {
@@ -40,10 +42,12 @@ const createAsyncPayload = (state: StoreStates, url: string, callback?: any): As
 const getStock = (code: string) => createAsyncPayload('stock', getStockUrl(code))
 const getTodayMarket = () => createAsyncPayload('market', getTodayMarketUrl(), todayMarketParser)
 const getMarketValuation = () => createAsyncPayload('marketValuation', getMarketValuationUrl())
+const getRank = () => createAsyncPayload('rank', getRankUrl())
 
 
 export {
   getStock,
   getTodayMarket,
-  getMarketValuation
+  getMarketValuation,
+  getRank
 }
