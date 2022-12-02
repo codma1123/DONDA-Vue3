@@ -3,38 +3,62 @@
     <v-card
       :width="CONTENT_WIDTH"
       height="120"
-      class="MarketCard"      
+      class="MarketCard"
       theme="dark"
-      color="#385F73"        
-      @click="router.push('/market')"
+      color="#333333"
     >
-      <v-card-title> 시장 동향 </v-card-title>
+      <v-card-title class="mt-3"> 시장 동향 </v-card-title>
+      <v-card-subtitle> 주식 시장이 어떻게 변하고 있는지 알아보세요. </v-card-subtitle>      
+      <v-btn       
+        class="vBtn"  
+        variant="text"
+        @click="router.push('/market')" 
+        icon="mdi-chevron-right"
+      />
     </v-card>
 
     <v-card
       :width="CONTENT_WIDTH"
-      height="200"
+      height="130"
       class="MarketCard"      
-      theme="dark"
-      color="#952175"        
+      theme="dark"   
+      color="#333333"   
     >
-      <v-card-title> 추천 종목 </v-card-title>
+      <v-card-title class="mt-3"> 추천 종목 </v-card-title>
+      <v-card-subtitle class="vCardSubtitle"> DONDA 가 기업 가치가 상대적으로 저평가된 종목들을 추천해줍니다.</v-card-subtitle>
+      <v-btn       
+        class="vBtn"  
+        variant="text"
+        @click="router.push('/market')" 
+        icon="mdi-chevron-right"
+      />
     </v-card>
+    
+    <div class="d-flex justify-space-between mt-8 align-end">
+      <v-card-title class="ml-3" v-font-size="16">
+        시가총액이 높은 기업들의 현황입니다.
+      </v-card-title>      
+      <v-btn variant="plain" v-font-size="12">
+        자세히..
+      </v-btn>
+    </div>
 
 
     <v-card
       v-for="(rankContent, i) in rankContents"
       :key="i"
       :width="CONTENT_WIDTH"
-      height="100"
+      height="80"
       class="MarketCard"      
       theme="dark"
-      color="information"        
+      color="#333333"
     >
-      <v-card-title> {{ rankContent.title }} </v-card-title>
-      <v-card-subtitle>
-        {{ rankContent.close }}
-      </v-card-subtitle>
+      <v-card-subtitle v-font-size="15" class="mt-2"> {{ rankContent.market }} </v-card-subtitle>
+      <div class="d-flex align-center">
+        <v-card-title v-font-size="18"> {{ rankContent.title }} </v-card-title>
+        
+      </div>
+      
       
     </v-card>    
   </div>    
@@ -66,7 +90,7 @@
     const marcap = rank.data?.marcap || []
     return marcap
       .map(entry => ({ code: entry[1], title: entry[2], market: entry[3], close: entry[4], change: entry[5], changeRatio: entry[6] }))
-      .slice(0, 5)
+      .slice(0, 8)
   })
 
 
@@ -76,22 +100,36 @@
 $margin-size : 1rem;
 .MarketCard {  
   margin: $margin-size;
-  border-radius: .25rem;
+  border-radius: 1.2rem;
     
   font-family: 'Hahmlet', serif;
   font-family: 'Noto Sans KR', sans-serif;
-  font-family: 'Poppins', sans-serif;
-
-  
-    
-  cursor: pointer;
+  font-family: 'Poppins', sans-serif;  
+      
   transition: all .5s ease-in-out;
+  cursor: pointer;
 
 
   &:first-child {
-    margin-top: 50px;
+    margin-top: 70px;
+    cursor: default;
+  }
+
+  &:nth-child(3) {
+    margin-top: 20px;
+  }
+    
+  .vCardSubtitle {
+    white-space: normal;
+    word-break: normal;
   }
 }
+
+.vBtn {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+  }
 
 
 

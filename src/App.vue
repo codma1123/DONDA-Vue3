@@ -5,7 +5,7 @@
         id="scroll-target"
         v-scroll:#scroll-target="onScroll"
         class="overflow-y-auto mt-5" 
-        color="white"
+        theme="dark"
         rounded="xl"
         :width="MAIN_WIDTH" 
         :height="MAIN_HEIGHT" 
@@ -28,7 +28,7 @@ import NavBar from './pages/NavBar.vue'
 
 const { MAIN_WIDTH, MAIN_HEIGHT } = useLayout()
 const isNav = ref<boolean>(true)
-const onScroll = (e: any) => isNav.value = e.target.scrollTop === 0 ? true : false
+const onScroll = (e: any) => true
 
 
 </script>
@@ -37,7 +37,7 @@ const onScroll = (e: any) => isNav.value = e.target.scrollTop === 0 ? true : fal
   width: 0px;
 }
 body {
-  background-color: bisque;
+  background-color: #111111;
   font-family: 'Hahmlet', serif;
   font-family: 'Noto Sans KR', sans-serif;
   font-family: 'Poppins', sans-serif;

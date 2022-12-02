@@ -2,12 +2,12 @@
   <transition name="fade">
     <v-sheet 
       class="NavBar" 
-      color="cardlayout" 
       width="430"
       min-height="40"        
       ref="navBar"
     > 
-      <v-btn flat icon color="cardlayout" size="25" @click="$router.push('/')">
+      <div class="logo">DONDA</div>
+      <v-btn flat icon size="25" @click="$router.push('/')">
         <v-icon x-small>mdi-home</v-icon>
       </v-btn>
     </v-sheet>
@@ -26,11 +26,19 @@
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   top: 20px;
+  z-index: 10;
   overflow: hidden;
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   padding-right: 20px;
   padding-top: 10px;
+
+  .logo {
+    opacity: .8;
+    margin-left: 30px;
+    font-weight: bold;
+    letter-spacing: .125rem;
+  }
 }
 
 .fade-enter-from {
