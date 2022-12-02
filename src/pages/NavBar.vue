@@ -6,7 +6,7 @@
       min-height="40"        
       ref="navBar"
     > 
-      <div class="logo">DONDA</div>
+      <div class="logo">DONDA - VUE3</div>
       <v-btn flat icon size="25" @click="$router.push('/')">
         <v-icon x-small>mdi-home</v-icon>
       </v-btn>

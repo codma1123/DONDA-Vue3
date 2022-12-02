@@ -10,6 +10,10 @@ const routes = [
   {
     path: '/market',
     component: Market
+  },
+  {
+    path: '/rank',
+    component: () => import('../pages/Rank.vue'),
   }
 ]
 

@@ -61,13 +61,13 @@
       elevation="2"
     >
       <v-card-subtitle v-font-size="15" class="mt-2"> {{ rankContent.market }} </v-card-subtitle>
-      <div class="d-flex align-center justify-space-between">
+      <div :class="BETWEEN_CLASS">
         <v-card-title v-font-size="18"> {{ rankContent.title }} </v-card-title>
         <div class="mr-3" v-font-size="18"> {{ rankContent.close }} </div>
       </div>            
     </v-card> 
 
-    <div class="d-flex justify-center align-center">      
+    <div :class="CENTER_CLASS">      
       <v-progress-circular v-if="rankCountLoad" indeterminate class="mb-2" color="white"/>    
       <Observer v-if="rankCountLoad" @triggerIntersected="loadMore"/>
     </div>
@@ -93,7 +93,7 @@
 
 
   const { market, marketValuation, rank, request } = useStockStore()
-  const { CONTENT_WIDTH } = useLayout()
+  const { CONTENT_WIDTH, CENTER_CLASS, BETWEEN_CLASS } = useLayout()
   const rankCount = ref<number>(8)
   const rankCountLoad = ref<boolean>(true)
 
