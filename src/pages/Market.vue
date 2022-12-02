@@ -1,5 +1,5 @@
 <template>
-  <div>    
+  <div v-if="(!market.loading && !marketValuation.loading)">    
     <div class="Title">
       <v-card-title v-font-size="25">
         시장 동향
@@ -18,40 +18,74 @@
       <v-card-title> 
         {{ content.market }}
       </v-card-title>      
-      <v-card-text class="d-flex align-center justify-center" v-font-size="20">
-        종가 {{ computedMarket[i].close }}
+      <v-card-text class="d-flex align-end justify-space-between">        
+        <div></div>
+        <div class="d-flex flex-column align-end">
+          <div>
+            <span v-font-size="20"> 
+              {{ computedMarket[i].close }} 
+            </span>
+            <span v-font-size="17" :class="['ml-3', computedMarket[i].colorClass]"> 
+              {{ computedMarket[i].prefixer}}{{ computedMarket[i].changes}}
+            </span>
+          </div>
+          <div>
+            전주 대비 {{ marketValuation.data[i].weeklyTrend }}%
+          </div>
+        </div>
+        
       </v-card-text>
 
     </v-sheet>
   </div>
+  <v-progress-circular 
+    v-else
+    class="ProgressCircular" 
+    indeterminate 
+    color="white" 
+    :value="100"
+  />
 </template>
 
 <script setup lang="ts">
   import { computed, onMounted, ref } from "vue"
-  import { useRouter } from "vue-router"
   import { useLayout } from "../mixins/layout";
   import { useStockStore } from "../store/stock"
   import { MarketType, MarketTypes } from '../models/stock' 
+  import { getMarketValuation, getTodayMarket } from "../store/payload";
   
-  const { market, marketValuation } = useStockStore()
-  const { CONTENT_WIDTH } = useLayout()
-  const router = useRouter()
-
-
+  // consts
   const marketTypes: MarketTypes[] = ['kospi', 'nasdaq', 'snp500', 'usdkrw']
-  const heights = ref<number[]>([160, 160, 160, 160])
+  const DEFAULT_MARKET_HEIGHT = 160
+  const EXTEND_MARKET_HEIGHT = 330
 
+  // uses
+  const { market, marketValuation, request } = useStockStore()
+  const { CONTENT_WIDTH } = useLayout()
 
-  const push = (path: string) => router.push(path)
+  // reactive values
+  const heights = ref<number[]>(marketTypes.map(() => DEFAULT_MARKET_HEIGHT))
 
-  const extension = (i: number) => heights.value[i] = heights.value[i] === 160 ? 300 : 160
+  const extension = (index: number) => heights.value[index] = heights.value[index] === DEFAULT_MARKET_HEIGHT ? EXTEND_MARKET_HEIGHT : DEFAULT_MARKET_HEIGHT
 
   const computedMarket = computed<any>(() => {
     const { data } = market
-    return marketTypes.map(market => ({
-      close: (data as MarketType)[market].values?.at(-1)?.close ?? 0,
-      changes: (data as MarketType)[market].values?.at(-1)?.changes ?? 0    
-    }))
+    return marketTypes.map(market => {
+      const recent = (data as MarketType)[market].values?.at(-1)
+      return {
+        close: recent?.close ?? 0,
+        changes: (recent?.changes ?? 0).toLocaleString(),
+        prefixer: (recent?.changes ?? 0) > 0 ? '+' : '',
+        colorClass: (recent?.changes ?? 0) > 0 ? 'text-red' : 'text-blue'
+      }
+    })
+  })
+
+  onMounted(() => {
+    if (market.data) return
+
+    request(getTodayMarket())
+    request(getMarketValuation())
   })
 
 </script>
@@ -64,7 +98,7 @@ $margin-size : 1rem;
   padding-top: 10px;
     
   cursor: pointer;
-  transition: all .5s ease-in-out;
+  transition: all .8s ease-in-out;
 
   &:hover {
     font-size: 12px;
@@ -78,6 +112,12 @@ $margin-size : 1rem;
 .Title {
   margin-top: 75px;
   margin-left: 15px;
+}
+
+.ProgressCircular {
+  position: absolute;
+  top: 50%;
+  left: 50%;
 }
 
 

@@ -50,6 +50,8 @@ export const useStockStore = defineStore('stock', () => {
     const { state, url, callback } = payload    
     const targetState = store[state]
 
+    console.log('request', payload)
+
     targetState.loading = true
 
     try {
