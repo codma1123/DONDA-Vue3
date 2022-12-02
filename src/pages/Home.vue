@@ -61,17 +61,21 @@
       elevation="2"
     >
       <v-card-subtitle v-font-size="15" class="mt-2"> {{ rankContent.market }} </v-card-subtitle>
-      <div class="d-flex align-center">
-        <v-card-title v-font-size="18"> {{ rankContent.title }} </v-card-title>        
+      <div class="d-flex align-center justify-space-between">
+        <v-card-title v-font-size="18"> {{ rankContent.title }} </v-card-title>
+        <div class="mr-3" v-font-size="18"> {{ rankContent.close }} </div>
       </div>            
     </v-card> 
+
     <div class="d-flex justify-center align-center">      
       <v-progress-circular v-if="rankCountLoad" indeterminate class="mb-2" color="white"/>    
       <Observer v-if="rankCountLoad" @triggerIntersected="loadMore"/>
     </div>
+
   </div>    
+
   <v-progress-circular 
-  v-else
+    v-else
     class="ProgressCircular" 
     indeterminate 
     color="white" 
@@ -84,6 +88,7 @@
   import { useLayout } from "../mixins/layout";
   import { getMarketValuation, getTodayMarket, getRank } from "../store/payload"
   import { useStockStore } from "../store/stock"
+  import { priceFormatter } from '../mixins/tools'
   import Observer from "../components/Observer.vue";
 
 
@@ -103,19 +108,25 @@
   const rankContents = computed(() => {
     const marcap = rank.data?.marcap || []
     return marcap
-      .map(entry => ({ code: entry[1], title: entry[2], market: entry[3], close: entry[4], change: entry[5], changeRatio: entry[6] }))
+      .map(entry => ({ 
+        code: entry[1], 
+        title: entry[2], 
+        market: entry[3], 
+        close: priceFormatter.format(entry[4] as number), 
+        change: entry[5], changeRatio: entry[6] 
+      }))
       .slice(0, rankCount.value)
   })
 
   
 
-  const loadMore = () => { 
+  const loadMore = (): void => { 
     if (rankCount.value > 44) {
       rankCountLoad.value = false
       return
     }
 
-    new Promise((resolve, reject) => {
+    new Promise(resolve => {
         setTimeout(() => {
         rankCount.value += 5 
         resolve(rankCount.value)
@@ -134,7 +145,7 @@ $margin-size : 1rem;
     
   font-family: 'Hahmlet', serif;
   font-family: 'Noto Sans KR', sans-serif;
-  font-family: 'Poppins', sans-serif;  
+  font-family: 'Poppins', sans-serif;
       
   transition: all .5s ease-in-out;
   cursor: pointer;
