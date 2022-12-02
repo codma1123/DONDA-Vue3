@@ -61,9 +61,16 @@
       elevation="2"
     >
       <v-card-subtitle v-font-size="15" class="mt-2"> {{ rankContent.market }} </v-card-subtitle>
-      <div :class="BETWEEN_CLASS">
-        <v-card-title v-font-size="18"> {{ rankContent.title }} </v-card-title>
-        <div class="mr-3" v-font-size="18"> {{ rankContent.close }} </div>
+      <div class="d-flex align-end justify-space-between">
+        <v-card-title v-font-size="18"> {{ rankContent.title }} </v-card-title>        
+        <div class="mr-3 mb-2"> 
+          <span v-font-size="18"> 
+            {{ rankContent.close }}  
+          </span>
+          <span class="ml-3" v-font-size="13"> 
+            {{ rankContent.prefix }}{{ rankContent.change }}
+           </span>
+        </div>
       </div>            
     </v-card> 
 
@@ -112,8 +119,10 @@
         code: entry[1], 
         title: entry[2], 
         market: entry[3], 
-        close: priceFormatter.format(entry[4] as number), 
-        change: entry[5], changeRatio: entry[6] 
+        close: priceFormatter.format(entry[4] as number),
+        change: (entry[5] as number).toLocaleString(), 
+        changeRatio: entry[6],
+        prefix: (entry[5] as number) > 0 ? '+' : ''
       }))
       .slice(0, rankCount.value)
   })
