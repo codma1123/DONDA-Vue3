@@ -1,26 +1,27 @@
 <template>  
   <v-layout>    
     <v-main class="d-flex justify-center align-center">
-      <v-sheet 
-        class="overflow-y-auto mt-5" 
-        theme="dark"
-        rounded="xl"
-        :width="MAIN_WIDTH" 
-        :height="MAIN_HEIGHT" 
-      >
       <router-view v-slot="{ Component }">
-          <NavBar v-if="isNav"/>
-          <transition name="fade">
-            <component :is="Component" />
-          </transition>
+        <NavBar v-if="isNav"/>
+          <v-sheet 
+            class="overflow-y-auto mt-5" 
+            theme="dark"
+            rounded="xl"
+            :width="MAIN_WIDTH" 
+            :height="MAIN_HEIGHT" 
+            ref="target"
+          >
+            <transition name="fade">
+              <component :is="Component" @mount="scrollToTop"/>
+            </transition>
+          </v-sheet>
         </router-view>
-      </v-sheet>
     </v-main>
   </v-layout>
 </template>
 
 <script lang="ts" setup>
-  import { onMounted, ref } from 'vue';
+  import { onMounted, ref, VueElement } from 'vue';
   import { useLayout } from './mixins/layout';
   import NavBar from './pages/NavBar.vue'
   import { getMarketValuation, getRank, getTodayMarket } from './store/payload';
@@ -29,12 +30,20 @@
   const { MAIN_WIDTH, MAIN_HEIGHT } = useLayout()
   const { request } = useStockStore()
   const isNav = ref<boolean>(true)
+  const target = ref<Element>()
+
+
+  const scrollToTop = () => {
+    
+  }
 
   onMounted(() => {
     request(getTodayMarket())
     request(getMarketValuation())
     request(getRank())
   })
+
+
 
 
 </script>

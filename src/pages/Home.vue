@@ -60,14 +60,21 @@
       color="#333333"
       elevation="2"
     >
-      <v-card-subtitle v-font-size="15" class="mt-2"> {{ rankContent.market }} </v-card-subtitle>
+      <v-card-subtitle v-font-size="15" class="mt-2"> 
+        {{ rankContent.market }} 
+        {{ rankContent.code }}
+      </v-card-subtitle>
       <div class="d-flex align-end justify-space-between">
-        <v-card-title v-font-size="20"> {{ rankContent.title }} </v-card-title>        
+        <v-card-title v-font-size="20"> 
+          <div>
+            {{ rankContent.title }}            
+          </div>          
+        </v-card-title>        
         <div class="mr-3 mb-2"> 
           <span v-font-size="23"> 
-            {{ rankContent.close }}  
+            {{ rankContent.close }}
           </span>
-          <span class="ml-3" v-font-size="12"> 
+          <span class="ml-1" v-font-size="12"> 
             {{ rankContent.prefix }}{{ rankContent.change }}
            </span>
         </div>
@@ -80,17 +87,18 @@
     </div>
 
   </div>    
-
   <ProgressCircular absolute v-else />
 </template>
 
 <script setup lang="ts">
-  import { ref, computed } from "vue"
+  import { ref, computed, onMounted } from "vue"
   import { useLayout } from "../mixins/layout";
   import { useStockStore } from "../store/stock"
   import Observer from "../components/Observer.vue";
+
   import ProgressCircular from "../components/global/ProgressCircular.vue";
 
+  const emit = defineEmits<{ (e: 'mount'): void }>()
 
   const { market, marketValuation, rank } = useStockStore()
   const { CONTENT_WIDTH, CENTER_CLASS } = useLayout()
@@ -99,6 +107,10 @@
   const rankCountLoad = ref<boolean>(true)
 
   const marcap = computed(() => rank.data.marcap.slice(0, rankCount.value))
+
+  onMounted(() => {
+    emit('mount')
+  })
 
   const loadMore = (): void => { 
     if (rankCount.value > 44) {

@@ -27,35 +27,36 @@
     <v-card
       v-for="(content, i) in contents"
       class="RankContent"        
+      color="cardlayout"
       height="90"
       :widtd="CONTENT_WIDTH"
-      color="cardlayout"
       :key="i"
       @click="push"
       elevation="2"
-    >        
+    >
       <v-card-subtitle v-font-size="15" class="mt-2"> {{ content.market }} </v-card-subtitle>
       <div class="d-flex align-end justify-space-between">
         <v-card-title> 
-          <span v-font-size="25"> {{ i + 1 }}</span>
-          <span v-font-size="20" class="pl-2"> {{ content.title }} </span>            
-          </v-card-title>        
+          <span v-font-size="23"> {{ i + 1 }}</span>
+          <span v-font-size="18" class="pl-2"> {{ content.title }} </span>            
+        </v-card-title>        
         <div class="mr-3 mb-2"> 
-          <span v-font-size="23"> 
-            {{ content.close }}  
-          </span>
-          <span class="ml-1" v-font-size="12"> 
-            {{ content.prefix }}{{ content.change }}
-          </span>
+          <div>
+            <span v-font-size="20"> 
+              {{ content.close }}  
+            </span>
+            <span class="ml-1" v-font-size="12"> 
+              {{ content.prefix }}{{ content.change }}
+            </span>
+          </div>
         </div>
       </div>    
     </v-card>
 
-      <div :class="CENTER_CLASS">      
-        <ProgressCircular v-if="rankCountLoad" class="mb-2"/>      
-        <Observer v-if="rankCountLoad" @triggerIntersected="loadMore"/>
-      </div>
-
+    <div :class="CENTER_CLASS">      
+      <ProgressCircular v-if="rankCountLoad" class="mb-2"/>      
+      <Observer v-if="rankCountLoad" @triggerIntersected="loadMore"/>
+    </div>
   </div>
   <ProgressCircular absolute v-else />
 </template>
@@ -66,7 +67,8 @@
   import { useStockStore } from '../store/stock';
   import ProgressCircular from '../components/global/ProgressCircular.vue'
   import Observer from "../components/Observer.vue";
-import { RankType } from '../models/stock';
+  import { RankType } from '../models/stock';
+  import { useRouter } from 'vue-router';
 
   type TagType = '시가총액' | '거래량' | '상승률' | '하락률'
   
@@ -78,11 +80,11 @@ import { RankType } from '../models/stock';
   }
 
   const { rank } = useStockStore()
-  const rankCount = ref(10)
   const { CONTENT_WIDTH, CENTER_CLASS } = useLayout()   
-  
-  const rankCountLoad = ref<boolean>(true)
+  const router = useRouter()
 
+  const rankCount = ref(10)    
+  const rankCountLoad = ref<boolean>(true)
   const tags = ref<TagType[]>(['시가총액', '거래량', '상승률', '하락률'])
   const selectedTag = ref<TagType>('시가총액')
   const currentSortType = ref<(keyof RankType)>('marcap')
@@ -96,7 +98,8 @@ import { RankType } from '../models/stock';
   watch(selectedTag, (v: TagType) => {    
     rankCount.value = 10
     currentSortType.value = marketMapping[v] as keyof RankType
-    console.log(currentSortType.value)
+    router.push(`/rank/${currentSortType.value}`)
+    
   })
 
   const loadMore = (): void => { 
@@ -148,5 +151,6 @@ import { RankType } from '../models/stock';
     margin-bottom: 0px;
     flex-grow: auto;
   }
+
 
 </style>
