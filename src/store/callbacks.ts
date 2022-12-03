@@ -1,5 +1,6 @@
 import { AxiosResponse } from "axios"
-import { MarketResponse } from "../api/types"
+import { MarketResponse, RankResponse } from "../api/types"
+import { priceFormatter } from "../mixins/tools"
 
 export type MarketTypes = 'KOSPI' | 'NASDAQ' | 'S&P500' | 'US1YT' | 'US5YT' | 'US10YT' | 'USD/KRW'
 
@@ -39,4 +40,28 @@ export const todayMarketParser = (response: AxiosResponse<MarketResponse>) => {
     })
     return acc          
   }, marketDefault)
+}
+
+export const rankParser = (response: AxiosResponse<RankResponse>) => {
+  const rank = response.data
+  const rankTypes = Object.keys(response.data) as (keyof RankResponse)[]
+  const obj: { [rankType: string]: any } = {}
+
+  return rankTypes.reduce((acc, cur) => {
+    const rankEntries = rank[cur]
+
+    acc[cur] = rankEntries.map(entry => ({
+      code: entry[1], 
+      title: entry[2], 
+      market: entry[3], 
+      close: priceFormatter.format(entry[4] as number),
+      change: (entry[5] as number).toLocaleString(), 
+      changeRatio: entry[6],
+      volume: entry[10],
+      marcap: entry[12],
+      prefix: (entry[5] as number) > 0 ? '+' : ''
+    }))
+
+    return obj
+  }, obj)  
 }

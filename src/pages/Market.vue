@@ -6,12 +6,13 @@
       </v-card-title>        
       <v-card-subtitle> 주식 시장이 어떻게 변하고 있는지 알아보세요. </v-card-subtitle>      
     </div>
-    <v-sheet
+    <v-card
       v-for="(content, i) in marketValuation.data"        
+      elevation="3"
       :key="content.market"
       class="MarketCard"      
       :width="CONTENT_WIDTH"
-      :height="heights[i]"
+      :height="extendToggles[i] ? EXTEND_MARKET_HEIGHT : DEFAULT_MARKET_HEIGHT"
       color="cardlayout"
       @click="extension(i)"
     >
@@ -36,23 +37,26 @@
         
       </v-card-text>
 
-    </v-sheet>
+      <v-card-actions v-if="extendToggles[i]">
+        추가 컨텐츠 ... 
+      </v-card-actions>
+
+    </v-card>
   </div>
   <v-progress-circular 
     v-else
     class="ProgressCircular" 
     indeterminate 
-    color="white" 
+    color="white"
     :value="100"
   />
 </template>
 
 <script setup lang="ts">
-  import { computed, onMounted, ref } from "vue"
+  import { computed, ref } from "vue"
   import { useLayout } from "../mixins/layout";
   import { useStockStore } from "../store/stock"
   import { MarketType, MarketTypes } from '../models/stock' 
-  import { getMarketValuation, getTodayMarket } from "../store/payload";
   
   // consts
   const marketTypes: MarketTypes[] = ['kospi', 'nasdaq', 'snp500', 'usdkrw']
@@ -64,9 +68,9 @@
   const { CONTENT_WIDTH } = useLayout()
 
   // reactive values
-  const heights = ref<number[]>(marketTypes.map(() => DEFAULT_MARKET_HEIGHT))
+  const extendToggles = ref<boolean[]>(marketTypes.map(() => false))
 
-  const extension = (index: number) => heights.value[index] = heights.value[index] === DEFAULT_MARKET_HEIGHT ? EXTEND_MARKET_HEIGHT : DEFAULT_MARKET_HEIGHT
+  const extension = (index: number) => extendToggles.value[index] = !extendToggles.value[index]
 
   const computedMarket = computed<any>(() => {
     const { data } = market
@@ -81,12 +85,7 @@
     })
   })
 
-  onMounted(() => {
-    if (market.data) return
 
-    request(getTodayMarket())
-    request(getMarketValuation())
-  })
 
 </script>
 
@@ -96,13 +95,12 @@ $margin-size : 1rem;
   margin: $margin-size;
   border-radius: 1.2rem;
   padding-top: 10px;
+
+  overflow: hidden;
     
   cursor: pointer;
-  transition: all .8s ease-in-out;
+  transition: height .8s ease-in-out;
 
-  &:hover {
-    font-size: 12px;
-  }
 
   &:first-child {
     margin-top: 40px;

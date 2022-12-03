@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!market.loading && !marketValuation.loading && !rank.loading">
+  <div v-if="(!market.loading && !marketValuation.loading && !rank.loading)">
     <v-card
       :width="CONTENT_WIDTH"
       height="120"
@@ -50,8 +50,8 @@
       </v-btn>
     </div>
 
-    <v-card
-      v-for="(rankContent, i) in rankContents"
+    <v-card          
+      v-for="(rankContent, i) in marcap"
       :key="i"
       :width="CONTENT_WIDTH"
       height="90"
@@ -91,43 +91,19 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, onMounted, ref } from "vue"
+  import { ref, computed } from "vue"
   import { useLayout } from "../mixins/layout";
-  import { getMarketValuation, getTodayMarket, getRank } from "../store/payload"
   import { useStockStore } from "../store/stock"
-  import { priceFormatter } from '../mixins/tools'
   import Observer from "../components/Observer.vue";
 
 
-  const { market, marketValuation, rank, request } = useStockStore()
+  const { market, marketValuation, rank } = useStockStore()
   const { CONTENT_WIDTH, CENTER_CLASS } = useLayout()
+
   const rankCount = ref<number>(8)
   const rankCountLoad = ref<boolean>(true)
 
-  onMounted(() => {
-    if (market.data) return
-
-    request(getRank())
-    request(getTodayMarket())
-    request(getMarketValuation())  
-  })
-
-  const rankContents = computed(() => {
-    const marcap = rank.data?.marcap || []
-    return marcap
-      .map(entry => ({ 
-        code: entry[1], 
-        title: entry[2], 
-        market: entry[3], 
-        close: priceFormatter.format(entry[4] as number),
-        change: (entry[5] as number).toLocaleString(), 
-        changeRatio: entry[6],
-        prefix: (entry[5] as number) > 0 ? '+' : ''
-      }))
-      .slice(0, rankCount.value)
-  })
-
-  
+  const marcap = computed(() => rank.data.marcap.slice(0, rankCount.value))
 
   const loadMore = (): void => { 
     if (rankCount.value > 44) {

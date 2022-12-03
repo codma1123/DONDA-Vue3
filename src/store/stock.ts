@@ -1,9 +1,10 @@
 import { MarketType, MarketValuationType, RankType } from './../models/stock';
 import axios from 'axios';
 import { defineStore } from "pinia";
-import { reactive } from "vue";
+import { computed, reactive } from "vue";
 import { DondaType, EvaluationDailyType, EvaluationType, GraphAllType, GraphDefaultType, IndicatorDailyType, IndicatorSectorDailyType, IndicatorSectorType, IndicatorType, NewsType, SimilarType, StatementAllType, StatementType, StateType, StocksType, StockType, VolumeType } from "../models/stock";
 import { AsnyPayload } from './payload';
+import { priceFormatter } from '../mixins/tools';
 
 export type AsyncState<T extends StateType = any> = {
   loading: boolean
@@ -12,7 +13,7 @@ export type AsyncState<T extends StateType = any> = {
 }
 
 const utils = {
-  initial: <T extends StateType, E = any>(initialData?: any): AsyncState<T> => ({
+  initial: <T extends StateType>(initialData?: any): AsyncState<T> => ({
     loading: false,
     data: initialData ?? null,
     error: null
@@ -23,6 +24,7 @@ export const useStockStore = defineStore('stock', () => {
 
   const store = useStockStore()
 
+  // STATES
   const market = reactive<AsyncState<MarketType>>(utils.initial())
   const marketValuation = reactive<AsyncState<MarketValuationType>>(utils.initial())
   const rank = reactive<AsyncState<RankType>>(utils.initial())
@@ -44,22 +46,22 @@ export const useStockStore = defineStore('stock', () => {
   const stockDonda = reactive<AsyncState<DondaType>>(utils.initial())
   const recommendStocks = reactive<AsyncState<StocksType>>(utils.initial())
   const recommendStockCodes = reactive<AsyncState<any>>(utils.initial())
+
   
+
+  // ACTIONS
   const request = async (payload: AsnyPayload): Promise<void> => {    
 
     const { state, url, callback } = payload    
     const targetState = store[state]
-
-    console.log('request', payload)
-
     targetState.loading = true
 
     try {
 
       const res = await axios.get(url)         
-      targetState.data = callback(res)
+      targetState.data = callback(res)      
       targetState.loading = false
-      
+
 
     } catch (e) {
 

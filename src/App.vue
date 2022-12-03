@@ -2,8 +2,6 @@
   <v-layout>    
     <v-main class="d-flex justify-center align-center">
       <v-sheet 
-        id="scroll-target"
-        v-scroll:#scroll-target="onScroll"
         class="overflow-y-auto mt-5" 
         theme="dark"
         rounded="xl"
@@ -22,13 +20,21 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, VueElement } from 'vue';
-import { useLayout } from './mixins/layout';
-import NavBar from './pages/NavBar.vue'
+  import { onMounted, ref } from 'vue';
+  import { useLayout } from './mixins/layout';
+  import NavBar from './pages/NavBar.vue'
+  import { getMarketValuation, getRank, getTodayMarket } from './store/payload';
+  import { useStockStore } from './store/stock';
 
-const { MAIN_WIDTH, MAIN_HEIGHT } = useLayout()
-const isNav = ref<boolean>(true)
-const onScroll = (e: any) => true
+  const { MAIN_WIDTH, MAIN_HEIGHT } = useLayout()
+  const { request } = useStockStore()
+  const isNav = ref<boolean>(true)
+
+  onMounted(() => {
+    request(getTodayMarket())
+    request(getMarketValuation())
+    request(getRank())
+  })
 
 
 </script>
