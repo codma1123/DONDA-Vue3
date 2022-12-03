@@ -61,6 +61,12 @@ body {
   transition: all .5s ease;
 }
 
+.ProgressCircular {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
 
 
 </style>

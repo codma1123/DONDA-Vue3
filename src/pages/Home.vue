@@ -75,19 +75,13 @@
     </v-card> 
 
     <div :class="CENTER_CLASS">      
-      <v-progress-circular v-if="rankCountLoad" indeterminate class="mb-2" color="white"/>    
+      <ProgressCircular v-if="rankCountLoad" class="mb-2"/>      
       <Observer v-if="rankCountLoad" @triggerIntersected="loadMore"/>
     </div>
 
   </div>    
 
-  <v-progress-circular 
-    v-else
-    class="ProgressCircular" 
-    indeterminate 
-    color="white" 
-    :value="100"
-  />
+  <ProgressCircular absolute v-else />
 </template>
 
 <script setup lang="ts">
@@ -95,6 +89,7 @@
   import { useLayout } from "../mixins/layout";
   import { useStockStore } from "../store/stock"
   import Observer from "../components/Observer.vue";
+  import ProgressCircular from "../components/global/ProgressCircular.vue";
 
 
   const { market, marketValuation, rank } = useStockStore()
@@ -135,13 +130,14 @@ $margin-size : 1rem;
 
 
   &:first-child {
-    margin-top: 70px;
+    margin-top: 55px;
     cursor: default;
   }
 
   &:nth-child(3) {
     margin-top: 20px;
   }
+
     
   .vCardSubtitle {
     white-space: normal;
@@ -155,10 +151,5 @@ $margin-size : 1rem;
     right: 5px;
   }
 
-.ProgressCircular {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-}
 
 </style>
