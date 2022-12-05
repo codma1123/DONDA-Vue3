@@ -21,6 +21,10 @@ const routes = [
         component: () => import('../components/rank/RankContent.vue'),
       }
     ]
+  },
+  {
+    path: '/detail/:code',
+    component: () => import('../pages/Detail.vue')
   }
 ]
 

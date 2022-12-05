@@ -59,6 +59,7 @@
       theme="dark"
       color="#333333"
       elevation="2"
+      @click="$router.push(`/detail/${rankContent.code}`)"
     >
       <v-card-subtitle v-font-size="15" class="mt-2"> 
         {{ rankContent.market }} 
