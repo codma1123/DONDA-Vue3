@@ -29,6 +29,12 @@
         color="cardlayout"
         elevation="2"
       >
+        <EvaluationChart 
+          v-if="stockEvaluation.data"
+          :chartData="chartData"
+        />
+        
+        
         {{ stockEvaluation.data }}
       </v-card>
     </div> 
@@ -38,12 +44,15 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted } from 'vue';
+  import { computed, onMounted } from 'vue';
   import { useRoute } from 'vue-router';
   import { useStockStore } from '../store/stock';
   import { getStock, getStockEvaluation } from '../store/payload'
   import { priceFormatter } from '../mixins/tools';
   import ProgressCircular from '../components/global/ProgressCircular.vue';
+  import { Chart } from 'chart.js';
+  import EvaluationChart from '../components/detail/evaluation/EvaluationChart.vue'
+  
 
   const requestPayloads = [
     getStock,
@@ -51,10 +60,24 @@
   ]
 
   const route = useRoute()  
-  const { request, stock, stockEvaluation } = useStockStore()  
-
+  const { request, stock, stockEvaluation } = useStockStore()    
   const convertPrice = (price: number) => priceFormatter.format(price)
+  const chartData = computed(() => stockEvaluation.data)
   
+  const renderChart = () => {
+    const ctx = document.getElementById('evaluationChart') as HTMLCanvasElement 
+
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: stockEvaluation.data.date,
+        datasets: [{
+          data: stockEvaluation.data['S-rim']
+        }]
+      }      
+    })
+  }
+
   onMounted(() => {
     const code = route.params.code as string
     requestPayloads

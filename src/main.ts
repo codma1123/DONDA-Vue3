@@ -1,11 +1,13 @@
-import { createApp, CreateAppFunction, VueElement } from 'vue'
+import { createApp } from 'vue'
 import App from './App.vue'
 import vuetify from './plugins/vuetify'
 import { loadFonts } from './plugins/webfontloader'
 import { createPinia } from 'pinia'
 import router from './router'
+import { Chart, registerables } from 'chart.js';
 
 const pinia = createPinia()
+Chart.register(...registerables);
 
 loadFonts()
 
