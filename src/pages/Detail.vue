@@ -30,12 +30,13 @@
         elevation="2"
       >
         <EvaluationChart 
-          v-if="stockEvaluation.data"
+          v-if="!_.isEmpty(chartData)"
           :chartData="chartData"
         />
-        
-        
-        {{ stockEvaluation.data }}
+        <div v-else>
+          데이터를 불러올수 없습니다.
+        </div>
+                
       </v-card>
     </div> 
     
@@ -52,6 +53,7 @@
   import ProgressCircular from '../components/global/ProgressCircular.vue';
   import { Chart } from 'chart.js';
   import EvaluationChart from '../components/detail/evaluation/EvaluationChart.vue'
+  import * as _ from 'lodash'
   
 
   const requestPayloads = [
@@ -64,6 +66,7 @@
   const convertPrice = (price: number) => priceFormatter.format(price)
   const chartData = computed(() => stockEvaluation.data)
   
+
   const renderChart = () => {
     const ctx = document.getElementById('evaluationChart') as HTMLCanvasElement 
 

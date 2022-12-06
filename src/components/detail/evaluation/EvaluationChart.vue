@@ -18,6 +18,7 @@
       data: {
         labels: chartData.date,
         datasets: [{
+          label: '',
           data: chartData['S-rim']
         }]
       }      
