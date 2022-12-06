@@ -31,7 +31,7 @@
       height="90"
       :widtd="CONTENT_WIDTH"
       :key="i"
-      @click="push"
+      @click="push(content.code)"
       elevation="2"
     >
       <v-card-subtitle v-font-size="15" class="mt-2"> {{ content.market }} </v-card-subtitle>
@@ -91,8 +91,8 @@
 
   const contents = computed(() => rank.data[currentSortType.value].slice(0, rankCount.value))
 
-  const push = (e: PointerEvent) => { 
-    console.log(e)
+  const push = (code: string) => { 
+    router.push(`/detail/${code}`)
   }
 
   watch(selectedTag, (v: TagType) => {    
