@@ -72,7 +72,7 @@ export const getStockVolumeUrl = (code: string) => `${API}/stock/${code}/years-v
 // 보조지표 (섹터)
 export const getStockIndicatorSectorUrl = (code: string) => `${API}/stock/${code}/sector`
 
-// 보조표 (섹터, 일간)
+// 보조지표 (섹터, 일간)
 export const getStockIndicatorSectorDailyUrl = (code: string) => `${API}/stock/${code}/sector/daily`
 
 // 돈다지수

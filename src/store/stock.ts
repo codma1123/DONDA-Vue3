@@ -48,7 +48,6 @@ export const useStockStore = defineStore('stock', () => {
   const recommendStockCodes = reactive<AsyncState<any>>(utils.initial())
 
   
-
   // ACTIONS
   const request = async (payload: AsnyPayload): Promise<void> => {    
 
@@ -61,6 +60,7 @@ export const useStockStore = defineStore('stock', () => {
       const res = await axios.get(url)         
       targetState.data = callback(res)      
       targetState.loading = false
+      console.log(targetState)
 
 
     } catch (e) {
@@ -69,7 +69,7 @@ export const useStockStore = defineStore('stock', () => {
       targetState.loading = false
 
     }
-    
+
   }
 
   return {

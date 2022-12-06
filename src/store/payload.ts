@@ -1,4 +1,4 @@
-import { getRankUrl } from './../api/api';
+import { getRankUrl, getStockEvaluationUrl } from './../api/api';
 import { AxiosResponse } from "axios"
 import { getMarketValuationUrl, getStockUrl, getTodayMarketUrl } from "../api/api"
 import { ResponseType, } from "../api/types"
@@ -43,11 +43,12 @@ const getStock = (code: string) => createAsyncPayload('stock', getStockUrl(code)
 const getTodayMarket = () => createAsyncPayload('market', getTodayMarketUrl(), todayMarketParser)
 const getMarketValuation = () => createAsyncPayload('marketValuation', getMarketValuationUrl())
 const getRank = () => createAsyncPayload('rank', getRankUrl(), rankParser)
-
+const getStockEvaluation = (code: string) => createAsyncPayload('stockEvaluation', getStockEvaluationUrl(code))
 
 export {
   getStock,
+  getStockEvaluation,
   getTodayMarket,
   getMarketValuation,
-  getRank
+  getRank,
 }
