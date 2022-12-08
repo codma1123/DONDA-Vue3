@@ -1,6 +1,6 @@
 <template>
   <div class="DetailLayout">
-    <div v-if="(!stock.loading && stock.data && !stockEvaluation.loading)">      
+    <div v-if="(!stock.loading && data && !stockEvaluation.loading)">      
       <v-card 
         class="CardLayout" 
         color="cardlayout"
@@ -9,25 +9,40 @@
         <v-card-title class="font-weight-bold d-flex justify-space-between">
           <div>
             <span>
-              {{ stock.data.name }}
+              {{ data.name }}
             </span>
             <span class="ml-2 stockCode" v-font-size="15">
-              {{ stock.data.code }}
+              {{ data.code }}              
             </span>
           </div>
           <div>
             <v-icon>mdi-bookmark-outline</v-icon>
           </div>
-        </v-card-title>        
-        <v-card-text v-font-size="20">
-          {{ convertPrice(stock.data.close) }}
+        </v-card-title>       
+                
+        <v-card-text>
+          <v-chip label class="SectorChip"> 
+            {{ data.sector }}
+          </v-chip>          
         </v-card-text>
+
+      </v-card>
+
+      <v-card 
+        class="CardLayout"
+        color="cardlayout"
+        elevation="2"
+      >
+        <div v-font-size="14" class="mt-3">
+          시가총액 {{ convertCompactPrice(data.marcap) }}
+        </div>
       </v-card>
 
       <v-card 
         class="CardLayout" 
         color="cardlayout"
         elevation="2"
+        link    
       >
         <EvaluationChart 
           v-if="!_.isEmpty(chartData)"
@@ -38,6 +53,7 @@
         </div>
                 
       </v-card>
+    
     </div> 
     
     <ProgressCircular v-else absolute />
@@ -46,14 +62,15 @@
 
 <script setup lang="ts">
   import { computed, onMounted } from 'vue';
+  import * as _ from 'lodash'
   import { useRoute } from 'vue-router';
+  
   import { useStockStore } from '../store/stock';
   import { getStock, getStockEvaluation } from '../store/payload'
-  import { priceFormatter } from '../mixins/tools';
+  import { priceFormatter, priceCompactFormatter } from '../mixins/tools';
+
   import ProgressCircular from '../components/global/ProgressCircular.vue';
-  import { Chart } from 'chart.js';
   import EvaluationChart from '../components/detail/evaluation/EvaluationChart.vue'
-  import * as _ from 'lodash'
   
 
   const requestPayloads = [
@@ -63,31 +80,22 @@
 
   const route = useRoute()  
   const { request, stock, stockEvaluation } = useStockStore()    
-  const convertPrice = (price: number) => priceFormatter.format(price)
   const chartData = computed(() => stockEvaluation.data)
+  const data = computed(() => stock.data)
+
+  const convertPrice = (price: number) => priceFormatter.format(price)
+  const convertCompactPrice = (price: number) => priceCompactFormatter.format(price)
+
+  const getPrefixer = (price: number) => price > 0 ? '+' + price.toLocaleString() : price.toLocaleString()
+  const getPriceColor = (price: number) => price > 0 ? 'text-red' : 'text-blue'
   
-
-  const renderChart = () => {
-    const ctx = document.getElementById('evaluationChart') as HTMLCanvasElement 
-
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: stockEvaluation.data.date,
-        datasets: [{
-          data: stockEvaluation.data['S-rim']
-        }]
-      }      
-    })
-  }
 
   onMounted(() => {
     const code = route.params.code as string
     requestPayloads
       .forEach(requestPayload => request(requestPayload(code)))
   })
-
-  
+    
 </script>
 
 <style scoped lang="scss">
@@ -102,8 +110,15 @@ $margin: 1rem;
   margin-left: 10px;
   margin-top: 20px;
   padding: 10px;
-  min-height: 150px;
+  min-height: 60px;
   border-radius: 10px;
+}
+
+.SectorChip {
+  font-size: 12px !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .stockCode {
