@@ -45,7 +45,7 @@
         }
       }
     },    
-  }
+  } as any
 
   const renderChart = () => {
     const ctx = document.getElementById('evaluationChart') as HTMLCanvasElement 
@@ -59,7 +59,7 @@
           data: chartData['S-rim']
         }]
       },
-      options: options as any
+      options
     })
 
 

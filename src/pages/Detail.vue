@@ -1,56 +1,28 @@
 <template>
   <div class="DetailLayout">
-    <div v-if="(!stock.loading && data && !stockEvaluation.loading)">      
-      <v-card 
-        class="CardLayout" 
-        color="cardlayout"
-        elevation="2"
-      >
-        <v-card-title class="font-weight-bold d-flex justify-space-between">
-          <div>
-            <span> {{ data.name }} </span>
-            <span class="ml-2 stockCode" v-font-size="15"> {{ data.code }} </span>
-          </div>
-          <div>
-            <v-icon>mdi-bookmark-outline</v-icon>
-          </div>
-        </v-card-title>       
-                
-        <v-card-text>
-          <v-chip label class="SectorChip"> {{ data.sector }} </v-chip>          
-        </v-card-text>
-      </v-card>
+    <ProgressCircular v-if="stockEvaluation.loading" absolute />    
+    <StockInfo />
+    <StockClose />
 
-      <v-card 
-        class="CardLayout"
-        color="cardlayout"
-        elevation="2"
-      >
-        <div v-font-size="14" class="mt-3"> 시가총액 
-          {{ convertCompactPrice(data.marcap) }}
-         </div>
-      </v-card>
 
-      <v-card 
+
+      <!-- <v-card 
         class="CardLayout" 
         color="cardlayout"
         elevation="2"
         link    
       >
         <EvaluationChart 
-          v-if="!_.isEmpty(chartData)"
-          :chartData="chartData"
+          v-if="!_.isEmpty(evaluationChartData)"
+          :chartData="evaluationChartData"
         />
         <div v-else>
           데이터를 불러올수 없습니다.
         </div>
                 
-      </v-card>
+      </v-card> -->
+  </div> 
     
-    </div> 
-    
-    <ProgressCircular v-else absolute />
-  </div>
 </template>
 
 <script setup lang="ts">
@@ -64,10 +36,12 @@
 
   import ProgressCircular from '../components/global/ProgressCircular.vue';
   import EvaluationChart from '../components/detail/evaluation/EvaluationChart.vue'
+  import StockInfo from '../components/detail/StockInfo.vue';
+  import StockClose from '../components/detail/StockClose.vue';
     
   const route = useRoute()  
   const { request, stock, stockEvaluation } = useStockStore()    
-  const chartData = computed(() => stockEvaluation.data)
+  const evaluationChartData = computed(() => stockEvaluation.data)
   const data = computed(() => stock.data)
 
   const convertPrice = (price: number) => priceFormatter.format(price)
@@ -85,7 +59,7 @@
     
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 
 $margin: 1rem;
 .DetailLayout {
@@ -96,7 +70,7 @@ $margin: 1rem;
 .CardLayout {
   margin-left: 10px;
   margin-top: 20px;
-  padding: 10px;
+  padding: 5px;
   min-height: 60px;
   border-radius: 10px;
 }

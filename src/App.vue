@@ -12,7 +12,7 @@
             ref="target"
           >
             <transition name="fade">
-              <component :is="Component" @mount="scrollToTop"/>
+              <component :is="Component" />
             </transition>
           </v-sheet>
         </router-view>
@@ -30,12 +30,7 @@
   const { MAIN_WIDTH, MAIN_HEIGHT } = useLayout()
   const { request } = useStockStore()
   const isNav = ref<boolean>(true)
-  const target = ref<Element>()
-
-
-  const scrollToTop = () => {
-    
-  }
+  const target = ref<Element>()  
 
   onMounted(() => {
     request(getTodayMarket())
@@ -67,7 +62,7 @@ body {
 }
 
 .fade-enter-active {
-  transition: all .5s ease;
+  transition: all .3s ease;
 }
 
 .ProgressCircular {
