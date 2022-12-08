@@ -1,7 +1,7 @@
-import { getRankUrl, getStockEvaluationUrl } from './../api/api';
+import { getRankUrl, getStockEvaluationUrl, getStockGraphAllUrl } from './../api/api';
 import { AxiosResponse } from "axios"
 import { getMarketValuationUrl, getStockUrl, getTodayMarketUrl } from "../api/api"
-import { ResponseType, } from "../api/types"
+import { IStockGraphResponse, ResponseType, } from "../api/types"
 import { rankParser, todayMarketParser } from "./callbacks"
 
 export type StoreStates = 
@@ -39,11 +39,18 @@ const createAsyncPayload = (state: StoreStates, url: string, callback?: any): As
   callback: callback || (response => response.data)
 })
 
-const getStock = (code: string) => createAsyncPayload('stock', getStockUrl(code))
 const getTodayMarket = () => createAsyncPayload('market', getTodayMarketUrl(), todayMarketParser)
 const getMarketValuation = () => createAsyncPayload('marketValuation', getMarketValuationUrl())
 const getRank = () => createAsyncPayload('rank', getRankUrl(), rankParser)
+
+const getStock = (code: string) => createAsyncPayload('stock', getStockUrl(code))
 const getStockEvaluation = (code: string) => createAsyncPayload('stockEvaluation', getStockEvaluationUrl(code))
+const getStockGraphAll = (code: string) => createAsyncPayload('stockGraphAll', getStockGraphAllUrl(code), (response: AxiosResponse<IStockGraphResponse>) => response.data.origin)
+export const stockPayloads = [
+  getStock,
+  getStockEvaluation,
+  getStockGraphAll
+]
 
 export {
   getStock,
@@ -51,4 +58,5 @@ export {
   getTodayMarket,
   getMarketValuation,
   getRank,
+  getStockGraphAll
 }

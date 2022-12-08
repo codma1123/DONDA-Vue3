@@ -8,12 +8,8 @@
       >
         <v-card-title class="font-weight-bold d-flex justify-space-between">
           <div>
-            <span>
-              {{ data.name }}
-            </span>
-            <span class="ml-2 stockCode" v-font-size="15">
-              {{ data.code }}              
-            </span>
+            <span> {{ data.name }} </span>
+            <span class="ml-2 stockCode" v-font-size="15"> {{ data.code }} </span>
           </div>
           <div>
             <v-icon>mdi-bookmark-outline</v-icon>
@@ -21,11 +17,8 @@
         </v-card-title>       
                 
         <v-card-text>
-          <v-chip label class="SectorChip"> 
-            {{ data.sector }}
-          </v-chip>          
+          <v-chip label class="SectorChip"> {{ data.sector }} </v-chip>          
         </v-card-text>
-
       </v-card>
 
       <v-card 
@@ -33,9 +26,9 @@
         color="cardlayout"
         elevation="2"
       >
-        <div v-font-size="14" class="mt-3">
-          시가총액 {{ convertCompactPrice(data.marcap) }}
-        </div>
+        <div v-font-size="14" class="mt-3"> 시가총액 
+          {{ convertCompactPrice(data.marcap) }}
+         </div>
       </v-card>
 
       <v-card 
@@ -66,18 +59,12 @@
   import { useRoute } from 'vue-router';
   
   import { useStockStore } from '../store/stock';
-  import { getStock, getStockEvaluation } from '../store/payload'
+  import { stockPayloads } from '../store/payload'
   import { priceFormatter, priceCompactFormatter } from '../mixins/tools';
 
   import ProgressCircular from '../components/global/ProgressCircular.vue';
   import EvaluationChart from '../components/detail/evaluation/EvaluationChart.vue'
-  
-
-  const requestPayloads = [
-    getStock,
-    getStockEvaluation, 
-  ]
-
+    
   const route = useRoute()  
   const { request, stock, stockEvaluation } = useStockStore()    
   const chartData = computed(() => stockEvaluation.data)
@@ -92,8 +79,8 @@
 
   onMounted(() => {
     const code = route.params.code as string
-    requestPayloads
-      .forEach(requestPayload => request(requestPayload(code)))
+    stockPayloads
+      .forEach(payload => request(payload(code)))
   })
     
 </script>
