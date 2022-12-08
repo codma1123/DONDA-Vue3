@@ -8,10 +8,7 @@
     >    
       <v-card-title class="innerTitle">
         <div class="d-flex align-center">
-          <v-icon class="mr-3">mdi-office-building-outline</v-icon>
-          <span v-font-size="14">
-            시가 총액 
-          </span>
+          <v-icon class="mr-3">mdi-office-building-outline</v-icon>          
           <span class="ml-2">             
             {{ convertCompactPrice(data.marcap) }}
           </span>
