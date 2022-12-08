@@ -1,5 +1,5 @@
 <template>
-  <transition name="fade" :duration="850">
+  <transition name="fade" :duration="1200">
     <v-card 
       v-if="(!loading && data)"
       class="CardLayout"
@@ -7,11 +7,20 @@
       elevation="2"
     >    
       <v-card-title class="innerTitle">
-        <v-icon class="mr-3">mdi-office-building-outline</v-icon>
-        <span class="ml-2"> 
-          {{ convertCompactPrice(data.marcap) }}
-        </span>
+        <div class="d-flex align-center">
+          <v-icon class="mr-3">mdi-office-building-outline</v-icon>
+          <span v-font-size="14">
+            시가 총액 
+          </span>
+          <span class="ml-2">             
+            {{ convertCompactPrice(data.marcap) }}
+          </span>
+        </div>
+        <div class="innerMore">
+          비슷한 기업 보기
+        </div>
       </v-card-title>
+      
     </v-card>
   </transition>
 </template>
@@ -31,11 +40,12 @@
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
 .innerTitle {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 
@@ -50,12 +60,33 @@
   opacity: 0;
 }
 
-.fade-enter-active {
-  transition: all .5s ease;
-}
-
 .fade-enter-active .innerTitle {
   transition-delay: .25s;
+}
+
+.fade-enter-active .innerMore,
+.fade-leave-active .innerMore {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.fade-enter-from .innerMore,
+.fade-leave-to .innerMore {
+  transform: translateY(30px);
+  opacity: 0;
+}
+
+.fade-enter-active .innerMore {
+  transition-delay: 1s;
+}
+
+
+.innerMore {
+  text-align: end;
+  top: 25px;
+  right: 10px;  
+  font-size: 10px;
+  opacity: .8;
+  cursor: pointer;
 }
 
 </style>
