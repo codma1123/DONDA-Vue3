@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios"
-import { MarketResponse, RankResponse } from "../api/types"
+import { MarketResponse, RankResponse, IStockIndicatorResponse } from "../api/types"
 import { priceFormatter } from "../mixins/tools"
+import { IndicatorType } from "../models/stock"
 
 export type MarketTypes = 'KOSPI' | 'NASDAQ' | 'S&P500' | 'US1YT' | 'US5YT' | 'US10YT' | 'USD/KRW'
 
@@ -65,3 +66,40 @@ export const rankParser = (response: AxiosResponse<RankResponse>) => {
     return obj
   }, obj)  
 }
+
+export const indicatorParser = (response: AxiosResponse<IStockIndicatorResponse>): IndicatorType => {
+  const date = Object.keys(response.data)
+  const values = Object.values(response.data)
+
+  return {
+    eps: { date, value: values.map(v => v[0].eps) },
+    bps: { date, value: values.map(v => v[0].bps) },
+    roe: { date, value: values.map(v => v[0].roe) },    
+  }  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

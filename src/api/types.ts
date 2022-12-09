@@ -85,7 +85,7 @@ export interface IStockIndicatorResponse {
     eps: number
     bps: number
     roe: number
-  }
+  }[]
 }
 
 export interface IStockIndicatorDailyResponse {

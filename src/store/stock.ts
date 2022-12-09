@@ -60,7 +60,7 @@ export const useStockStore = defineStore('stock', () => {
       const res = await axios.get(url)         
       targetState.data = callback(res)      
       targetState.loading = false
-      console.log(targetState)
+      console.log(targetState.data, state)
 
 
     } catch (e) {
