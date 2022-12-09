@@ -33,50 +33,9 @@
   const data = computed(() => stock.data)
   const loading = computed(() => stock.loading)
 
-
-
 </script>
 
 <style scoped lang="scss">
-
-.innerTitle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-
-.fade-enter-active .innerTitle,
-.fade-leave-active .innerTitle {
-  transition: all 0.3s ease-in-out;
-}
-
-.fade-enter-from .innerTitle,
-.fade-leave-to .innerTitle {
-  transform: translateX(30px);
-  opacity: 0;
-}
-
-.fade-enter-active .innerTitle {
-  transition-delay: .25s;
-}
-
-.fade-enter-active .innerMore,
-.fade-leave-active .innerMore {
-  transition: opacity 0.3s ease-in-out;
-}
-
-.fade-enter-from .innerMore,
-.fade-leave-to .innerMore {
-  transform: translateY(30px);
-  opacity: 0;
-}
-
-.fade-enter-active .innerMore {
-  transition-delay: 1s;
-}
-
-
 .innerMore {
   text-align: end;
   top: 25px;
@@ -85,5 +44,62 @@
   opacity: .8;
   cursor: pointer;
 }
+
+.innerTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+// enter
+.fade-enter-active {
+  .innerTitle {
+    transition: all 0.3s ease-in-out;  
+    transition-delay: .25s;
+  }
+
+  .innerMore {
+    transition: opacity 0.3s ease-in-out;
+    transition-delay: 1s;
+  }
+}
+
+.fade-enter-from {
+  .innerTitle {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+
+  .innerMore {
+    opacity: 0;
+  }
+}
+
+// leave
+.fade-leave-active {
+  .innerTitle {
+    transition: all 0.3s ease-in-out;
+  }
+
+  .innerMore {
+    transition: opacity 0.3s ease-in-out;
+  }
+}
+
+.fade-leave-to {
+  .innerTitle {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+
+  .innerMore {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+}
+
+
+
 
 </style>
