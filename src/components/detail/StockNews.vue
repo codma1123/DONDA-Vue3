@@ -3,23 +3,47 @@
     elevation="0"
     v-if="!loading"
   > 
-    <StockNewsContentVue 
+    <StockNewsContent 
       v-for="(content, i) in contents"
       :key="i"
       :content="content"
     />
-
+    
+    <div class="d-flex justify-center align-center">
+      <ProgressCircular v-if="contentCountLoad" class="mb-2 mt-4"/>      
+      <Observer v-if="contentCountLoad" @triggerIntersected="loadMore"/>
+    </div>
   </v-card>
 </template>
 
 <script setup lang="ts">
   import { useStockStore } from '../../store/stock';
-  import { computed } from 'vue';
-  import StockNewsContentVue from './StockNewsContent.vue';
+  import { computed, ref } from 'vue';
+
+  import StockNewsContent from './StockNewsContent.vue';
+  import ProgressCircular from '../global/ProgressCircular.vue';
+  import Observer from '../Observer.vue';
+
+  const contentsCount = ref<number>(6)
+  const contentCountLoad = ref<boolean>(true)
 
   const { news } = useStockStore()
-  const contents = computed(() => news.data)
+  const contents = computed(() => news.data?.slice(0, contentsCount.value))
   const loading = computed(() => news.loading)
+
+  const loadMore = (): void => {        
+    if(contentsCount.value > news.data.length - 5) {
+      contentCountLoad.value = false
+      return
+    }
+
+    new Promise(resolve => {
+        setTimeout(() => {
+        contentsCount.value += 3
+        resolve(contentsCount.value)
+      }, 500)      
+    })
+  }
   
 </script>
 
