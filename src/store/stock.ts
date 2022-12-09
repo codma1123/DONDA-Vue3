@@ -36,7 +36,7 @@ export const useStockStore = defineStore('stock', () => {
   const stockEvaluation = reactive<AsyncState<EvaluationType>>(utils.initial())
   const stockEvaluationDaily = reactive<AsyncState<EvaluationDailyType>>(utils.initial())
   const similarContents = reactive<AsyncState<SimilarType>>(utils.initial())
-  const news = reactive<AsyncState<NewsType>>(utils.initial())
+  const news = reactive<AsyncState<NewsType[]>>(utils.initial())
   const statement = reactive<AsyncState<StatementType>>(utils.initial())
   const statementAll = reactive<AsyncState<StatementAllType>>(utils.initial())
   const indicator = reactive<AsyncState<IndicatorType>>(utils.initial())

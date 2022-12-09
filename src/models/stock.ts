@@ -112,7 +112,7 @@ export type StateType =
   EvaluationType |
   EvaluationDailyType |
   SimilarType |
-  NewsType |
+  NewsType[] |
   StatementType |
   StatementAllType |
   IndicatorType |

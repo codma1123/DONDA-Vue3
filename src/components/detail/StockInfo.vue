@@ -33,7 +33,6 @@
   const loading = computed(() => stock.loading)
 
 
-  // lifeCycles
 
 
   

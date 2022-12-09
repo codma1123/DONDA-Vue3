@@ -1,47 +1,41 @@
 <template>
-  <transition name="fade" :duration="2400">
-    <v-card
+  <transition name="fade" :duration="1200">
+    <v-card 
       v-if="(!loading && data)"
       class="CardLayout"
       color="cardlayout"
       elevation="2"
       link
-    >      
-      <v-card-title class="innerTitle">        
+    >    
+      <v-card-title class="innerTitle">
         <div class="d-flex align-center">
-          <v-icon class="mr-3" :color="trend.color" :icon="trend.icon" />
+          <v-icon class="mr-3">mdi-office-building-outline</v-icon>
           <span class="ml-4">             
-            {{ priceFormatter.format(data.close) }}
+            {{ priceCompactFormatter.format(data.marcap) }}
           </span>
         </div>
         <div class="innerMore">
-          주가 흐름 확인하기
-        </div>        
+          비슷한 기업 보기
+        </div>
       </v-card-title>
+      
     </v-card>
   </transition>
 </template>
 
 <script setup lang="ts">
+
+  import { computed } from 'vue';
+  import { priceCompactFormatter } from '../../mixins/tools';
   import { useStockStore } from '../../store/stock';
-  import { computed } from 'vue'
-  import { priceFormatter } from '../../mixins/tools';
-  
+
   const { stock } = useStockStore()
   const data = computed(() => stock.data)
   const loading = computed(() => stock.loading)
 
-  const trend = computed<{ icon: string, color: string}>(() => {
-    const isHighVal = data.value.changes > 0
-    return {
-      icon: isHighVal ? 'mdi-trending-up' : 'mdi-trending-down',
-      color: isHighVal ? 'red' : 'blue'
-    }
-  })
-
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .innerMore {
   text-align: end;
   top: 25px;
@@ -57,6 +51,8 @@
   justify-content: space-between;
 }
 
+
+// enter
 .fade-enter-active {
   .innerTitle {
     transition: all 0.3s ease-in-out;  
@@ -102,4 +98,8 @@
     opacity: 0;
   }
 }
+
+
+
+
 </style>

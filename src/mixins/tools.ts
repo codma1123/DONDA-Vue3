@@ -6,7 +6,7 @@ export const priceFormatter = new Intl.NumberFormat('ko-KR', {
 })
 
 export const priceCompactFormatter = new Intl.NumberFormat('ko-KR', {
-  // style: 'currency', 
+  style: 'currency', 
   currency: 'KRW',
   maximumFractionDigits: 1,
   minimumFractionDigits: 0,

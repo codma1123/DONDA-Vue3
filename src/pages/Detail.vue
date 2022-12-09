@@ -1,26 +1,26 @@
 <template>
   <div class="DetailLayout">
-    <ProgressCircular v-if="stockEvaluation.loading" absolute />    
+    <!-- <ProgressCircular v-if="stockEvaluation.loading" absolute />     -->
     <StockInfo />
+    <StockMarcap />
     <StockClose />
+    
 
 
 
-      <!-- <v-card 
-        class="CardLayout" 
-        color="cardlayout"
-        elevation="2"
-        link    
-      >
-        <EvaluationChart 
-          v-if="!_.isEmpty(evaluationChartData)"
-          :chartData="evaluationChartData"
-        />
-        <div v-else>
-          데이터를 불러올수 없습니다.
-        </div>
-                
-      </v-card> -->
+    <!-- <v-card 
+      class="CardLayout" 
+      color="cardlayout"
+      elevation="2"
+      link    
+      v-if="(!_.isEmpty(stockEvaluation.data) && !stockEvaluation.loading)"
+    >
+      <EvaluationChart           
+        :chartData="stockEvaluation.data"
+      />                        
+    </v-card> -->
+
+    <StockNews />
   </div> 
     
 </template>
@@ -36,13 +36,14 @@
 
   import ProgressCircular from '../components/global/ProgressCircular.vue';
   import EvaluationChart from '../components/detail/evaluation/EvaluationChart.vue'
+
   import StockInfo from '../components/detail/StockInfo.vue';
-  import StockClose from '../components/detail/StockClose.vue';
+  import StockMarcap from '../components/detail/StockMarcap.vue';
+  import StockClose from '../components/detail/StockClose.vue'
+  import StockNews from '../components/detail/StockNews.vue'
     
   const route = useRoute()  
   const { request, stock, stockEvaluation } = useStockStore()    
-  const evaluationChartData = computed(() => stockEvaluation.data)
-  const data = computed(() => stock.data)
 
   const convertPrice = (price: number) => priceFormatter.format(price)
   const convertCompactPrice = (price: number) => priceCompactFormatter.format(price)

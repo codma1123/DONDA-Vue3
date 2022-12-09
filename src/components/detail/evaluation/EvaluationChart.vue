@@ -4,10 +4,11 @@
 
 <script setup lang="ts">
   import { Chart } from 'chart.js';
-  import { onMounted } from 'vue';
+  import { onBeforeUnmount, onMounted, ref } from 'vue';
   import { EvaluationType } from '../../../models/stock';
 
   const { chartData } = defineProps<{ chartData: EvaluationType}>()
+  const chart = ref<Chart>()
   
   const options = {
     plugins: {
@@ -41,7 +42,7 @@
           display: false
         },        
         ticks: {
-          color: 'white'
+          display: false,      
         }
       }
     },    
@@ -50,19 +51,17 @@
   const renderChart = () => {
     const ctx = document.getElementById('evaluationChart') as HTMLCanvasElement 
 
-    const chart = new Chart(ctx, {
-      type: 'line',
+    chart.value = new Chart(ctx, {
+      type: 'bar',
       data: {
         labels: chartData.date,
         datasets: [{
           label: '',
-          data: chartData['S-rim']
+          data: chartData['S-rim'].map(v => v * 0.9)
         }]
       },
       options
-    })
-
-
+    })  
   }
 
   onMounted(() => renderChart())
