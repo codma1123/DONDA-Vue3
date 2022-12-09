@@ -4,6 +4,7 @@
     <StockInfo />
     <StockMarcap />
     <StockClose />
+    <StockIndicator />
     
 
 
@@ -41,6 +42,7 @@
   import StockMarcap from '../components/detail/StockMarcap.vue';
   import StockClose from '../components/detail/StockClose.vue'
   import StockNews from '../components/detail/StockNews.vue'
+  import StockIndicator from '../components/detail/StockIndicator.vue'
     
   const route = useRoute()  
   const { request, stock, stockEvaluation } = useStockStore()    

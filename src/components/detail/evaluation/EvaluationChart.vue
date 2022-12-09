@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
   import { Chart } from 'chart.js';
-  import { onBeforeUnmount, onMounted, ref } from 'vue';
+  import { onMounted, ref } from 'vue';
   import { EvaluationType } from '../../../models/stock';
 
   const { chartData } = defineProps<{ chartData: EvaluationType}>()

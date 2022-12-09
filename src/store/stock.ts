@@ -1,10 +1,9 @@
 import { MarketType, MarketValuationType, RankType } from './../models/stock';
 import axios from 'axios';
 import { defineStore } from "pinia";
-import { computed, reactive } from "vue";
+import { reactive } from "vue";
 import { DondaType, EvaluationDailyType, EvaluationType, GraphAllType, GraphDefaultType, IndicatorDailyType, IndicatorSectorDailyType, IndicatorSectorType, IndicatorType, NewsType, SimilarType, StatementAllType, StatementType, StateType, StocksType, StockType, VolumeType } from "../models/stock";
 import { AsnyPayload } from './payload';
-import { priceFormatter } from '../mixins/tools';
 
 export type AsyncState<T extends StateType = any> = {
   loading: boolean
