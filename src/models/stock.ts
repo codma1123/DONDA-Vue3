@@ -55,11 +55,8 @@ export type StatementType = IDateValue
 export type StatementAllType = ISimpleStock
 export type IndicatorType = IDateValue
 export type IndicatorSectorType = IStockIndicatorSectorResponse
-export type IndicatorDailyType = ISectorDaily
-export type IndicatorSectorDailyType = {
-  value: ISectorDaily,
-  date: string[]
-}
+export type IndicatorDailyType = IDateValue
+export type IndicatorSectorDailyType = IDateValue  
 export type DondaType = IStockEvaluationDailyResponse
 export type StocksType = IStockResponse[]
 

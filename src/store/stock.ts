@@ -3,7 +3,7 @@ import axios from 'axios';
 import { defineStore } from "pinia";
 import { reactive } from "vue";
 import { DondaType, EvaluationDailyType, EvaluationType, GraphAllType, GraphDefaultType, IndicatorDailyType, IndicatorSectorDailyType, IndicatorSectorType, IndicatorType, NewsType, SimilarType, StatementAllType, StatementType, StateType, StocksType, StockType, VolumeType } from "../models/stock";
-import { AsnyPayload } from './payload';
+import { AsyncPayload } from './payload';
 
 export type AsyncState<T extends StateType = any> = {
   loading: boolean
@@ -13,7 +13,7 @@ export type AsyncState<T extends StateType = any> = {
 
 const utils = {
   initial: <T extends StateType>(initialData?: any): AsyncState<T> => ({
-    loading: false,
+    loading: true,
     data: initialData ?? null,
     error: null
   })
@@ -47,7 +47,7 @@ export const useStockStore = defineStore('stock', () => {
   const recommendStockCodes = reactive<AsyncState<any>>(utils.initial())
   
   // ACTIONS
-  const request = async (payload: AsnyPayload): Promise<void> => {    
+  const request = async (payload: AsyncPayload): Promise<void> => {    
 
     const { state, url, callback } = payload    
     const targetState = store[state]
@@ -60,14 +60,14 @@ export const useStockStore = defineStore('stock', () => {
       targetState.loading = false
 
       console.log(targetState.data, state)
+
     } catch (e) {
 
       targetState.error = e
-      targetState.loading = false
-
+      targetState.loading = false      
       
-
     }
+
   }
 
   return {

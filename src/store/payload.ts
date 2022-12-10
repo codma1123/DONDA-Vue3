@@ -1,8 +1,8 @@
-import { getRankUrl, getStockEvaluationUrl, getStockGraphAllUrl, getStockIndicatorDailyUrl, getStockIndicatorSectorUrl, getStockIndicatorUrl, getStockNewsUrl } from './../api/api';
+import { getRankUrl, getStockEvaluationUrl, getStockGraphAllUrl, getStockIndicatorDailyUrl, getStockIndicatorSectorDailyUrl, getStockIndicatorSectorUrl, getStockIndicatorUrl, getStockNewsUrl } from './../api/api';
 import { AxiosResponse } from "axios"
 import { getMarketValuationUrl, getStockUrl, getTodayMarketUrl } from "../api/api"
 import { IStockGraphResponse, ResponseType, } from "../api/types"
-import { rankParser, todayMarketParser, indicatorParser, indicatorDailyParser } from "./callbacks"
+import { rankParser, todayMarketParser, indicatorParser, indicatorDailyParser, indicatorSectorDailyParser } from "./callbacks"
 
 export type StoreStates = 
 'stock' | 
@@ -27,13 +27,13 @@ export type StoreStates =
 'rank'
 
 
-export type AsnyPayload = {
+export type AsyncPayload = {
   state: StoreStates,
   url: string
   callback: (response: AxiosResponse<ResponseType>) => any
 }
 
-const createAsyncPayload = (state: StoreStates, url: string, callback?: any): AsnyPayload => ({
+const createAsyncPayload = (state: StoreStates, url: string, callback?: any): AsyncPayload => ({
   state,
   url,
   callback: callback || (response => response.data)
@@ -49,7 +49,9 @@ const getStockGraphAll = (code: string) => createAsyncPayload('stockGraphAll', g
 const getStockNews = (code: string) => createAsyncPayload('news', getStockNewsUrl(code))
 const getStockIndicator = (code: string) => createAsyncPayload('indicator', getStockIndicatorUrl(code), indicatorParser)
 const getStockIndicatorDaily = (code: string) => createAsyncPayload('indicatorDaily', getStockIndicatorDailyUrl(code), indicatorDailyParser)
-const getStockIndicaotrSector = (code: string) => createAsyncPayload('indicatorSector', getStockIndicatorSectorUrl(code))
+const getStockIndicatorSector = (code: string) => createAsyncPayload('indicatorSector', getStockIndicatorSectorUrl(code))
+const getStockIndicatorSectorDaily = (code: string) => createAsyncPayload('indicatorSectorDaily', getStockIndicatorSectorDailyUrl(code), indicatorSectorDailyParser)
+
 
 export const stockPayloads = [
   getStock,
@@ -57,8 +59,9 @@ export const stockPayloads = [
   getStockGraphAll,
   getStockNews,
   getStockIndicator,
-  getStockIndicaotrSector,
-  getStockIndicatorDaily
+  getStockIndicatorSector,
+  getStockIndicatorDaily,
+  getStockIndicatorSectorDaily
 ]
 
 export {

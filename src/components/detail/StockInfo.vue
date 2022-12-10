@@ -31,12 +31,7 @@
   const { stock } = useStockStore()
   const data = computed(() => stock.data)
   const loading = computed(() => stock.loading)
-
-
-
-
   
-
 </script>
 
 <style scoped>

@@ -1,15 +1,11 @@
 <template>  
   <v-card
     class="CardLayout IndicatorCardLayout"
-    color="cardlayout"
-    v-if="!loading"
+    color="cardlayout"    
   >
-    <v-card-title>      
-
-    </v-card-title>
-    <v-card-text>
-      <StockIndicatorChart />
-    </v-card-text>
+    <div v-if="!indicator.loading && !indicatorSector.loading && !indicatorSectorDaily.loading && !indicatorDaily.loading">
+      <StockIndicatorChart />      
+    </div>
   </v-card>
 </template>
 
@@ -18,13 +14,16 @@
   import { computed } from 'vue'
   import StockIndicatorChart from './StockIndicatorChart.vue';
 
-  const { indicator } = useStockStore()
-  const loading = computed(() => indicator.loading)
+  const { indicator, indicatorSector, indicatorDaily, indicatorSectorDaily } = useStockStore()
+  const loading = computed<boolean>(() => !indicator.loading && !indicatorSector.loading && !indicatorSectorDaily.loading && !indicatorDaily.loading)
   
 </script>
 
 <style scoped>
 .IndicatorCardLayout {
   height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

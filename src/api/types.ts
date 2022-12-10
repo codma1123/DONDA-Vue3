@@ -108,7 +108,7 @@ export interface IStockIndicatorSectorDailyResponse {
     per: number
     pbr: number
     psr: number
-  }
+  }[]
 }
 
 export interface IStockGraphVolumeResponse {

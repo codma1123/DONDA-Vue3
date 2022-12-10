@@ -3,7 +3,7 @@
     <!-- <ProgressCircular v-if="stockEvaluation.loading" absolute />     -->
     <StockInfo />
     <StockMarcap />
-  <StockClose />
+    <StockClose />
     <StockIndicator />
     
 
@@ -58,6 +58,7 @@
     const code = route.params.code as string
     stockPayloads
       .forEach(payload => request(payload(code)))
+      console.log('detailMount')
   })
     
 </script>

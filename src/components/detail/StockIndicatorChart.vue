@@ -8,37 +8,40 @@
   import { onMounted, computed, ref } from 'vue'
   import { useStockStore } from '../../store/stock';
 
-  const options = {
-    plugins: {
-      legend: {
-        display: false
-      }
+  const options = computed(() => ({
+    plugins: {      
+      tooltip: { enabled: false },      
+      legend: { display: false }
     },
 
     grid: {
-      x: {
-        display: false
-      }
+      x: { display: false }
     },
+
 
     scales: {
       x: {
-        grid: {
-          display: false
-        },
+        grid: { display: false },
 
-        border: {
-          display: false
-        }
+        border: { display: false },        
+
+        ticks: { display: false }
       },
 
       y: {
-        grid: {
-          display: false
-        },
+        grid: { display: false },
 
-        border: {
-          display: false
+        border: { display: false },
+
+        ticks: { display: false }
+      },
+
+      r: {
+        ticks: { display: false },
+        max: Math.max(...sectorData.value),        
+        pointLabels: {
+          fontSize: 20,
+          color: '#fff'
         }
       }
     },
@@ -47,32 +50,72 @@
       easing: 'easeInOutCubic',
       duration: 2000
     },
-  } as any
+  }))
 
-  const { indicator } = useStockStore()
-  const labels = computed(() => indicator.data?.eps.date)  
+  const { indicator, indicatorDaily, indicatorSector, indicatorSectorDaily, stock } = useStockStore()
+  const labels = ['EPS', 'BPS', 'ROE', 'PER', 'PBR', 'PSR']
   const chart = ref<Chart>()
 
+  const indicatorChartData = computed(() => indicator.data)
+  const indicatorDailyChartData = computed(() => indicatorDaily.data)
+  const indicatorSectorChartData = computed(() => indicatorSector.data)
+  const indicatorSectorDailyChartData = computed(() => indicatorSectorDaily.data)
+
+  const currentData = computed(() => [
+    (indicatorChartData.value.eps.value.at(-1) as number) / 20,
+    (indicatorChartData.value.bps.value.at(-1) as number) / 350,
+    (indicatorChartData.value.roe.value.at(-1) as number) + 100,
+    (indicatorDailyChartData.value.per.value.at(-1) as number) + 50,
+    (indicatorDailyChartData.value.pbr.value.at(-1) as number) + 50,
+    (indicatorDailyChartData.value.psr.value.at(-1) as number) + 50,
+  ])
+
+  const sectorData = computed(() => [
+    (indicatorSectorChartData.value.sector_eps.at(-1) as number) / 20,
+    (indicatorSectorChartData.value.sector_bps.at(-1) as number) / 350,
+    (indicatorSectorChartData.value.sector_roe.at(-1) as number) + 50,
+    (indicatorSectorDailyChartData.value.per.value.at(-1) as number) + 50,
+    (indicatorSectorDailyChartData.value.pbr.value.at(-1) as number) + 50,
+    (indicatorSectorDailyChartData.value.psr.value.at(-1) as number) + 50,
+  ])
+
   const renderChart = () => { 
-    const ctx = document.getElementById('indicatorChart') as HTMLCanvasElement
-
+    const ctx = document.getElementById('indicatorChart') as HTMLCanvasElement    
     chart.value = new Chart(ctx, {
-      type: 'radar',
+      type: 'line',
       data: {
-        labels: labels.value,
-        datasets: [{
-
-          data: [1, 2, 3, 4]
-        }]
+        labels,
+        datasets: [
+          {
+            label: stock.data.name,
+            data: currentData.value,
+            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          },
+          {
+            label: '섹터 평균',
+            data: sectorData.value,
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgb(54, 162, 235)',
+            
+          }
+        ]
       },
-      options
+      options: options.value as any
     })    
   }
 
-  onMounted(() => renderChart())
+  onMounted(() => {
+    console.log(sectorData.value)
+    renderChart()
+  })
 
 </script>
 
 <style scoped>
-
+#indicatorChart {
+  max-height: 300px; 
+  max-width: 300px;
+  overflow: hidden;
+}
 </style>
