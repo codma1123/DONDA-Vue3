@@ -21,7 +21,7 @@
       />                        
     </v-card> -->
 
-    <StockNews />
+    <!-- <StockNews /> -->
   </div> 
     
 </template>

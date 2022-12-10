@@ -3,16 +3,14 @@
     <v-card
       class="CardLayout IndicatorCardLayout"
       color="cardlayout"    
+      link
       v-if="loading"
-    >
-      <v-card-title>적정 주가</v-card-title>
-      <v-card-subtitle>기업의 적정주가는 얼마일까요?</v-card-subtitle>
-      <v-card-text class="d-flex align-cetner justify-center">
+    >      
+      <v-card-text class="d-flex align-cetner justify-center mt-1">
         <StockIndicatorChart />      
       </v-card-text>
       <v-card-actions class="innerAction">
-        설명 ..
-        <div class="innerMore"> 적정주가 정보 확인하기</div>
+        <div class="innerMore"> 보조지표 확인하기</div>
       </v-card-actions>
     </v-card>
   </transition>
@@ -30,7 +28,7 @@
 
 <style scoped lang="scss">
 .IndicatorCardLayout {
-  height: 350px;  
+  height: 250px;  
 }
 
 .innerAction {
