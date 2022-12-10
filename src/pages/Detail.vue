@@ -3,7 +3,7 @@
     <!-- <ProgressCircular v-if="stockEvaluation.loading" absolute />     -->
     <StockInfo />
     <StockMarcap />
-    <StockClose />
+  <StockClose />
     <StockIndicator />
     
 

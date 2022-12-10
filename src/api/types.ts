@@ -93,7 +93,7 @@ export interface IStockIndicatorDailyResponse {
     PER: number
     PBR: number
     PSR: number
-  }
+  }[]
 }
 
 export interface IStockIndicatorSectorResponse {

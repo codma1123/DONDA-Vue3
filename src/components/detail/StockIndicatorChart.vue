@@ -41,7 +41,12 @@
           display: false
         }
       }
-    }
+    },
+
+    animation: {      
+      easing: 'easeInOutCubic',
+      duration: 2000
+    },
   } as any
 
   const { indicator } = useStockStore()
@@ -61,9 +66,7 @@
         }]
       },
       options
-    })
-
-    
+    })    
   }
 
   onMounted(() => renderChart())

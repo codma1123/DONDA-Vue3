@@ -45,7 +45,6 @@ export const useStockStore = defineStore('stock', () => {
   const stockDonda = reactive<AsyncState<DondaType>>(utils.initial())
   const recommendStocks = reactive<AsyncState<StocksType>>(utils.initial())
   const recommendStockCodes = reactive<AsyncState<any>>(utils.initial())
-
   
   // ACTIONS
   const request = async (payload: AsnyPayload): Promise<void> => {    
@@ -55,20 +54,20 @@ export const useStockStore = defineStore('stock', () => {
     targetState.loading = true
 
     try {
-
       const res = await axios.get(url)         
+      
       targetState.data = callback(res)      
       targetState.loading = false
+
       console.log(targetState.data, state)
-
-
     } catch (e) {
 
       targetState.error = e
       targetState.loading = false
 
-    }
+      
 
+    }
   }
 
   return {
