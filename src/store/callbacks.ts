@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios"
-import { MarketResponse, RankResponse, IStockIndicatorResponse } from "../api/types"
+import { MarketResponse, RankResponse, IStockIndicatorResponse, IStockIndicatorDailyResponse } from "../api/types"
 import { priceFormatter } from "../mixins/tools"
 import { IndicatorType } from "../models/stock"
 
@@ -75,6 +75,17 @@ export const indicatorParser = (response: AxiosResponse<IStockIndicatorResponse>
     eps: { date, value: values.map(v => v[0].eps) },
     bps: { date, value: values.map(v => v[0].bps) },
     roe: { date, value: values.map(v => v[0].roe) },    
+  }  
+}
+
+export const indicatorDailyParser = (response: AxiosResponse<IStockIndicatorDailyResponse>): IndicatorType => {
+  const date = Object.keys(response.data)
+  const values = Object.values(response.data)
+
+  return {
+    per: { date, value: values.map(v => v[0].PER) },
+    pbr: { date, value: values.map(v => v[0].PBR) },
+    psr: { date, value: values.map(v => v[0].PSR) },    
   }  
 }
 
