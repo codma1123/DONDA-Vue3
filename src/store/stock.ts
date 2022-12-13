@@ -59,8 +59,6 @@ export const useStockStore = defineStore('stock', () => {
       targetState.data = callback(res)      
       targetState.loading = false
 
-      console.log(targetState.data, state)
-
     } catch (e) {
 
       targetState.error = e

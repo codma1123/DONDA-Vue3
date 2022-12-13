@@ -1,11 +1,27 @@
 <template>
   <div class="DetailLayout">
     <!-- <ProgressCircular v-if="stockEvaluation.loading" absolute />     -->
+
+    <!--  종목 개괄 -->
     <StockInfo />
+
+    <!-- 시가총액 -->
     <StockMarcap />
+
+    <!-- 종가 -->
     <StockClose />
+
+    <!-- 보조지표 -->
     <StockIndicator />
     
+    <!-- 재무제표 -->
+    <!-- <StockFinance /> -->
+
+    <!-- 유사종목 -->
+    <!-- <StockSimilar /> -->
+    
+    <!-- 종목뉴스 -->
+    <StockNews />
 
 
 
@@ -45,7 +61,7 @@
   import StockIndicator from '../components/detail/StockIndicator.vue'
     
   const route = useRoute()  
-  const { request, stock, stockEvaluation } = useStockStore()    
+  const { request} = useStockStore()    
 
   const convertPrice = (price: number) => priceFormatter.format(price)
   const convertCompactPrice = (price: number) => priceCompactFormatter.format(price)
@@ -56,9 +72,7 @@
 
   onMounted(() => {
     const code = route.params.code as string
-    stockPayloads
-      .forEach(payload => request(payload(code)))
-      console.log('detailMount')
+    stockPayloads.forEach(payload => request(payload(code)))
   })
     
 </script>
