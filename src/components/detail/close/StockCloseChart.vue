@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, ref } from 'vue';
+  import { computed, onMounted, ref } from 'vue';
   import { Chart } from 'chart.js'
   import { GraphAllType } from '../../../models/stock';
   import { priceCompactFormatter } from '../../../mixins/tools';
@@ -18,6 +18,10 @@
   const { chartData } = defineProps<{ chartData: GraphAllType}>()
   const count = ref<number>(20)
   const chart = ref<Chart>()
+
+  const labels = computed<string[]>(() => Object.keys(chartData))
+  const data = computed<number[]>(() => Object.values(chartData))
+
   const options = {
     responsive: true,
 
@@ -32,12 +36,8 @@
           mode: 'x',
         },
         zoom: {          
-          wheel: {
-            enabled: true
-          },
-          pinch: {
-            enabled: true
-          },
+          wheel: { enabled: true },
+          pinch: { enabled: true },
           mode: 'x'
         }
       }
@@ -46,10 +46,14 @@
     scales: {
       x: {                 
         grid: { display: false },
+        min: labels.value.at(count.value * (-1)),
         ticks: {
-          maxTicksLimit: 7,
+          maxTicksLimit: 4,
+          minTicksLimit: 4,
           maxRotation: 0,
           color: 'white',
+          align: 'start',
+          crossAlign: 'center',          
         }
       },
       y: { 
@@ -57,7 +61,7 @@
         ticks: {
           maxTicksLimit: 7,
           color: 'white',
-          callback: (t: number) => priceCompactFormatter.format(t)          
+          callback: (t: number) => priceCompactFormatter.format(t),          
         }
       }
     }
@@ -66,18 +70,15 @@
   
   const renderChart = () => {    
     const ctx = document.getElementById('closeChart') as HTMLCanvasElement
-
-    const labels = Object.keys(chartData).map(label => label.slice(5))
-    const data = Object.values(chartData)
-
+    
     chart.value = new Chart(ctx, {
       type: 'line',
       data: { 
-        labels,
+        labels: labels.value,
         datasets: [
           { 
             label: '',
-            data,
+            data: data.value,
             pointRadius: 0,
             tension: 0.3,
             borderColor: '#1DE9B6',            
