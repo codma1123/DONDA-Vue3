@@ -1,4 +1,4 @@
-import { MarketType, MarketValuationType, RankType } from './../models/stock';
+import { MarketType, MarketValuationType, RankType, SearchTableType } from './../models/stock';
 import axios from 'axios';
 import { defineStore } from "pinia";
 import { reactive } from "vue";
@@ -27,6 +27,7 @@ export const useStockStore = defineStore('stock', () => {
   const market = reactive<AsyncState<MarketType>>(utils.initial())
   const marketValuation = reactive<AsyncState<MarketValuationType>>(utils.initial())
   const rank = reactive<AsyncState<RankType>>(utils.initial())
+  const searchTable = reactive<AsyncState<SearchTableType>>(utils.initial())
 
   const stock = reactive<AsyncState<StockType>>(utils.initial())
   const stockGraphVolume = reactive<AsyncState<VolumeType>>(utils.initial())
@@ -91,6 +92,7 @@ export const useStockStore = defineStore('stock', () => {
 
     rank,
     market,
-    marketValuation
+    marketValuation,
+    searchTable
   }
 })
