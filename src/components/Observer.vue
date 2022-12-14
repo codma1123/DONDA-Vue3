@@ -35,10 +35,6 @@ import { onMounted, onUnmounted, ref } from 'vue';
   onUnmounted(() => {
     observer.value?.disconnect();
   });
-  
-
-  
-
 
 </script>
 

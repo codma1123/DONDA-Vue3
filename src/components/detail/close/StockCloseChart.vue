@@ -5,7 +5,7 @@
 <script setup lang="ts">
   import { onMounted } from 'vue';
   import { Chart } from 'chart.js'
-  import { GraphAllType } from '../../models/stock';
+  import { GraphAllType } from '../../../models/stock';
 
   const { chartData } = defineProps<{ chartData: GraphAllType}>()
   const options = {
