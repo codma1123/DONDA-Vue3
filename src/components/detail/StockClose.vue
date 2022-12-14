@@ -5,7 +5,7 @@
       class="CardLayout"
       color="cardlayout"
       elevation="2"
-      link
+      @click="goRoute"
     >      
       <v-card-title class="innerTitle">        
         <div class="d-flex align-center">
@@ -26,10 +26,13 @@
   import { useStockStore } from '../../store/stock';
   import { computed } from 'vue'
   import { priceFormatter } from '../../mixins/tools';
-  
+  import { useRoute, useRouter } from 'vue-router';
+    
   const { stock } = useStockStore()
   const data = computed(() => stock.data)
   const loading = computed(() => stock.loading)
+  const route = useRoute()
+  const router = useRouter();
 
   const trend = computed<{ icon: string, color: string}>(() => {
     const isHighVal = data.value.changes > 0
@@ -38,6 +41,8 @@
       color: isHighVal ? 'red' : 'blue'
     }
   })
+
+  const goRoute = () => router.push(route.fullPath + '/close')
 
 </script>
 

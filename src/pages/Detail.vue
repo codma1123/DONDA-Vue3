@@ -36,7 +36,7 @@
         :chartData="stockEvaluation.data"
       />                        
     </v-card> -->
-
+-
     <!-- <StockNews /> -->
   </div> 
     

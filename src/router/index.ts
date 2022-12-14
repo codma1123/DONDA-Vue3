@@ -10,7 +10,7 @@ const routes = [
   },
   {
     path: '/market',
-    component: Market
+    component: Market,    
   },
   {
     path: '/rank',
@@ -24,7 +24,11 @@ const routes = [
   },
   {
     path: '/detail/:code',
-    component: () => import('../pages/Detail.vue')
+    component: () => import('../pages/Detail.vue'),    
+  },
+  {
+    path: '/detail/:code/close',
+    component: () => import('../pages/detail/Close.vue')
   }
 ]
 
