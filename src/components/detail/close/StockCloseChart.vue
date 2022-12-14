@@ -3,6 +3,7 @@
     class="CardLayout"
     color="cardlayout"
     elevation="2"
+    @click="resetZoom"
   >
     <canvas id="closeChart"></canvas>
   </v-card>
@@ -16,12 +17,25 @@
 
   const { chartData } = defineProps<{ chartData: GraphAllType}>()
   const count = ref<number>(20)
+  const chart = ref<Chart>()
   const options = {
     responsive: true,
 
     plugins: {
       legend: {
         display: false
+      },
+
+      zoom: {        
+        zoom: {          
+          wheel: {
+            enabled: true
+          },
+          pinch: {
+            enabled: true
+          },
+          mode: 'x'
+        }
       }
     },
 
@@ -48,13 +62,11 @@
   
   const renderChart = () => {    
     const ctx = document.getElementById('closeChart') as HTMLCanvasElement
-    const labels = 
-      Object.keys(chartData)
-        .slice(count.value * (-1))
-        .map(label => label.slice(5))
-    const data = Object.values(chartData).slice(count.value * (-1))
 
-    const chart = new Chart(ctx, {
+    const labels = Object.keys(chartData).map(label => label.slice(5))
+    const data = Object.values(chartData)
+
+    chart.value = new Chart(ctx, {
       type: 'line',
       data: { 
         labels,
@@ -69,8 +81,10 @@
         ]
       },
       options
-    })
+    })    
   }
+
+  const resetZoom = () => chart.value?.resetZoom()
   
   onMounted(() => renderChart())
 

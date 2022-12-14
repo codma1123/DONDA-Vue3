@@ -5,9 +5,10 @@ import { loadFonts } from './plugins/webfontloader'
 import { createPinia } from 'pinia'
 import router from './router'
 import { Chart, registerables } from 'chart.js';
+import zoomPlugin from 'chartjs-plugin-zoom'
 
 const pinia = createPinia()
-Chart.register(...registerables);
+Chart.register(...registerables, zoomPlugin);
 
 loadFonts()
 

@@ -13,6 +13,7 @@
     "@types/chart.js": "^2.9.37",
     "@types/lodash": "^4.14.191",
     "chart.js": "^4.0.1",
+    "chartjs-plugin-zoom": "^2.0.0",
     "lodash": "^4.17.21",
     "pinia": "^2.0.23",
     "roboto-fontface": "*",
