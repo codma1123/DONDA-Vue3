@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, onMounted } from 'vue';
+  import { computed, onMounted, toRefs } from 'vue';
   import * as _ from 'lodash'
   import { useRoute } from 'vue-router';
   
@@ -61,7 +61,7 @@
   import StockIndicator from '../components/detail/StockIndicator.vue'
     
   const route = useRoute()  
-  const { request} = useStockStore()    
+  const store = useStockStore()    
 
   const convertPrice = (price: number) => priceFormatter.format(price)
   const convertCompactPrice = (price: number) => priceCompactFormatter.format(price)
@@ -72,7 +72,12 @@
 
   onMounted(() => {
     const code = route.params.code as string
-    stockPayloads.forEach(payload => request(payload(code)))
+
+    if (store.currentStock === code) return
+    
+    stockPayloads.forEach(payload => store.request(payload(code)))
+    store.currentStock = code    
+        
   })
     
 </script>

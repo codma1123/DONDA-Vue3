@@ -1,7 +1,7 @@
 import { MarketType, MarketValuationType, RankType, SearchTableType } from './../models/stock';
 import axios from 'axios';
 import { defineStore } from "pinia";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { DondaType, EvaluationDailyType, EvaluationType, GraphAllType, GraphDefaultType, IndicatorDailyType, IndicatorSectorDailyType, IndicatorSectorType, IndicatorType, NewsType, SimilarType, StatementAllType, StatementType, StateType, StocksType, StockType, VolumeType } from "../models/stock";
 import { AsyncPayload } from './payload';
 
@@ -24,6 +24,9 @@ export const useStockStore = defineStore('stock', () => {
   const store = useStockStore()
 
   // STATES
+
+  const currentStock = ref<string>('')
+
   const market = reactive<AsyncState<MarketType>>(utils.initial())
   const marketValuation = reactive<AsyncState<MarketValuationType>>(utils.initial())
   const rank = reactive<AsyncState<RankType>>(utils.initial())
@@ -69,6 +72,8 @@ export const useStockStore = defineStore('stock', () => {
 
   }
 
+
+
   return {
     request,
 
@@ -93,6 +98,9 @@ export const useStockStore = defineStore('stock', () => {
     rank,
     market,
     marketValuation,
-    searchTable
+    searchTable,
+
+
+    currentStock
   }
 })
