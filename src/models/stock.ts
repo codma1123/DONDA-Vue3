@@ -5,7 +5,7 @@ import {
   IStockSimilarResponse,
   IStockNewsResponse,
   IStockIndicatorSectorResponse,
-  MarketValuationResponse, RankResponse 
+  MarketValuationResponse, RankResponse, SearchTableResponse 
 } from "../api/types"
 
 export type MarketTypes = 'kospi' | 'nasdaq' | 'usdkrw' | 'snp500' | 'us1yt' | 'us5yt' | 'us10yt' | 'usdkrw'
@@ -99,6 +99,8 @@ export type MarketRecentType = {
 export interface CodeTitleMappingType {
 	[title: string]: string
 }
+
+export type SearchTableType = SearchTableResponse
 
 export type StateType = 
   RankType |
