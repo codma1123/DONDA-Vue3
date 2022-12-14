@@ -14,7 +14,9 @@
             {{ priceFormatter.format(data.close) }}
           </span>
         </div>
-        <div class="innerMore">
+        <div 
+          v-if="enableLink"
+          class="innerMore">
           주가 흐름 확인하기
         </div>        
       </v-card-title>
@@ -34,6 +36,8 @@
   const route = useRoute()
   const router = useRouter();
 
+  const { enableLink = false } = defineProps<{ enableLink?: boolean }>()
+
   const trend = computed<{ icon: string, color: string}>(() => {
     const isHighVal = data.value.changes > 0
     return {
@@ -42,7 +46,7 @@
     }
   })
 
-  const goRoute = () => router.push(route.fullPath + '/close')
+  const goRoute = () => enableLink && router.push(route.fullPath + '/close')
 
 </script>
 

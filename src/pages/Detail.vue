@@ -9,7 +9,7 @@
     <StockMarcap />
 
     <!-- 종가 -->
-    <StockClose />
+    <StockClose enableLink/>
 
     <!-- 보조지표 -->
     <StockIndicator />
