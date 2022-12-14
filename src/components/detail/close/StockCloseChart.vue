@@ -3,7 +3,7 @@
     class="CardLayout"
     color="cardlayout"
     elevation="2"
-    @click="resetZoom"
+    @dblclick="resetZoom"
   >
     <canvas id="closeChart"></canvas>
   </v-card>
@@ -27,6 +27,10 @@
       },
 
       zoom: {        
+        pan: {
+          enabled: true,
+          mode: 'x',
+        },
         zoom: {          
           wheel: {
             enabled: true
@@ -40,12 +44,12 @@
     },
 
     scales: {
-      x: { 
+      x: {                 
         grid: { display: false },
         ticks: {
           maxTicksLimit: 7,
           maxRotation: 0,
-          color: 'white'
+          color: 'white',
         }
       },
       y: { 
@@ -76,12 +80,13 @@
             data,
             pointRadius: 0,
             tension: 0.3,
-            borderColor: '#1DE9B6'
+            borderColor: '#1DE9B6',            
           }
         ]
       },
       options
-    })    
+    })
+
   }
 
   const resetZoom = () => chart.value?.resetZoom()
