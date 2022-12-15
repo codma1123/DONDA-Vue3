@@ -26,15 +26,14 @@
     responsive: true,
 
     plugins: {
-      legend: {
-        display: false
-      },
+      legend: { display: false },
 
       zoom: {        
         pan: {
           enabled: true,
           mode: 'x',
         },
+        
         zoom: {          
           wheel: { enabled: true },
           pinch: { enabled: true },
