@@ -6,9 +6,9 @@
       class="CardLayout" 
       color="cardlayout"
     >      
-      <v-card-item :title="stockData.date" />
+      <!-- <v-card-item :title="stockData.date" /> -->
 
-      <v-card-text class="mt-3">
+      <v-card-text class="mt-3 text-center">
         <span v-font-size="45">
           {{ priceFormatter.format(stockData.close) }}
         </span>        
@@ -16,7 +16,7 @@
           {{ computedChanges }}
         </span>
         <span>
-          ({{ stockData.changes_ratio }})
+          ({{ computedChangeRatio }})
         </span>
       </v-card-text>
     </v-card>
@@ -39,7 +39,7 @@
   const stockData = computed(() => stock.data)
   const computedChanges = computed<string>(() => {
     const change = stock.data.changes
-    return change > 0 ? '+' + change.toLocaleString() : '' + change.toLocaleString()
+    return change > 0 ? '+₩' + change.toLocaleString() : '₩' + change.toLocaleString()
   })
 
   const computedChangeRatio = computed<string>(() => {
