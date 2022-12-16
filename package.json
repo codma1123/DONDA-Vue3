@@ -19,6 +19,7 @@
     "roboto-fontface": "*",
     "sass": "^1.56.1",
     "vue": "^3.2.41",
+    "vue-number-animation": "^1.1.2",
     "vue-router": "^4.1.6",
     "vuetify": "npm:@vuetify/nightly@next",
     "webfontloader": "^1.0.0"
