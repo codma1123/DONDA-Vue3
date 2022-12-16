@@ -3,7 +3,7 @@
     <!-- <ProgressCircular v-if="stockEvaluation.loading" absolute />     -->
 
     <!--  종목 개괄 -->
-    <StockInfo />
+    <StockTitle />
 
     <!-- 시가총액 -->
     <StockMarcap />
@@ -59,6 +59,7 @@
   import StockClose from '../components/detail/StockClose.vue'
   import StockNews from '../components/detail/StockNews.vue'
   import StockIndicator from '../components/detail/StockIndicator.vue'
+  import StockTitle from '../components/detail/StockTitle.vue'
     
   const route = useRoute()  
   const store = useStockStore()    

@@ -2,20 +2,22 @@
   <div class="DetailLayout">    
     <StockTitle />
     <v-card-subtitle> 의 주가를 살펴보세요.</v-card-subtitle>
-    <!-- <StockClose :label="'ㅎㅎ;'"/> -->
     <v-card 
       class="CardLayout" 
       color="cardlayout"
     >      
-      <v-card-text>
-        <div class="mb-5"> 종가 </div>
+      <v-card-item :title="stockData.date" />
+
+      <v-card-text class="mt-3">
         <span v-font-size="45">
           {{ priceFormatter.format(stockData.close) }}
         </span>        
-        <span v-font-size="17">
-          ({{ computedChanges }})
+        <span v-font-size="17" class="ml-2">
+          {{ computedChanges }}
         </span>
-        <div class="mt-3 mb-3"> 고가</div>
+        <span>
+          ({{ stockData.changes_ratio }})
+        </span>
       </v-card-text>
     </v-card>
     <StockCloseChart v-if="loading" :chartData="chartData" />
@@ -24,8 +26,7 @@
 
 <script setup lang="ts">
 
-  import { computed } from 'vue'
-  import StockClose from '../../components/detail/StockClose.vue';
+  import { computed } from 'vue'  
   import StockCloseChart from '../../components/detail/close/StockCloseChart.vue';
   import { useStockStore } from '../../store/stock';
   import { priceFormatter } from '../../mixins/tools';
@@ -34,11 +35,17 @@
 
   const chartData = computed(() => stockGraphAll.data)
   const loading = computed<boolean>(() => !stock.loading && !stockGraphAll.loading)
+
   const stockData = computed(() => stock.data)
   const computedChanges = computed<string>(() => {
     const change = stock.data.changes
     return change > 0 ? '+' + change.toLocaleString() : '' + change.toLocaleString()
-  } )
+  })
+
+  const computedChangeRatio = computed<string>(() => {
+    const changes_ratio = stock.data.changes_ratio as number
+    return changes_ratio > 0 ? '+' + changes_ratio.toLocaleString() : '' + changes_ratio.toLocaleString()
+  })
 
   // const label = computed<string>(() => {
   //   const stockGraphAll 
