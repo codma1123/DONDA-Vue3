@@ -2,6 +2,8 @@
   <div class="DetailLayout">    
 
     <StockTitle />
+
+    <v-divider />
     
 
       <!-- <v-card-item :title="stockData.date" /> -->
