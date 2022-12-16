@@ -35,6 +35,7 @@ export const useStockStore = defineStore('stock', () => {
   const stock = reactive<AsyncState<StockType>>(utils.initial())
   const stockGraphVolume = reactive<AsyncState<VolumeType>>(utils.initial())
   const stockGraphDefault = reactive<AsyncState<GraphDefaultType>>(utils.initial())
+  const stockVolume = reactive<AsyncState<any>>(utils.initial())
   const stockGraphAll = reactive<AsyncState<GraphAllType>>(utils.initial())
   const stockEvaluation = reactive<AsyncState<EvaluationType>>(utils.initial())
   const stockEvaluationDaily = reactive<AsyncState<EvaluationDailyType>>(utils.initial())
@@ -62,6 +63,8 @@ export const useStockStore = defineStore('stock', () => {
       
       targetState.data = callback(res)      
       targetState.loading = false
+
+      console.log(targetState.data, state)
 
     } catch (e) {
 
@@ -94,6 +97,7 @@ export const useStockStore = defineStore('stock', () => {
     stockDonda,
     recommendStocks,
     recommendStockCodes,
+    stockVolume,
 
     rank,
     market,
