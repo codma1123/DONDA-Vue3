@@ -2,7 +2,7 @@
   <v-card
     class="CardLayout"
     color="cardlayout"
-    elevation="2"
+    elevation="0"
     @dblclick="resetZoom"
   >  
     <canvas id="closeChart"></canvas>
@@ -15,13 +15,18 @@
   import { GraphAllType } from '../../../models/stock';
   import { priceCompactFormatter, priceFormatter } from '../../../mixins/tools';
   import { useStockStore } from '../../../store/stock';
-import { myCrossHair } from '../../../plugins/chart';
+  import { myCrossHair } from '../../../plugins/chart';
+
+  const volueTranslateValue = 40
+
+
 
   const { stockVolume } = useStockStore()
   const { chartData } = defineProps<{ chartData: GraphAllType}>()
 
   const count = ref<number>(20)
   const chart = ref<Chart>()
+
 
   const labels = computed<string[]>(() => Object.keys(chartData))
   const data = computed<number[]>(() => Object.values(chartData))
@@ -49,7 +54,7 @@ import { myCrossHair } from '../../../plugins/chart';
         callbacks: {                              
           label: (ctx: any) => {
             const line = '₩' + ctx.formattedValue
-            const bar = (Number(ctx.formattedValue.split('.')[0].replace(',', '')) * 100).toLocaleString()
+            const bar = (Number(ctx.formattedValue.split('.')[0].replace(',', '')) * 1000).toLocaleString()
             return ctx.datasetIndex ? bar : line
           }
         }
@@ -121,7 +126,7 @@ import { myCrossHair } from '../../../plugins/chart';
           {
             type: 'bar',
             label: '거래량',
-            data: volumeData.value.map(v => v * 0.01),
+            data: volumeData.value.map(v => v * 0.001),
             borderColor: 'rgb(201, 203, 207)',
             backgroundColor: 'rgba(201, 203, 207, 0.2)',
           }
