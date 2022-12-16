@@ -4,19 +4,7 @@
     color="cardlayout"
     elevation="2"
     @dblclick="resetZoom"
-  >
-    <div class="d-flex justify-end">
-      <v-btn 
-        prepend-icon="mdi-chart-box-plus-outline"
-        size="small"
-        class="OptionBtns"
-        :variant="volumeSelect ? 'text' : 'outlined'"
-        v-model="volumeSelect"
-        @click="volumeSelect = !volumeSelect"
-      >
-        거래량
-      </v-btn>      
-    </div>
+  >  
     <canvas id="closeChart"></canvas>
   </v-card>
 </template>
@@ -25,22 +13,50 @@
   import { computed, onMounted, ref, watch } from 'vue';
   import { Chart } from 'chart.js'
   import { GraphAllType } from '../../../models/stock';
-  import { priceCompactFormatter } from '../../../mixins/tools';
+  import { priceCompactFormatter, priceFormatter } from '../../../mixins/tools';
+  import { useStockStore } from '../../../store/stock';
+import { myCrossHair } from '../../../plugins/chart';
 
+  const { stockVolume } = useStockStore()
   const { chartData } = defineProps<{ chartData: GraphAllType}>()
+
   const count = ref<number>(20)
   const chart = ref<Chart>()
-  const volumeSelect = ref<boolean>(false)
 
   const labels = computed<string[]>(() => Object.keys(chartData))
   const data = computed<number[]>(() => Object.values(chartData))
-  const datasets = computed(() => volumeSelect ? [data.value] : [data.value])
+  const volumeData = computed(() => Object.values(stockVolume.data))
 
   const options = {
     responsive: true,
 
     plugins: {
-      legend: { display: false },
+      legend: { 
+        
+      },
+
+      tooltip: {
+        intersect: true,
+        mode: 'index',
+        backgroundColor: '#black',
+        titleAlign: 'center',
+        bodyAlign: 'center',
+        bodySpacing: 5,
+        padding: 10,
+        cornerRadius: 15,
+        bodyFont: { size: 12 },
+        boxPadding: 5,
+        callbacks: {                              
+          label: (ctx: any) => {
+            const line = '₩' + ctx.formattedValue
+            const bar = (Number(ctx.formattedValue.split('.')[0].replace(',', '')) * 100).toLocaleString()
+            return ctx.datasetIndex ? bar : line
+          }
+        }
+      },
+
+
+      myCrossHair: true,
 
       zoom: {        
         pan: {
@@ -70,6 +86,7 @@
         }
       },
       y: { 
+        beginAtZero: false,
         grid: { display: false },
         ticks: {
           maxTicksLimit: 7,
@@ -82,34 +99,36 @@
   } as any
 
 
-
-  // watch
-  watch(volumeSelect, (newVal: boolean) => {
-    if (!newVal) return
-    chart.value?.destroy()
-    renderChart()
-  })
-
   // hooks
   
   const renderChart = () => {    
     const ctx = document.getElementById('closeChart') as HTMLCanvasElement    
-    
+    chart.value?.destroy()
     chart.value = new Chart(ctx, {      
       data: { 
         labels: labels.value,
         datasets: [
-          { 
+          {
             type: 'line',
-            label: '',
+            label: '종가',
             data: data.value,
             pointRadius: 0,
             tension: 0.3,
-            borderColor: '#1DE9B6',            
+            borderColor: '#1DE9B6',
+            backgroundColor: '#fff',
+            pointHitRadius: 50
+          },
+          {
+            type: 'bar',
+            label: '거래량',
+            data: volumeData.value.map(v => v * 0.01),
+            borderColor: 'rgb(201, 203, 207)',
+            backgroundColor: 'rgba(201, 203, 207, 0.2)',
           }
         ]
       },
-      options
+      options,
+      plugins: [myCrossHair]
     })
 
   }

@@ -33,9 +33,8 @@ export const useStockStore = defineStore('stock', () => {
   const searchTable = reactive<AsyncState<SearchTableType>>(utils.initial())
 
   const stock = reactive<AsyncState<StockType>>(utils.initial())
-  const stockGraphVolume = reactive<AsyncState<VolumeType>>(utils.initial())
   const stockGraphDefault = reactive<AsyncState<GraphDefaultType>>(utils.initial())
-  const stockVolume = reactive<AsyncState<any>>(utils.initial())
+  const stockVolume = reactive<AsyncState<VolumeType>>(utils.initial())
   const stockGraphAll = reactive<AsyncState<GraphAllType>>(utils.initial())
   const stockEvaluation = reactive<AsyncState<EvaluationType>>(utils.initial())
   const stockEvaluationDaily = reactive<AsyncState<EvaluationDailyType>>(utils.initial())
@@ -81,7 +80,6 @@ export const useStockStore = defineStore('stock', () => {
     request,
 
     stock,
-    stockGraphVolume,
     stockGraphDefault,
     stockGraphAll,
     stockEvaluation,

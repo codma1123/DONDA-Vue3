@@ -6,7 +6,6 @@ import { rankParser, todayMarketParser, indicatorParser, indicatorDailyParser, i
 
 export type StoreStates = 
 'stock' | 
-'stockGraphVolume' | 
 'stockGraphDefault' |
 'stockGraphAll' | 
 'stockEvaluation' | 

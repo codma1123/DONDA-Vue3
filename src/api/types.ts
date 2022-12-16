@@ -79,6 +79,9 @@ export interface IStockGraphResponse {
   }
 }
 
+
+export type VolumeResponse = IStockGraphResponse
+
 export interface IStockIndicatorResponse {
   [date: string]: {
     type: string
@@ -152,6 +155,7 @@ export type MarketResponse = {
   }[]
 }
 
+
 export type MarketValuationResponse = {
   market: MarketType
   monthlyTrend: number
@@ -184,6 +188,7 @@ export type ResponseType =
   IStockGraphVolumeResponse |
   IStockRecommendResponse[] | 
   IStockEvaluationResponse |
+  VolumeResponse |
 
   
   MarketResponse | 

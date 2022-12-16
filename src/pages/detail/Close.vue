@@ -47,10 +47,6 @@
     return changes_ratio > 0 ? '+' + changes_ratio.toLocaleString() : '' + changes_ratio.toLocaleString()
   })
 
-  // const label = computed<string>(() => {
-  //   const stockGraphAll 
-  // })
-
 </script>
 
 <style scoped lang="scss">
