@@ -1,11 +1,25 @@
 <template>
   <v-card
-    class="CardLayout"
-    color="cardlayout"
+    class="CardLayout"    
     elevation="0"
     @dblclick="resetZoom"
   >  
     <canvas id="closeChart"></canvas>
+    <v-card-actions class="d-flex flex-column align-start" v-font-size="12">
+      <span class="informationArea">
+        <v-icon>mdi-information</v-icon> 
+        <span> 마우스 휠을 사용해 차트를 축소/확대 할 수 있습니다. (PC)</span>
+      </span>      
+      <span class="informationArea">
+        <v-icon>mdi-information</v-icon> 
+        <span> 화면을 끌어 차트를 이동시킬 수 있습니다</span>
+      </span>      
+      <span class="informationArea">
+        <v-icon>mdi-information</v-icon> 
+        <span> 두번 탭하여 차트를 초기화 시킬 수 있습니다.</span>
+      </span>      
+      
+    </v-card-actions>
   </v-card>
 </template>
 
@@ -180,4 +194,16 @@
 .OptionBtns {
   transition: all .3s ease-in;
 }
+
+.informationArea {
+  display: flex;
+  align-items: center;
+  span {
+    margin-left: .25rem;
+    opacity: .6;
+  }
+  margin-top: 5px;
+}
+
+
 </style>

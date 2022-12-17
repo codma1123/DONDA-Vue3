@@ -5,8 +5,8 @@
 
     <v-divider />
   
-      <!-- <v-card-item :title="stockData.date" /> -->
 
+    <!-- Close -->
     <v-card elevation="0" @click="expandToggle = !expandToggle">      
       <div class="date"> 기준일 : {{ stockData.date }}</div>
       <v-card-subtitle class="mt-2"> 종가</v-card-subtitle>
@@ -88,10 +88,17 @@
           </div>
         </div>      
       </v-expand-transition>
+      <v-divider class="mt-5"/>
     </v-card>
 
 
+    <!-- CloseChart -->
+    <StockCloseChart v-if="loading" :chartData="chartData" />
 
+    <v-divider />
+
+
+    <!-- Compare -->
     <v-sheet class="px-2 mt-5 d-flex flex-wrap justify-space-around">
 
       <div 
@@ -99,25 +106,26 @@
         :key="i"
         class="mt-1 d-flex align-center mr-3 comparePriceWrapper"        
       >
-        <div 
-          class="chipWarpper"
-          :style="{ backgroundColor: content.comparePrice.per.includes('-') ? '#4169E1' : '#B22222'}"
-        >
-          <v-chip class="chip">{{ content.text }}</v-chip>
+        <div class="chipWarpper">
+          <v-chip 
+            :style="{ backgroundColor: content.comparePrice.per.includes('-') ? '#4169E1' : '#B22222'}"
+            class="chip">{{ content.text }}</v-chip>
         </div>
         <div 
           class="textWrapper"
-          :style="{ backgroundColor: content.comparePrice.per.includes('-') ? '#4169E1' : '#B22222'}"
+          
         >
           {{ content.comparePrice.per }}%
         </div>
       </div>
 
-
     </v-sheet>
 
 
-    <StockCloseChart v-if="loading" :chartData="chartData" />
+
+
+
+
   </div>
 </template>
 
@@ -255,6 +263,7 @@ $margin: 1rem;
   border-bottom-left-radius: 14px;
 
   .chip {
+    opacity: .95;
     min-width: 100px;
     display: flex;
     align-items: center;
