@@ -22,7 +22,7 @@
 
   import StockNewsContent from './StockNewsContent.vue';
   import ProgressCircular from '../global/ProgressCircular.vue';
-  import Observer from '../Observer.vue';
+  import Observer from '../global/Observer.vue';
 
   const contentsCount = ref<number>(6)
   const contentCountLoad = ref<boolean>(true)

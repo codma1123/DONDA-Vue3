@@ -12,11 +12,12 @@
     "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
     "noEmit": true,    
+    "baseUrl": ".",
+    "paths": { "@/*": ["src/*"] }
   },
   "allowJS": true,
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/api/typests"],
   "typeRoots" : ["./@types", "./node_modules/@types"],
   "references": [{ "path": "./tsconfig.node.json" }],
-  "paths": { "@/*": ["src/*"] }
   
 }

@@ -66,7 +66,7 @@
   import { useLayout } from '../mixins/layout';
   import { useStockStore } from '../store/stock';
   import ProgressCircular from '../components/global/ProgressCircular.vue'
-  import Observer from "../components/Observer.vue";
+  import Observer from "../components/global/Observer.vue";
   import { RankType } from '../models/stock';
   import { useRouter } from 'vue-router';
 

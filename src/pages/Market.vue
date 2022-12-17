@@ -54,9 +54,9 @@
 
 <script setup lang="ts">
   import { computed, ref } from "vue"
-  import { useLayout } from "../mixins/layout";
-  import { useStockStore } from "../store/stock"
-  import { MarketType, MarketTypes } from '../models/stock' 
+  import { useLayout } from "@/mixins/layout";
+  import { useStockStore } from "@/store/stock"
+  import { MarketType, MarketTypes } from '@/models/stock' 
   
   // consts
   const marketTypes: MarketTypes[] = ['kospi', 'nasdaq', 'snp500', 'usdkrw']

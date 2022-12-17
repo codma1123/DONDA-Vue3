@@ -99,7 +99,7 @@
 </template>
 
 <script setup lang="ts">
-  import { StockType } from '../../../models/stock';
+  import { StockType } from '@/models/stock';
   import { ref, onMounted, computed } from 'vue'
   
   const { stockData } = defineProps<{ stockData: StockType}>()

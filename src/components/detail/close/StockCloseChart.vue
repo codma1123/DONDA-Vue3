@@ -29,10 +29,10 @@
 <script setup lang="ts">
   import { computed, onMounted, ref, onUnmounted } from 'vue';
   import { Chart } from 'chart.js'
-  import { GraphAllType } from '../../../models/stock';
-  import { priceCompactFormatter } from '../../../mixins/tools';
-  import { useStockStore } from '../../../store/stock';
-  import { myCrossHair } from '../../../plugins/chart';
+  import { GraphAllType } from '@/models/stock';
+  import { priceCompactFormatter } from '@/mixins/tools';
+  import { useStockStore } from '@/store/stock';
+  import { myCrossHair } from '@/plugins/chart';
 
   const { stockVolume, stock, stockGraphAll } = useStockStore()
   const { chartData } = defineProps<{ chartData: GraphAllType}>()

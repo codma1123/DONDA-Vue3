@@ -22,8 +22,8 @@
 
 <script setup lang="ts">
   import { computed } from 'vue'
-  import { StockType } from '../../../models/stock';
-  import { useStockStore } from '../../../store/stock';
+  import { StockType } from '@/models/stock';
+  import { useStockStore } from '@/store/stock';
 
   interface IComparePrice {
     text: string
