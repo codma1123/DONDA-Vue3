@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, onMounted, ref } from 'vue';
+  import { computed, onMounted, ref, onUnmounted } from 'vue';
   import { Chart } from 'chart.js'
   import { GraphAllType } from '../../../models/stock';
   import { priceCompactFormatter } from '../../../mixins/tools';
@@ -38,9 +38,8 @@
   const { stockVolume, stock, stockGraphAll } = useStockStore()
   const { chartData } = defineProps<{ chartData: GraphAllType}>()
 
-  const count = ref<number>(20)
+  const count = ref<number>(7)
   const chart = ref<Chart>()
-
 
   const labels = computed<string[]>(() => Object.keys(chartData))
   const data = computed<number[]>(() => Object.values(chartData))
@@ -135,7 +134,9 @@
           drawOnChartArea: false
         }
       }
-    }
+    },
+
+    animation: { }
     
   } as any
 
@@ -179,6 +180,8 @@
   const resetZoom = () => chart.value?.resetZoom()
   
   onMounted(() => renderChart())
+
+  onUnmounted(() => chart.value?.destroy())
 
   
 </script>

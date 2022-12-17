@@ -1,8 +1,12 @@
 <template>
   <v-divider />
+
   <v-card elevation="0" @click="expandToggle = !expandToggle">      
+
     <div class="date"> 기준일 : {{ stockData.date }}</div>
+
     <v-card-subtitle class="mt-2"> 종가</v-card-subtitle>
+
     <v-card-text class="mt-5">
       <span v-font-size="50">
         <number
@@ -25,8 +29,10 @@
         </span>
       </transition>
     </v-card-text>
+
     <v-expand-transition v-if="expandToggle">          
       <div class="d-flex flex-wrap">
+
         <div class="price">
           <v-card-subtitle> 고가 </v-card-subtitle>    
           <span v-font-size="28" class="ml-5">
@@ -40,6 +46,7 @@
             />   
           </span>        
         </div>
+
         <div class="price">
           <v-card-subtitle> 저가 </v-card-subtitle>    
             <span v-font-size="28" class="ml-5">
@@ -53,6 +60,7 @@
               />   
             </span>        
         </div>
+
         <div class="price">
           <v-card-subtitle class="mt-3"> 시가 </v-card-subtitle>    
             <span v-font-size="28" class="ml-5">
@@ -66,6 +74,7 @@
               />   
             </span>        
         </div>
+
         <div class="price">
           <v-card-subtitle class="mt-3"> 거래량 </v-card-subtitle>    
           <span v-font-size="28" class="ml-5">
@@ -81,8 +90,12 @@
         </div>
       </div>      
     </v-expand-transition>
+
     <v-divider class="mt-5"/>
+      
   </v-card>
+
+
 </template>
 
 <script setup lang="ts">
@@ -92,7 +105,7 @@
   const { stockData } = defineProps<{ stockData: StockType}>()
 
   const appear = ref<boolean>(false)
-  const expandToggle = ref<boolean>(false)
+  const expandToggle = ref<boolean>(true)
 
   const priceFormat = (price: number) => '₩' + Number(price.toFixed(0)).toLocaleString()
   const volumeFormat = (price: number) => Number(price.toFixed(0)).toLocaleString()

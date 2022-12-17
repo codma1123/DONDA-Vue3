@@ -43,9 +43,9 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, onMounted, toRefs } from 'vue';
+  import { computed, onMounted, toRefs, watch } from 'vue';
   import * as _ from 'lodash'
-  import { useRoute } from 'vue-router';
+  import { useRoute, onBeforeRouteUpdate, RouteLocationNormalized } from 'vue-router';
   
   import { useStockStore } from '../store/stock';
   import { stockPayloads } from '../store/payload'
@@ -62,24 +62,26 @@
   import StockTitle from '../components/detail/StockTitle.vue'
     
   const route = useRoute()  
-  const store = useStockStore()    
+  const store = useStockStore()
+  const param = computed(() => route.params.id as string)
 
   const convertPrice = (price: number) => priceFormatter.format(price)
   const convertCompactPrice = (price: number) => priceCompactFormatter.format(price)
 
   const getPrefixer = (price: number) => price > 0 ? '+' + price.toLocaleString() : price.toLocaleString()
   const getPriceColor = (price: number) => price > 0 ? 'text-red' : 'text-blue'
-  
 
-  onMounted(() => {
-    const code = route.params.code as string
-
+  const fetch = (code: string): void => {    
     if (store.currentStock === code) return
     
     stockPayloads.forEach(payload => store.request(payload(code)))
-    store.currentStock = code    
-        
-  })
+    store.currentStock = code            
+  }
+
+  onBeforeRouteUpdate((to: RouteLocationNormalized) => fetch(to.params.code as string))
+  
+
+  onMounted(() => fetch(route.params.code as string))
     
 </script>
 

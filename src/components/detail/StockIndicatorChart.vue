@@ -5,7 +5,7 @@
 <script setup lang="ts">
 
   import { Chart } from 'chart.js'
-  import { onMounted, computed, ref } from 'vue'
+  import { onMounted, computed, ref, onUnmounted } from 'vue'
   import { useStockStore } from '../../store/stock';
 
   const options = computed(() => ({
@@ -27,19 +27,13 @@
     scales: {
       x: {
         grid: { display: false },
-
         border: { display: false },        
-
-        ticks: {
-          color: '#fff'
-        }        
+        ticks: { color: '#fff' }        
       },
 
       y: {
         grid: { display: false },
-
-        // border: { display: false },
-
+        border: { display: false },
         ticks: { display: false }
       },
 
@@ -64,9 +58,7 @@
   const chart = ref<Chart>()
 
   const indicatorChartData = computed(() => indicator.data)
-  const indicatorDailyChartData = computed(() => indicatorDaily.data)
   const indicatorSectorChartData = computed(() => indicatorSector.data)
-  const indicatorSectorDailyChartData = computed(() => indicatorSectorDaily.data)
 
   const currentData = computed(() => [
     (indicatorChartData.value.eps.value.at(-1) as number) / 20,
@@ -116,10 +108,7 @@
     })    
   }
 
-  onMounted(() => {
-    console.log(sectorData.value)
-    renderChart()
-  })
+  onMounted(() => renderChart())
 
 </script>
 

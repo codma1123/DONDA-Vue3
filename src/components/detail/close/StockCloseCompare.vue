@@ -7,13 +7,11 @@
     >
       <div class="chipWarpper">
         <v-chip 
+          label
           :style="{ backgroundColor: content.comparePrice.per.includes('-') ? '#4169E1' : '#B22222'}"
           class="chip">{{ content.text }}</v-chip>
       </div>
-      <div 
-        class="textWrapper"
-        
-      >
+      <div class="textWrapper">
         {{ content.comparePrice.per }}%
       </div>
     </div>
