@@ -21,7 +21,7 @@
     <!-- <StockSimilar /> -->
     
     <!-- 종목뉴스 -->
-    <StockNews />
+    <!-- <StockNews /> -->
 
 
 
@@ -36,7 +36,7 @@
         :chartData="stockEvaluation.data"
       />                        
     </v-card> -->
--
+
     <!-- <StockNews /> -->
   </div> 
     

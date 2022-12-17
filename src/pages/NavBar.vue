@@ -5,6 +5,7 @@
       width="430"
       min-height="45"        
       ref="navBar"
+      v-if="!searchTable.loading"
     > 
       <div class="logo">DONDA - VUE3</div>
       <div class="IconBox">
@@ -24,7 +25,8 @@
             variant="underlined"
             class="SearchBar" 
             @blur="(searchBarToggle = true)"
-            @keyup.enter="(searchBarToggle = true)"
+            @keyup.enter="searchBarEnter"
+            v-model="searchBarContent"
           />
           
         </transition>
@@ -36,11 +38,20 @@
 
 <script setup lang="ts">
   import { ref } from 'vue';
+  import { useRouter } from 'vue-router';
+  import { useStockStore } from '../store/stock';
+
+  const { searchTable } = useStockStore()
+  const router = useRouter()
+
 
   const searchBarToggle = ref(true)
   const autofocus = ref(false)
-
   const searchBar = ref<HTMLInputElement | null>(null)
+  const searchBarContent = ref<string>('')
+
+  const getKeyByValue = (obj: any, value: string) => Object.keys(obj).find(key => obj[key] === value)
+
   
   const toggle = () => {
     searchBarToggle.value = false
@@ -49,7 +60,13 @@
     }, 90)
   }
 
-
+  const searchBarEnter = () => {
+    const code = getKeyByValue(searchTable.data, searchBarContent.value)    
+    code && router.push(`/detail/${code}`)    
+    searchBarContent.value = ''
+    searchBarToggle.value = true
+  }
+    
 
 </script>
 
