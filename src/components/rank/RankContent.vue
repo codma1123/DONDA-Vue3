@@ -33,8 +33,8 @@
 <script setup lang="ts">
   import { computed } from 'vue';
 import { useRoute } from 'vue-router';
-import { useLayout } from '../../mixins/layout';
-  import { useStockStore } from '../../store/stock';    
+import { useLayout } from '@/mixins/layout';
+  import { useStockStore } from '@/store/stock';    
 
   const { rank } = useStockStore()
   const { CONTENT_WIDTH } = useLayout()

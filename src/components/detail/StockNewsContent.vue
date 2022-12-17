@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-  import { NewsType } from '../../models/stock';
+  import { NewsType } from '@/models/stock';
   import { computed } from 'vue'
 
   const { content: prop } = defineProps<{ content: NewsType}>()

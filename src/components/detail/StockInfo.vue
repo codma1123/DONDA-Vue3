@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
   import { computed } from 'vue'
-  import { useStockStore } from '../../store/stock';
+  import { useStockStore } from '@/store/stock';
 
   // hooks
   const { stock } = useStockStore()

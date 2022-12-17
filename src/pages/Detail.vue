@@ -49,19 +49,19 @@
   import * as _ from 'lodash'
   import { useRoute, onBeforeRouteUpdate, RouteLocationNormalized } from 'vue-router';
   
-  import { useStockStore } from '../store/stock';
-  import { stockPayloads } from '../store/payload'
-  import { priceFormatter, priceCompactFormatter } from '../mixins/tools';
+  import { useStockStore } from '@/store/stock';
+  import { stockPayloads } from '@/store/payload'
+  import { priceFormatter, priceCompactFormatter } from '@/mixins/tools';
 
-  import ProgressCircular from '../components/global/ProgressCircular.vue';
-  import EvaluationChart from '../components/detail/evaluation/EvaluationChart.vue'
+  import ProgressCircular from '@/components/global/ProgressCircular.vue';
+  import EvaluationChart from '@/components/detail/evaluation/EvaluationChart.vue'
 
-  import StockInfo from '../components/detail/StockInfo.vue';
-  import StockMarcap from '../components/detail/StockMarcap.vue';
-  import StockClose from '../components/detail/StockClose.vue'
-  import StockNews from '../components/detail/StockNews.vue'
-  import StockIndicator from '../components/detail/StockIndicator.vue'
-  import StockTitle from '../components/detail/StockTitle.vue'
+  import StockInfo from '@/components/detail/StockInfo.vue';
+  import StockMarcap from '@/components/detail/StockMarcap.vue';
+  import StockClose from '@/components/detail/StockClose.vue'
+  import StockNews from '@/components/detail/StockNews.vue'
+  import StockIndicator from '@/components/detail/StockIndicator.vue'
+  import StockTitle from '@/components/detail/StockTitle.vue'
     
   const route = useRoute()  
   const store = useStockStore()

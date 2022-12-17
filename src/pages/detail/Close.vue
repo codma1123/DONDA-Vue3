@@ -19,12 +19,12 @@
 <script setup lang="ts">
 
   import { computed } from 'vue'  
-  import { useStockStore } from '../../store/stock';
+  import { useStockStore } from '@/store/stock';
 
-  import StockCloseChart from '../../components/detail/close/StockCloseChart.vue';
-  import StockTitle from '../../components/detail/StockTitle.vue'
-  import StockCloses from '../../components/detail/close/StockCloses.vue'
-  import StockCloseCompare from '../../components/detail/close/StockCloseCompare.vue'
+  import StockCloseChart from '@/components/detail/close/StockCloseChart.vue';
+  import StockTitle from '@/components/detail/StockTitle.vue'
+  import StockCloses from '@/components/detail/close/StockCloses.vue'
+  import StockCloseCompare from '@/components/detail/close/StockCloseCompare.vue'
     
   const { stockGraphAll, stock } = useStockStore()
   

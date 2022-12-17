@@ -5,8 +5,8 @@
 <script setup lang="ts">
 
   import { Chart } from 'chart.js'
-  import { onMounted, computed, ref, onUnmounted } from 'vue'
-  import { useStockStore } from '../../store/stock';
+  import { onMounted, computed, ref } from 'vue'
+  import { useStockStore } from '@/store/stock';
 
   const options = computed(() => ({
     responsive: true,

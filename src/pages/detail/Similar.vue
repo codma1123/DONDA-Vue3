@@ -10,8 +10,8 @@
 <script setup lang="ts">
 
   import { onMounted } from 'vue'
-  import StockSimilarInfo from '../../components/detail/similar/StockSimilarInfo.vue';
-  import StockTitle from '../../components/detail/StockTitle.vue';
+  import StockSimilarInfo from '@/components/detail/similar/StockSimilarInfo.vue';
+  import StockTitle from '@/components/detail/StockTitle.vue';
 
   onMounted(() => {
     console.log('mount')

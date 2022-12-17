@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-  import { useStockStore } from '../../store/stock';
+  import { useStockStore } from '@/store/stock';
   import { computed, ref } from 'vue'
 
   const { stock } = useStockStore()

@@ -39,7 +39,7 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
-  import { useStockStore } from '../store/stock';
+  import { useStockStore } from '@/store/stock';
 
   const { searchTable } = useStockStore()
   const router = useRouter()

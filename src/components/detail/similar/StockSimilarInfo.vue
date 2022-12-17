@@ -54,10 +54,10 @@
 </template>
 
 <script setup lang="ts">
-  import { useStockStore } from '../../../store/stock';
+  import { useStockStore } from '@/store/stock';
   import { computed } from 'vue'
-  import { priceCompactFormatter } from '../../../mixins/tools';  
-  import { RankTypes } from '../../../api/types';
+  import { priceCompactFormatter } from '@/mixins/tools';  
+  import { RankTypes } from '@/api/types';
   import _ from 'lodash';
 
   const rankTypes = ["change_incr", "change_redu", "marcap", "volume"]

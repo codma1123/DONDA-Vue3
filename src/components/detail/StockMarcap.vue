@@ -27,8 +27,8 @@
 
   import { computed } from 'vue';
   import { useRouter } from 'vue-router';
-  import { priceCompactFormatter } from '../../mixins/tools';
-  import { useStockStore } from '../../store/stock';
+  import { priceCompactFormatter } from '@/mixins/tools';
+  import { useStockStore } from '@/store/stock';
 
   const { stock } = useStockStore()
   const router = useRouter()

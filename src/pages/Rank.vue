@@ -63,11 +63,11 @@
 
 <script setup lang="ts">
   import {  computed, ref, watch } from 'vue';
-  import { useLayout } from '../mixins/layout';
-  import { useStockStore } from '../store/stock';
-  import ProgressCircular from '../components/global/ProgressCircular.vue'
-  import Observer from "../components/global/Observer.vue";
-  import { RankType } from '../models/stock';
+  import { useLayout } from '@/mixins/layout';
+  import { useStockStore } from '@/store/stock';
+  import ProgressCircular from '@/components/global/ProgressCircular.vue'
+  import Observer from "@/components/global/Observer.vue";
+  import { RankType } from '@/models/stock';
   import { useRouter } from 'vue-router';
 
   type TagType = '시가총액' | '거래량' | '상승률' | '하락률'

@@ -26,9 +26,9 @@
 </template>
 
 <script setup lang="ts">
-  import { useStockStore } from '../../store/stock';
+  import { useStockStore } from '@/store/stock';
   import { computed } from 'vue'
-  import { priceFormatter } from '../../mixins/tools';
+  import { priceFormatter } from '@/mixins/tools';
   import { useRoute, useRouter } from 'vue-router';
     
   const { stock } = useStockStore()

@@ -17,9 +17,9 @@
 </template>
 
 <script setup lang="ts">
-  import { useStockStore } from '../../store/stock';
   import { computed } from 'vue'
-  import StockIndicatorChart from './StockIndicatorChart.vue';
+  import { useStockStore } from '@/store/stock';
+  import StockIndicatorChart from '@/components/detail/StockIndicatorChart.vue';
 
   const { indicator, indicatorSector, indicatorDaily, indicatorSectorDaily } = useStockStore()
   const loading = computed<boolean>(() => !indicator.loading && !indicatorSector.loading && !indicatorSectorDaily.loading && !indicatorDaily.loading)

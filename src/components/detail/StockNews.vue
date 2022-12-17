@@ -17,12 +17,12 @@
 </template>
 
 <script setup lang="ts">
-  import { useStockStore } from '../../store/stock';
+  import { useStockStore } from '@/store/stock';
   import { computed, ref } from 'vue';
 
-  import StockNewsContent from './StockNewsContent.vue';
-  import ProgressCircular from '../global/ProgressCircular.vue';
-  import Observer from '../global/Observer.vue';
+  import StockNewsContent from '@/components/detail/StockNewsContent.vue';
+  import ProgressCircular from '@/components/global/ProgressCircular.vue';
+  import Observer from '@/components/global/Observer.vue';
 
   const contentsCount = ref<number>(6)
   const contentCountLoad = ref<boolean>(true)
