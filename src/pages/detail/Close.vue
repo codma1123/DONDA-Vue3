@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 
-  import { computed, onMounted } from 'vue'  
+  import { computed } from 'vue'  
   import { useStockStore } from '../../store/stock';
 
   import StockCloseChart from '../../components/detail/close/StockCloseChart.vue';

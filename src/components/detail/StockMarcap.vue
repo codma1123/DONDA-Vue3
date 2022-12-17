@@ -26,13 +26,12 @@
 <script setup lang="ts">
 
   import { computed } from 'vue';
-import { useRouter } from 'vue-router';
+  import { useRouter } from 'vue-router';
   import { priceCompactFormatter } from '../../mixins/tools';
   import { useStockStore } from '../../store/stock';
 
   const { stock } = useStockStore()
   const router = useRouter()
-
 
   const data = computed(() => stock.data)
   const loading = computed(() => stock.loading)

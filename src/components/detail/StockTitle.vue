@@ -5,7 +5,7 @@
       <span v-font-size="15" class="code"> {{ stockData.code }} </span>
     </div>
     <v-btn icon variant="text" @click="iconToggle = !iconToggle">
-      <v-icon class="Icon">{{icon}}</v-icon>
+      <v-icon class="icon">{{icon}}</v-icon>
     </v-btn>
   </v-card-title>
 </template>
@@ -15,14 +15,15 @@
   import { computed, ref } from 'vue'
 
   const { stock } = useStockStore()
-  const stockData = computed(() => stock.data)
-  const iconToggle = ref<boolean>(false)
 
+  const iconToggle = ref<boolean>(false)
+  
+  const stockData = computed(() => stock.data)
   const icon = computed(() => iconToggle.value ? 'mdi-bookmark' : 'mdi-bookmark-outline')  
 </script>
 
 <style lang="scss" scoped>
-.Icon {
+.icon {
   transition: all 1s ease-in-out;
 }
 

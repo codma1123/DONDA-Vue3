@@ -24,7 +24,6 @@ export const useStockStore = defineStore('stock', () => {
   const store = useStockStore()
 
   // STATES
-
   const currentStock = ref<string>('')
 
   const market = reactive<AsyncState<MarketType>>(utils.initial())
@@ -63,17 +62,13 @@ export const useStockStore = defineStore('stock', () => {
       targetState.data = callback(res)      
       targetState.loading = false
 
-
     } catch (e) {
 
       targetState.error = e
       targetState.loading = false      
       
     }
-
   }
-
-
 
   return {
     request,
@@ -100,7 +95,6 @@ export const useStockStore = defineStore('stock', () => {
     market,
     marketValuation,
     searchTable,
-
 
     currentStock
   }

@@ -77,13 +77,12 @@
     if (store.currentStock === code) return
     
     stockPayloads.forEach(payload => store.request(payload(code)))
-    store.currentStock = code            
+    store.currentStock = code    
   }
-
-  onBeforeRouteUpdate((to: RouteLocationNormalized) => fetch(to.params.code as string))
   
-
   onMounted(() => fetch(route.params.code as string))
+  
+  onBeforeRouteUpdate((to: RouteLocationNormalized) => fetch(to.params.code as string))    
     
 </script>
 

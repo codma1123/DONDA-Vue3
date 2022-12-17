@@ -107,9 +107,6 @@
   const appear = ref<boolean>(false)
   const expandToggle = ref<boolean>(true)
 
-  const priceFormat = (price: number) => '₩' + Number(price.toFixed(0)).toLocaleString()
-  const volumeFormat = (price: number) => Number(price.toFixed(0)).toLocaleString()
-
   const computedChanges = computed<string>(() => {
     const change = stockData.changes
     return change > 0 ? '+' + change.toLocaleString() : '₩' + change.toLocaleString()
@@ -119,6 +116,9 @@
     const changes_ratio = stockData.changes_ratio as number
     return changes_ratio > 0 ? '+' + changes_ratio.toLocaleString() : '' + changes_ratio.toLocaleString()
   })
+  
+  const priceFormat = (price: number) => '₩' + Number(price.toFixed(0)).toLocaleString()
+  const volumeFormat = (price: number) => Number(price.toFixed(0)).toLocaleString()
 
   onMounted(() => {
     appear.value = false

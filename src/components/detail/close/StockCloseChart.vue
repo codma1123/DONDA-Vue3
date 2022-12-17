@@ -34,17 +34,16 @@
   import { useStockStore } from '../../../store/stock';
   import { myCrossHair } from '../../../plugins/chart';
 
-
   const { stockVolume, stock, stockGraphAll } = useStockStore()
   const { chartData } = defineProps<{ chartData: GraphAllType}>()
 
   const count = ref<number>(7)
   const chart = ref<Chart>()
 
-  const labels = computed<string[]>(() => Object.keys(chartData))
-  const data = computed<number[]>(() => Object.values(chartData))
+  const labels = computed(() => Object.keys(chartData))
+  const data = computed(() => Object.values(chartData))
   const volumeData = computed(() => Object.values(stockVolume.data))
-  const loading = computed<boolean>(() => !stock.loading && !stockGraphAll.loading)
+  const loading = computed((): boolean => !stock.loading && !stockGraphAll.loading)
 
   const options = {
     responsive: true,
@@ -54,11 +53,7 @@
       intersect: false,
     },
 
-    plugins: {
-      legend: { 
-        
-      },
-
+    plugins: {      
       tooltip: {
         intersect: true,
         mode: 'index',
@@ -70,15 +65,8 @@
         cornerRadius: 15,
         bodyFont: { size: 12 },
         boxPadding: 5,
-        callbacks: {                              
-          label: (ctx: any) => {
-            const line = '₩' + ctx.formattedValue
-            const bar = ctx.formattedValue
-            return ctx.datasetIndex ? bar : line
-          }
-        }
+        callbacks: { label: (ctx: any) => ctx.datasetIndex ? '₩' + ctx.formattedValue : ctx.formattedValue }
       },
-
 
       myCrossHair: true,
 
@@ -126,27 +114,18 @@
         type: 'linear',
         beginAtZero: false,
         position: 'right',
-        ticks: {
-          callback: (t: any) => priceCompactFormatter.format(t).slice(1)
-        },
-
-        grid: {
-          drawOnChartArea: false
-        }
+        ticks: { callback: (t: any) => priceCompactFormatter.format(t).slice(1) },
+        grid: { drawOnChartArea: false }
       }
     },
-
-    animation: { }
-    
   } as any
 
 
-  // hooks
-  
-  const renderChart = () => {    
-    const ctx = document.getElementById('closeChart') as HTMLCanvasElement    
+  // hooks  
+  const renderChart = (): void => {    
+    const ctx = document.getElementById('closeChart') as HTMLCanvasElement
     chart.value?.destroy()
-    chart.value = new Chart(ctx, {      
+    chart.value = new Chart(ctx, {
       data: { 
         labels: labels.value,
         datasets: [
@@ -174,15 +153,13 @@
       options,
       plugins: [myCrossHair]
     })
-
   }
 
-  const resetZoom = () => chart.value?.resetZoom()
+  const resetZoom = (): void => chart.value?.resetZoom()
   
   onMounted(() => renderChart())
 
   onUnmounted(() => chart.value?.destroy())
-
   
 </script>
 

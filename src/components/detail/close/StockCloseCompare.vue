@@ -9,7 +9,8 @@
         <v-chip 
           label
           :style="{ backgroundColor: content.comparePrice.per.includes('-') ? '#4169E1' : '#B22222'}"
-          class="chip">{{ content.text }}</v-chip>
+          class="chip"
+        >{{ content.text }}</v-chip>
       </div>
       <div class="textWrapper">
         {{ content.comparePrice.per }}%
@@ -34,7 +35,7 @@
     comparePrice: IComparePrice
   }
 
-  const { stockData } = defineProps<{ stockData: StockType}>()
+  const { stockData } = defineProps<{ stockData: StockType }>()
   const { stockGraphAll } = useStockStore()
 
   const chartData = computed(() => stockGraphAll.data)
