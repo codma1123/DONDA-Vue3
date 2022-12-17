@@ -48,7 +48,7 @@ export type GraphDefaultType = ISimpleStock
 export type GraphAllType = ISimpleStock
 export type EvaluationType = IStockEvaluationResponse
 export type EvaluationDailyType = IStockEvaluationDailyResponse
-export type SimilarType = IStockSimilarResponse
+export type SimilarType = IStockSimilarResponse[]
 export type NewsType = IStockNewsResponse
 
 export type StatementType = IDateValue

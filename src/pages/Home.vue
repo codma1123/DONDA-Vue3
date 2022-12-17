@@ -93,11 +93,11 @@
 
 <script setup lang="ts">
   import { ref, computed, onMounted } from "vue"
-  import { useLayout } from "../mixins/layout";
-  import { useStockStore } from "../store/stock"
-  import Observer from "../components/global/Observer.vue";
+  import { useLayout } from "@/mixins/layout";
+  import { useStockStore } from "@/store/stock"
+  import Observer from "@/components/global/Observer.vue";
 
-  import ProgressCircular from "../components/global/ProgressCircular.vue";
+  import ProgressCircular from "@/components/global/ProgressCircular.vue";
 
   const emit = defineEmits<{ (e: 'mount'): void }>()
 
