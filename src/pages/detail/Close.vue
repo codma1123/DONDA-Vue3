@@ -1,101 +1,16 @@
 <template>
   <div class="DetailLayout">    
 
+    <!-- Title -->
     <StockTitle />
-
-    <v-divider />
-  
-
+      
     <!-- Close -->
-    <v-card elevation="0" @click="expandToggle = !expandToggle">      
-      <div class="date"> 기준일 : {{ stockData.date }}</div>
-      <v-card-subtitle class="mt-2"> 종가</v-card-subtitle>
-      <v-card-text class="mt-5">
-        <span v-font-size="50">
-          <number
-            :from="0"
-            :to="stockData.close"
-            :format="priceFormat"
-            :duration="1"
-            :delay="0"
-            easing="Power4.easeOut"
-          />        
-        </span>   
-        <transition name="appear">
-          <span v-if="appear">
-            <span v-font-size="17" class="ml-2">
-              {{ computedChanges }}
-            </span>
-            <span>
-              ({{ computedChangeRatio }})
-            </span>
-          </span>
-        </transition>
-      </v-card-text>
-      <v-expand-transition v-if="expandToggle">          
-        <div class="d-flex flex-wrap">
-          <div class="price">
-            <v-card-subtitle> 고가 </v-card-subtitle>    
-            <span v-font-size="28" class="ml-5">
-              <number
-                :from="0"
-                :to="stockData.high"
-                :format="priceFormat"
-                :duration="2"
-                :delay="0"
-                easing="Power4.easeOut"
-              />   
-            </span>        
-          </div>
-          <div class="price">
-            <v-card-subtitle> 저가 </v-card-subtitle>    
-              <span v-font-size="28" class="ml-5">
-                <number
-                  :from="0"
-                  :to="stockData.low"
-                  :format="priceFormat"
-                  :duration="2"
-                  :delay="0"
-                  easing="Power4.easeOut"
-                />   
-              </span>        
-          </div>
-          <div class="price">
-            <v-card-subtitle class="mt-3"> 시가 </v-card-subtitle>    
-              <span v-font-size="28" class="ml-5">
-                <number
-                  :from="0"
-                  :to="stockData.open"
-                  :format="priceFormat"
-                  :duration="2.2"
-                  :delay="0"
-                  easing="Power4.easeOut"
-                />   
-              </span>        
-          </div>
-          <div class="price">
-            <v-card-subtitle class="mt-3"> 거래량 </v-card-subtitle>    
-            <span v-font-size="28" class="ml-5">
-              <number
-                :from="0"
-                :to="stockData.volume"
-                :format="volumeFormat"
-                :duration="2.3"
-                :delay="0"
-                easing="Power4.easeOut"
-              />   
-            </span>        
-          </div>
-        </div>      
-      </v-expand-transition>
-      <v-divider class="mt-5"/>
-    </v-card>
-
+    <StockCloses :stockData="stockData" />
 
     <!-- CloseChart -->
     <StockCloseChart v-if="loading" :chartData="chartData" />
 
-    <v-divider />
+    
 
 
     <!-- Compare -->
@@ -132,9 +47,12 @@
 <script setup lang="ts">
 
   import { computed, ref, onMounted } from 'vue'  
-  import StockCloseChart from '../../components/detail/close/StockCloseChart.vue';
   import { useStockStore } from '../../store/stock';
+
+  import StockCloseChart from '../../components/detail/close/StockCloseChart.vue';
   import StockTitle from '../../components/detail/StockTitle.vue'
+  import StockCloses from '../../components/detail/close/StockCloses.vue'
+
 
   interface IComparePrice {
     text: string
@@ -145,13 +63,6 @@
     text: string
     comparePrice: IComparePrice
   }
-
-  /**
-   * const
-   */
-
-
-
   
   /**
    * custom hook
@@ -213,9 +124,7 @@
    */
   onMounted(() => {
     appear.value = false
-    setTimeout(() => {      
-      appear.value = true
-    }, 1000)
+    setTimeout(() => { appear.value = true }, 1000)
   })
 
   
@@ -229,29 +138,7 @@ $margin: 1rem;
   margin-top: 55px;  
 }
 
-.price {
-  width: 180px;
-}
 
-.appear-enter-from {
-  opacity: 0
-}
-
-.appear-enter-to {
-  opacity: 1
-}
-
-.appear-enter-active {
-  transition: all 1s ease-out;
-}
-
-.date {
-  position: absolute;
-  right: 0px;
-  font-size: 12px;
-  opacity: .5;
-  margin-top: 10px;
-}
 
 .comparePriceWrapper {
   width: 150px;  

@@ -5,6 +5,7 @@
     @dblclick="resetZoom"
   >  
     <canvas id="closeChart"></canvas>
+
     <v-card-actions class="d-flex flex-column align-start" v-font-size="12">
       <span class="informationArea">
         <v-icon>mdi-information</v-icon> 
@@ -17,22 +18,20 @@
       <span class="informationArea">
         <v-icon>mdi-information</v-icon> 
         <span> 두번 탭하여 차트를 초기화 시킬 수 있습니다.</span>
-      </span>      
-      
+      </span>          
     </v-card-actions>
+    
   </v-card>
+  <v-divider />
 </template>
 
 <script setup lang="ts">
-  import { computed, onMounted, ref, watch } from 'vue';
+  import { computed, onMounted, ref } from 'vue';
   import { Chart } from 'chart.js'
   import { GraphAllType } from '../../../models/stock';
-  import { priceCompactFormatter, priceFormatter } from '../../../mixins/tools';
+  import { priceCompactFormatter } from '../../../mixins/tools';
   import { useStockStore } from '../../../store/stock';
   import { myCrossHair } from '../../../plugins/chart';
-
-  const volueTranslateValue = 40
-
 
 
   const { stockVolume } = useStockStore()
