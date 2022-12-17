@@ -7,7 +7,7 @@
   
       <!-- <v-card-item :title="stockData.date" /> -->
 
-    <v-card elevation="0" @click="expandToggle = !expandToggle">
+    <v-card elevation="0" @click="expandToggle = !expandToggle">      
       <div class="date"> 기준일 : {{ stockData.date }}</div>
       <v-card-subtitle class="mt-2"> 종가</v-card-subtitle>
       <v-card-text class="mt-5">
@@ -91,7 +91,31 @@
     </v-card>
 
 
-    <v-divider  class="mt-3"/>
+
+    <v-sheet class="px-2 mt-5 d-flex flex-wrap justify-space-around">
+
+      <div 
+        v-for="(content, i) in comparePriceIterator"
+        :key="i"
+        class="mt-1 d-flex align-center mr-3 comparePriceWrapper"        
+      >
+        <div 
+          class="chipWarpper"
+          :style="{ backgroundColor: content.comparePrice.per.includes('-') ? '#4169E1' : '#B22222'}"
+        >
+          <v-chip class="chip">{{ content.text }}</v-chip>
+        </div>
+        <div 
+          class="textWrapper"
+          :style="{ backgroundColor: content.comparePrice.per.includes('-') ? '#4169E1' : '#B22222'}"
+        >
+          {{ content.comparePrice.per }}%
+        </div>
+      </div>
+
+
+    </v-sheet>
+
 
     <StockCloseChart v-if="loading" :chartData="chartData" />
   </div>
@@ -104,11 +128,39 @@
   import { useStockStore } from '../../store/stock';
   import StockTitle from '../../components/detail/StockTitle.vue'
 
+  interface IComparePrice {
+    text: string
+    per: string
+  }
+
+  interface IComparePriceIterator {
+    text: string
+    comparePrice: IComparePrice
+  }
+
+  /**
+   * const
+   */
+
+
+
+  
+  /**
+   * custom hook
+   */
   const { stockGraphAll, stock } = useStockStore()
 
+  /**
+   * state
+   */
   const appear = ref<boolean>(false)
-  const expandToggle = ref<boolean>(false)
+  const expandToggle = ref<boolean>(true)
 
+
+
+  /**
+   * computed
+   */
   const chartData = computed(() => stockGraphAll.data)
   const loading = computed<boolean>(() => !stock.loading && !stockGraphAll.loading)
   const stockData = computed(() => stock.data)
@@ -123,9 +175,34 @@
     return changes_ratio > 0 ? '+' + changes_ratio.toLocaleString() : '' + changes_ratio.toLocaleString()
   })
 
+  const comparePriceIterator = computed<IComparePriceIterator[]>(() => [
+    { text: '1주전 대비', comparePrice: comparePrice(7) },
+    { text: '전달 대비', comparePrice: comparePrice(30) },
+    { text: '전분기 대비', comparePrice: comparePrice(120) },
+    { text: '전년 대비', comparePrice: comparePrice(360) },
+  ])
+
+
+  /**
+   * method
+   */
   const priceFormat = (price: number) => '₩' + Number(price.toFixed(0)).toLocaleString()
   const volumeFormat = (price: number) => Number(price.toFixed(0)).toLocaleString()
 
+  const comparePrice = (target: number): IComparePrice => {
+    const targetPrice = Object.values(chartData.value).at(target * (-1)) || 0
+    const origin = stockData.value.close
+
+    const text = targetPrice < origin ? '증가' : '감소'
+    const per = ((origin - targetPrice) * 100 / origin).toFixed(1)
+    return { text, per }    
+  }
+
+  
+
+  /**
+   * hook
+   */
   onMounted(() => {
     appear.value = false
     setTimeout(() => {      
@@ -166,6 +243,33 @@ $margin: 1rem;
   font-size: 12px;
   opacity: .5;
   margin-top: 10px;
+}
+
+.comparePriceWrapper {
+  width: 150px;  
+}
+
+.chipWarpper {
+
+  border-top-left-radius: 14px;
+  border-bottom-left-radius: 14px;
+
+  .chip {
+    min-width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.textWrapper {
+  padding: .25rem;
+  min-width: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top-right-radius: 14px;
+  border-bottom-right-radius: 14px;
 }
 
 
