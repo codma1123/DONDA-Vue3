@@ -5,7 +5,7 @@
     <!--  종목 개괄 -->
     <StockTitle />
 
-    <!-- <router-view /> -->
+    <v-divider />
 
     <!-- 시가총액 -->
     <StockMarcap />

@@ -1,5 +1,5 @@
 <template>
-  <v-card-title v-if="!stock.loading" class="d-flex justify-space-between"> 
+  <v-card-title v-if="!stock.loading" class="d-flex justify-space-between StockTitle"> 
     <div>
       <span v-font-size="30" class="font-weight-bold"> {{ stockData.name }} </span>
       <span v-font-size="15" class="code"> {{ stockData.code }} </span>
@@ -23,6 +23,12 @@
 </script>
 
 <style lang="scss" scoped>
+
+.StockTitle {
+  overflow: auto;
+  position: sticky !important;
+  top: 33px;
+}
 .icon {
   transition: all 1s ease-in-out;
 }

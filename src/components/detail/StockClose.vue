@@ -4,15 +4,18 @@
       v-if="(!loading && data)"
       class="CardLayout"
       color="cardlayout"
-      elevation="2"
+      elevation="0"
       @click="goRoute"
     >      
       <v-card-title class="innerTitle">        
-        <div class="d-flex align-center">
-          <v-icon class="mr-3" :color="trend.color" :icon="trend.icon" />
-          <span class="ml-4">             
+        <div class="d-flex justify-center">
+          <v-chip label variant="text">
+            <v-icon start class="mr-3" :color="trend.color" :icon="trend.icon" />
+            종가
+          </v-chip>
+          <div class="ml-11">             
             {{ priceFormatter.format(data.close) }}
-          </span>
+          </div>
         </div>
         <div v-if="enableLink" class="innerMore">
           주가 흐름 확인하기

@@ -65,7 +65,7 @@
         cornerRadius: 15,
         bodyFont: { size: 12 },
         boxPadding: 5,
-        callbacks: { label: (ctx: any) => ctx.datasetIndex ? '₩' + ctx.formattedValue : ctx.formattedValue }
+        callbacks: { label: (ctx: any) => ctx.datasetIndex === 0 ? '₩' + ctx.formattedValue : ctx.formattedValue }
       },
 
       myCrossHair: true,
@@ -138,7 +138,8 @@
             borderColor: '#1DE9B6',
             backgroundColor: '#fff',
             pointHitRadius: 50,
-            yAxisID: 'y'
+            yAxisID: 'y',
+            order: 1
           },
           {
             type: 'bar',
@@ -146,7 +147,8 @@
             data: volumeData.value,
             borderColor: 'rgb(201, 203, 207)',
             backgroundColor: 'rgba(201, 203, 207, 0.2)',
-            yAxisID: 'y1'
+            yAxisID: 'y1',
+            order: 2
           }
         ]
       },

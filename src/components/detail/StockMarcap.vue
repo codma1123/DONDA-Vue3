@@ -1,15 +1,18 @@
 <template>
-  <transition name="fade" :duration="1200">
+  <transition name="fade" :duration="1200">    
     <v-card 
       v-if="(!loading && data)"
       class="CardLayout"
       color="cardlayout"
-      elevation="2"
+      elevation="0"
       @click="goRoute"
-    >    
+    >          
       <v-card-title class="innerTitle">
-        <div class="d-flex align-center">
-          <v-icon class="mr-3">mdi-office-building-outline</v-icon>
+        <div class="d-flex">
+          <v-chip label variant="text">
+            <v-icon start class="mr-3">mdi-office-building-outline</v-icon> 
+            시가총액
+          </v-chip>
           <span class="ml-4">             
             {{ priceCompactFormatter.format(data.marcap) }}
           </span>
@@ -17,8 +20,7 @@
         <div class="innerMore">
           비슷한 기업 보기
         </div>
-      </v-card-title>
-      
+      </v-card-title>      
     </v-card>
   </transition>
 </template>
@@ -41,6 +43,7 @@
 </script>
 
 <style scoped lang="scss">
+
 .innerMore {
   text-align: end;
   top: 25px;

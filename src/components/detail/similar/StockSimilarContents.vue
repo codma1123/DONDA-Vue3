@@ -4,9 +4,6 @@
       <v-chip label>
         {{ stockData.sector }} 내 유사기업
       </v-chip>      
-      <span v-font-size="15">
-        
-      </span>
     </v-card-title>
     <v-card-text>
       <StockSimilarContent 
@@ -26,7 +23,7 @@
 
   const { similarContents, stock } = useStockStore()
 
-  const similarContentsData = computed(() => similarContents.data.slice(1))
+  const similarContentsData = computed(() => similarContents.data.slice(1, 6))
   const stockData = computed(() => stock.data)
   const loading = computed(() => !similarContents.loading && !stock.loading)
 

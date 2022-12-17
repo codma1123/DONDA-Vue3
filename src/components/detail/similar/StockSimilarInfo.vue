@@ -10,6 +10,7 @@
       label
       v-for="preFixer in preFixerIterator"
       :key="preFixer.type"
+      @click="route('/rank')"
     >
     {{ preFixer.type }} {{ preFixer.index}}위
     </v-chip>
@@ -32,16 +33,16 @@
         <v-card-subtitle class="mt-5">
           상장주식수
         </v-card-subtitle>
-        <v-card-text v-font-size="45">
+        <v-card-text v-font-size="35">
           {{ priceCompactFormatter.format(stockData.stocks).slice(1)}}
         </v-card-text>       
       </div>
 
       <div>
-        <v-card-subtitle class="mt-5 closeIcon" @click="goRoute">
+        <v-card-subtitle class="mt-5 closeIcon" @click="route(`/detail/${stockData.code}/close`)">
           종가 <v-icon>mdi-information</v-icon>
         </v-card-subtitle>
-        <v-card-text v-font-size="45">
+        <v-card-text v-font-size="35">
           {{ priceCompactFormatter.format(stockData.close)}}          
         </v-card-text>       
         
@@ -110,7 +111,7 @@ import { useRouter } from 'vue-router';
     return { index, type: rankTypeMap[rankType] }      
   }
 
-  const goRoute = () => router.push(`/detail/${stockData.value.code}/close`)
+  const route = (link: string) => router.push(link)
   
 </script>
 
