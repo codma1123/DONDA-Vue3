@@ -100,7 +100,6 @@
             borderColor: 'rgb(54, 162, 235)',
             borderSkipped: false,
             borderRadius: 3
-            
           }
         ]
       },

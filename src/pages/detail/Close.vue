@@ -1,5 +1,5 @@
 <template>
-  <div class="DetailLayout">    
+  <div class="DetailLayout">
 
     <!-- Title -->
     <StockTitle />

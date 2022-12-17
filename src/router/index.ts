@@ -29,6 +29,10 @@ const routes = [
   {
     path: '/detail/:code/close',
     component: () => import('../pages/detail/Close.vue')
+  },
+  {
+    path: '/detail/:code/similar',
+    component: () => import('../pages/detail/Similar.vue')
   }
 ]
 
