@@ -3,6 +3,7 @@
     class="CardLayout"    
     elevation="0"
     @dblclick="resetZoom"
+    v-if="loading"
   >  
     <canvas id="closeChart"></canvas>
 
@@ -20,7 +21,7 @@
         <span> 두번 탭하여 차트를 초기화 시킬 수 있습니다.</span>
       </span>          
     </v-card-actions>
-    
+
   </v-card>
   <v-divider />
 </template>
@@ -34,7 +35,7 @@
   import { myCrossHair } from '../../../plugins/chart';
 
 
-  const { stockVolume } = useStockStore()
+  const { stockVolume, stock, stockGraphAll } = useStockStore()
   const { chartData } = defineProps<{ chartData: GraphAllType}>()
 
   const count = ref<number>(20)
@@ -44,6 +45,7 @@
   const labels = computed<string[]>(() => Object.keys(chartData))
   const data = computed<number[]>(() => Object.values(chartData))
   const volumeData = computed(() => Object.values(stockVolume.data))
+  const loading = computed<boolean>(() => !stock.loading && !stockGraphAll.loading)
 
   const options = {
     responsive: true,
