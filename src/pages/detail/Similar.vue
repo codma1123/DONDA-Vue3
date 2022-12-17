@@ -2,6 +2,7 @@
   <div class="DetailLayout">
 
     <StockTitle />
+    
     <StockSimilarInfo />
   </div>
 </template>

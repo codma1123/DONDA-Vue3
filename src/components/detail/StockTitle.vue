@@ -2,7 +2,7 @@
   <v-card-title v-if="!stock.loading" class="d-flex justify-space-between"> 
     <div>
       <span v-font-size="30" class="font-weight-bold"> {{ stockData.name }} </span>
-      <span v-font-size="15" class="ml-2"> {{ stockData.code }} </span>
+      <span v-font-size="15" class="code"> {{ stockData.code }} </span>
     </div>
     <v-btn icon variant="text" @click="iconToggle = !iconToggle">
       <v-icon class="Icon">{{icon}}</v-icon>
@@ -24,5 +24,10 @@
 <style lang="scss" scoped>
 .Icon {
   transition: all 1s ease-in-out;
+}
+
+.code {
+  opacity: .8;
+  margin-left: 10px;
 }
 </style>

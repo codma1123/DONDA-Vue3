@@ -140,7 +140,7 @@ export interface IStockEvaluationResponse {
 
 
 type MarketType = 'KOSPI' | 'NASDAQ' | 'S&P500' | 'US1YT' | 'US5YT' | 'US10YT' | 'USD/KRW'
-type RankType = 'change_incr' | 'change_redu' | 'marcap' | 'volume'
+export type RankTypes = 'change_incr' | 'change_redu' | 'marcap' | 'volume'
 
 export type MarketResponse = {
   [date: string]: {
@@ -168,7 +168,7 @@ export type SearchTableResponse = {
 }
 
 export type RankResponse = {
-  [K in RankType]: (number | string)[][]
+  [K in RankTypes]: (number | string)[][]
 }
 
 
