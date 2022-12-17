@@ -34,6 +34,11 @@
 
   const options = {
     responsive: true,
+    stacked: false,
+    interaction: {
+      mode: 'index',
+      intersect: false,
+    },
 
     plugins: {
       legend: { 
@@ -54,7 +59,7 @@
         callbacks: {                              
           label: (ctx: any) => {
             const line = '₩' + ctx.formattedValue
-            const bar = (Number(ctx.formattedValue.split('.')[0].replace(',', '')) * 1000).toLocaleString()
+            const bar = ctx.formattedValue
             return ctx.datasetIndex ? bar : line
           }
         }
@@ -78,7 +83,7 @@
     },
 
     scales: {
-      x: {                 
+      x: {        
         grid: { display: false },
         min: labels.value.at(count.value * (-1)),
         ticks: {
@@ -90,13 +95,29 @@
           crossAlign: 'center',          
         }
       },
+
       y: { 
+        type: 'linear',
+        position: 'left',
         beginAtZero: false,
         grid: { display: false },
         ticks: {
           maxTicksLimit: 7,
-          color: 'white',
+          color: '#1DE9B6',
           callback: (t: number) => priceCompactFormatter.format(t),          
+        }
+      },
+
+      y1: {
+        type: 'linear',
+        beginAtZero: false,
+        position: 'right',
+        ticks: {
+          callback: (t: any) => priceCompactFormatter.format(t).slice(1)
+        },
+
+        grid: {
+          drawOnChartArea: false
         }
       }
     }
@@ -121,14 +142,16 @@
             tension: 0.3,
             borderColor: '#1DE9B6',
             backgroundColor: '#fff',
-            pointHitRadius: 50
+            pointHitRadius: 50,
+            yAxisID: 'y'
           },
           {
             type: 'bar',
             label: '거래량',
-            data: volumeData.value.map(v => v * 0.001),
+            data: volumeData.value,
             borderColor: 'rgb(201, 203, 207)',
             backgroundColor: 'rgba(201, 203, 207, 0.2)',
+            yAxisID: 'y1'
           }
         ]
       },
