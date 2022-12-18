@@ -18,7 +18,11 @@
           <div class="ml-11">             
           </div>
         </div>    
-      </v-card-title>      
+      </v-card-title>    
+      
+      <v-card-text>
+        <StockEvaluationChart />
+      </v-card-text>  
 
       <v-card-actions>
         <div class="innerMore-absolute">
@@ -33,6 +37,7 @@
   import { useStockStore } from '@/store/stock';
   import { computed } from 'vue';
   import { useRouter } from 'vue-router';
+  import StockEvaluationChart from '@/components/detail/StockEvaluationChart.vue';
 
   const router = useRouter()
   const { stockEvaluation, stock } = useStockStore()

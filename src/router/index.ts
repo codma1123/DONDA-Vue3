@@ -33,6 +33,10 @@ const routes = [
   {
     path: '/detail/:code/similar',
     component: () => import('../pages/detail/Similar.vue')
+  },
+  {
+    path: '/detail/:code/evaluation',
+    component: () => import('@/pages/detail/Evaluation.vue')
   }
 ]
 
