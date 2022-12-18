@@ -10,7 +10,7 @@
         <StockIndicatorChart />      
       </v-card-text>
       <v-card-actions class="innerAction">
-        <div class="innerMore"> 보조지표 확인하기</div>
+        <div class="innerMore-absolute"> 보조지표 확인하기</div>
       </v-card-actions>
     </v-card>
   </transition>
@@ -36,14 +36,7 @@
   justify-content: center;
 }
 
-.innerMore {
-  position: absolute;
-  right: 20px;  
-  bottom: 12px;
-  font-size: 10px;
-  opacity: .8;
-  cursor: pointer;
-}
+
 
 .fade-enter-active {
   .innerAction {
@@ -52,16 +45,4 @@
   }
 }
 
-.fade-enter-from {
-  .innerAction {
-    // transform: translateY(30px);
-    opacity: 0;
-  }
-}
-
-.fade-leave-active {
-  .innerAction {
-    transition: all 0.3s ease-in-out;
-  }
-}
 </style>

@@ -55,64 +55,11 @@
 </script>
 
 <style lang="scss" scoped>
-.innerMore {
-  text-align: end;
-  top: 25px;
-  right: 10px;  
-  font-size: 10px;
-  opacity: .8;
-  cursor: pointer;
-}
-
-.innerTitle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
 
 .fade-enter-active {
   .innerTitle {
     transition: all 0.3s ease-in-out;  
     transition-delay: .35s;
-  }
-
-  .innerMore {
-    transition: opacity 0.3s ease-in-out;
-    transition-delay: 1s;
-  }
-}
-
-.fade-enter-from {
-  .innerTitle {
-    transform: translateX(30px);
-    opacity: 0;
-  }
-
-  .innerMore {
-    opacity: 0;
-  }
-}
-
-// leave
-.fade-leave-active {
-  .innerTitle {
-    transition: all 0.3s ease-in-out;
-  }
-
-  .innerMore {
-    transition: opacity 0.3s ease-in-out;
-  }
-}
-
-.fade-leave-to {
-  .innerTitle {
-    transform: translateX(30px);
-    opacity: 0;
-  }
-
-  .innerMore {
-    transform: translateY(30px);
-    opacity: 0;
   }
 }
 </style>

@@ -115,4 +115,78 @@ $margin: 1rem;
 .stockCode {
   opacity: .6;
 }
+
+.innerTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.innerMore {
+  text-align: end;
+  top: 25px;
+  right: 10px;  
+  font-size: 10px;
+  opacity: .8;
+  cursor: pointer;
+}
+
+.innerMore-absolute {
+  position: absolute;
+  right: 20px;  
+  bottom: 12px;
+  font-size: 10px;
+  opacity: .8;
+  cursor: pointer;
+}
+
+
+// transition
+.fade-enter-active {
+  .innerTitle {
+    transition: all 0.3s ease-in-out;  
+    transition-delay: .25s;
+  }
+
+  .innerMore {
+    transition: opacity 0.3s ease-in-out;
+    transition-delay: 1s;
+  }
+}
+
+.fade-enter-from {
+  .innerTitle {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+
+  .innerMore {
+    opacity: 0;
+  }
+}
+
+.fade-leave-active {
+  .innerTitle {
+    transition: all 0.3s ease-in-out;
+  }
+
+  .innerMore {
+    transition: opacity 0.3s ease-in-out;
+  }
+}
+
+.fade-leave-to {
+  .innerTitle {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+
+  .innerMore {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+}
+
+
+
 </style>
