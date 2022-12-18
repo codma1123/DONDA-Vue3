@@ -73,7 +73,7 @@
 .fade-enter-active {
   .innerTitle {
     transition: all 0.3s ease-in-out;  
-    transition-delay: .25s;
+    transition-delay: .35s;
   }
 
   .innerMore {

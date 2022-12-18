@@ -12,6 +12,8 @@
 
     <!-- 종가 -->
     <StockClose enableLink/>
+  
+    <StockEvaluation />
 
     <!-- 보조지표 -->
     <StockIndicator />
@@ -62,6 +64,7 @@
   import StockNews from '@/components/detail/StockNews.vue'
   import StockIndicator from '@/components/detail/StockIndicator.vue'
   import StockTitle from '@/components/detail/StockTitle.vue'
+  import StockEvaluation from '@/components/detail/StockEvaluation.vue'
     
   const route = useRoute()  
   const store = useStockStore()

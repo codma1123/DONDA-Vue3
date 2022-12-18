@@ -12,20 +12,34 @@
       :key="preFixer.type"
       @click="route('/rank')"
     >
-    {{ preFixer.type }} {{ preFixer.index}}위
+      {{ preFixer.type }} {{ preFixer.index}}위
     </v-chip>
 
     <v-card-subtitle class="mt-5"> 시가총액 </v-card-subtitle>
 
     <v-card-text v-font-size="45">
-      {{ priceCompactFormatter.format(stockData.marcap)}}         
+      <number 
+        :from="0"
+        :to="stockData.marcap"
+        :format="priceFormat"
+        :duration="1"
+        :delay="0"
+        easing="Power4.easeOut"
+      />
     </v-card-text>
 
     <v-card-subtitle class="mt-5">
       거래대금
     </v-card-subtitle>
     <v-card-text v-font-size="45">
-      {{ priceCompactFormatter.format(stockData.amount)}}
+      <number 
+        :from="0"
+        :to="stockData.amount"
+        :format="priceFormat"
+        :duration="1.5"
+        :delay="0"
+        easing="Power4.easeOut"
+      />
     </v-card-text>       
 
     <div class="d-flex">
@@ -34,7 +48,14 @@
           상장주식수
         </v-card-subtitle>
         <v-card-text v-font-size="35">
-          {{ priceCompactFormatter.format(stockData.stocks).slice(1)}}
+          <number 
+            :from="0"
+            :to="stockData.stocks"
+            :format="amountFormat"
+            :duration="2"
+            :delay="0"
+            easing="Power4.easeOut"
+          />
         </v-card-text>       
       </div>
 
@@ -43,7 +64,14 @@
           종가 <v-icon>mdi-information</v-icon>
         </v-card-subtitle>
         <v-card-text v-font-size="35">
-          {{ priceCompactFormatter.format(stockData.close)}}          
+          <number 
+            :from="0"
+            :to="stockData.close"
+            :format="priceFormat"
+            :duration="1"
+            :delay="0"
+            easing="Power4.easeOut"
+          />
         </v-card-text>       
         
       </div>
@@ -112,6 +140,9 @@ import { useRouter } from 'vue-router';
   }
 
   const route = (link: string) => router.push(link)
+
+  const priceFormat = (price: number) => priceCompactFormatter.format(price).slice()
+  const amountFormat = (price: number) => priceCompactFormatter.format(price).slice(1)
   
 </script>
 
