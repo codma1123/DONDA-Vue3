@@ -8,7 +8,6 @@
 
     <StockEvaluationChart propKey="detail"/>
 
-    <v-divider />
 
     <StockEvaluationText />
 

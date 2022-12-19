@@ -5,9 +5,14 @@
 
     <v-divider />
 
+    <v-chip class="ml-3 mt-2" label size="small">
+      {{ stockData.sector }}
+    </v-chip>
+
     <v-chip 
-      class="ml-3 mt-3"
+      class="ml-3 mt-2"
       label
+      size="small"
       v-for="preFixer in preFixerIterator"
       :key="preFixer.type"
       @click="route('/rank')"
@@ -43,7 +48,7 @@
     </v-card-text>       
 
     <div class="d-flex">
-      <div>
+      <div class="MarcapContent">
         <v-card-subtitle class="mt-5">
           상장주식수
         </v-card-subtitle>
@@ -59,7 +64,7 @@
         </v-card-text>       
       </div>
 
-      <div>
+      <div class="MarcapContent">
         <v-card-subtitle class="mt-5 closeIcon" @click="route(`/detail/${stockData.code}/close`)">
           종가 <v-icon>mdi-information</v-icon>
         </v-card-subtitle>
@@ -72,8 +77,7 @@
             :delay="0"
             easing="Power4.easeOut"
           />
-        </v-card-text>       
-        
+        </v-card-text>               
       </div>
       
     </div>
@@ -104,7 +108,7 @@
   import { priceCompactFormatter } from '@/mixins/tools';  
   import { RankTypes } from '@/api/types';
   import _ from 'lodash';
-import { useRouter } from 'vue-router';
+  import { useRouter } from 'vue-router';
 
   const rankTypes = ["change_incr", "change_redu", "marcap", "volume"]
   type RankTypeKorean = '상승률' | '하락률' | '시가총액' | '거래량'
@@ -163,4 +167,7 @@ import { useRouter } from 'vue-router';
   margin-top: 10px;
 }
 
+.MarcapContent {
+  width: 190px;
+}
 </style>
