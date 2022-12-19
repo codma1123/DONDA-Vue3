@@ -2,7 +2,9 @@
   <v-card v-if="loading" elevation="0">
     <v-card-title>    
       <v-chip label>
-        {{ stockData.sector }} 내 유사기업
+        <span v-font-size="11">
+          {{ stockData.sector }} 내 유사기업
+        </span>
       </v-chip>      
     </v-card-title>
     <v-card-text>

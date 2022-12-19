@@ -4,21 +4,22 @@
     <div class="date"> 기준일 : {{ stockData.date }}</div>
 
     <v-divider />
-
-    <v-chip class="ml-3 mt-2" label size="small">
-      {{ stockData.sector }}
-    </v-chip>
-
-    <v-chip 
-      class="ml-3 mt-2"
-      label
-      size="small"
-      v-for="preFixer in preFixerIterator"
-      :key="preFixer.type"
-      @click="route('/rank')"
-    >
-      {{ preFixer.type }} {{ preFixer.index}}위
-    </v-chip>
+    <v-sheet width="300">
+      <v-chip class="ml-3 mt-2" label size="small">
+        {{ stockData.sector }}
+      </v-chip>
+  
+      <v-chip 
+        class="ml-3 mt-2"
+        label
+        size="small"
+        v-for="preFixer in preFixerIterator"
+        :key="preFixer.type"
+        @click="push('/rank')"
+      >
+        {{ preFixer.type }} {{ preFixer.index}}위
+      </v-chip>
+    </v-sheet>
 
     <v-card-subtitle class="mt-5"> 시가총액 </v-card-subtitle>
 
@@ -65,7 +66,7 @@
       </div>
 
       <div class="MarcapContent">
-        <v-card-subtitle class="mt-5 closeIcon" @click="route(`/detail/${stockData.code}/close`)">
+        <v-card-subtitle class="mt-5 closeIcon" @click="push(`/detail/${stockData.code}/close`)">
           종가 <v-icon>mdi-information</v-icon>
         </v-card-subtitle>
         <v-card-text v-font-size="35">
@@ -143,7 +144,7 @@
     return { index, type: rankTypeMap[rankType] }      
   }
 
-  const route = (link: string) => router.push(link)
+  const push = (link: string) => router.push(link)
 
   const priceFormat = (price: number) => priceCompactFormatter.format(price).slice()
   const amountFormat = (price: number) => priceCompactFormatter.format(price).slice(1)

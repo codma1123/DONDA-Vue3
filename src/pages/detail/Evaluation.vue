@@ -6,8 +6,9 @@
 
     <StockEvaluationInfo />
 
-    <StockEvaluationChart propKey="detail"/>
-
+    <v-card class="CardLayout">
+      <StockEvaluationChart propKey="detail"/>
+    </v-card>
 
     <StockEvaluationText />
 
@@ -34,6 +35,11 @@ $margin: 1rem;
 .DetailLayout {
   margin: $margin;
   margin-top: 55px;  
+}
+
+.CardLayout {
+  padding-top: 0px;
+  margin-top: 5px;
 }
 
 

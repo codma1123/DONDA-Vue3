@@ -4,12 +4,9 @@
   <v-card class="" elevation="0">
 
     <v-sheet class="EvaluationChartSheet">      
-      <v-divider vertical />
-      <div>
-        {{ evaluation.value }}% 
-        <div :class="[evaluation.textClass, 'font-weight-bold']" v-font-size="40">
-          {{ evaluation.text  }}
-        </div>
+      {{ evaluation.value }}% 
+      <div :class="evaluation.textClass" v-font-size="40">
+        {{ evaluation.text  }}
       </div>
     </v-sheet>
 
@@ -19,23 +16,35 @@
       현재 주가 <v-icon>mdi-information</v-icon>
     </v-card-subtitle>
     <v-card-text v-font-size="35">
-      {{ stockClose }}
+      <number 
+        :from="0"
+        :to="stockClose"
+        :format="priceFormat"
+        :duration="1.2"
+        :delay="0"
+        easing="Power4.easeOut"
+      />
     </v-card-text>
 
     <v-card-subtitle class="mt-5">
       적정 주가      
     </v-card-subtitle>
     <v-card-text v-font-size="35">
-      {{ evaluationClose }}
+      <number 
+        :from="0"
+        :to="evaluationClose"
+        :format="priceFormat"
+        :duration="1.4"
+        :delay="0"
+        easing="Power4.easeOut"
+      />
     </v-card-text>
-
-
 
   </v-card>
 </template>
 
 <script setup lang="ts">
-  import { priceFormatter } from '@/mixins/tools';
+  import { priceCompactFormatter, priceFormatter } from '@/mixins/tools';
   import { useStockStore } from '@/store/stock';
   import { computed } from 'vue'
   import { useRouter } from 'vue-router';
@@ -44,9 +53,9 @@
   const { stock, stockEvaluation } = useStockStore()
   const router = useRouter()
 
-  const stockClose = computed(() => priceFormatter.format(stock.data.close))
+  const stockClose = computed(() => stock.data.close)
   const date = computed(() => stock.data.date)
-  const evaluationClose = computed(() => priceFormatter.format(stockEvaluation.data['S-rim'].at(-1) as number))
+  const evaluationClose = computed(() => stockEvaluation.data['S-rim'].at(-1) as number)
 
   const evaluation = computed(() => {
     const close = stock.data.close
@@ -62,6 +71,7 @@
 
   
   const push = (link: string) => router.push(link)
+  const priceFormat = (price: number) => '₩' + Number(price.toFixed(0)).toLocaleString()
   
 </script>
 
@@ -83,7 +93,7 @@
   height: 110px;
   font-size: 30px;
   text-align: center;  
-  display: flex;
+  font-weight: bold;
 }
 
 .informationArea {
