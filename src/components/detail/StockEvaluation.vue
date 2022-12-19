@@ -44,7 +44,7 @@
 
   const loading = computed(() => !stockEvaluation.loading && !stock.loading)
 
-  const goRoute = () => router.push(`/stock/${stock.data.code}/evaluation`)
+  const goRoute = () => router.push(`/detail/${stock.data.code}/evaluation`)
   
 </script>
 

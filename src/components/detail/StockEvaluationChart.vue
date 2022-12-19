@@ -1,5 +1,5 @@
 <template>
-  <canvas id="evaluationChart"></canvas>
+    <canvas :id="propKey" class="evaluationChart"></canvas>
 </template>
 
 <script setup lang="ts">
@@ -15,6 +15,9 @@
   const evaluationChartData = computed<number>(() => stockEvaluation.data['S-rim'].at(-1) as number)
 
   const chart = ref<Chart>()
+  const { propKey } = withDefaults(defineProps<{ propKey?: string }>(), {
+    propKey: 'evaluation'
+  })
 
   const options = {
     indexAxis: 'y',
@@ -44,8 +47,9 @@
   } as any
 
   const renderChart = () => {
-    const ctx = document.getElementById('evaluationChart') as HTMLCanvasElement
-    
+    console.log(propKey)
+    const ctx = document.getElementById(propKey) as HTMLCanvasElement
+        
     chart.value = new Chart(ctx, {
       data: {
         labels: ['현재주가', '적정주가'],
@@ -71,7 +75,7 @@
 </script>
 
 <style>
-#evaluationChart {
+.evaluationChart {
   max-height: 110px;
 }
 </style>
