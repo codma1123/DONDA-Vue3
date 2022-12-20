@@ -28,6 +28,7 @@ import {
   indicatorSectorDailyParser,
   statementParser
 } from "@/store/callbacks"
+import { StateType } from '@/models/stock';
 
 export type StoreStates = 
 'stock' | 
@@ -64,7 +65,7 @@ StatementType
 export type AsyncPayload = {
   state: StoreStates,
   url: string
-  callback: (response: AxiosResponse<ResponseType>) => any
+  callback: (response: AxiosResponse<ResponseType>) => StateType
 }
 
 const createAsyncPayload = (state: StoreStates, url: string, callback?: any): AsyncPayload => ({

@@ -1,6 +1,6 @@
 import { MarketType, MarketValuationType, RankType, SearchTableType } from './../models/stock';
 import axios from 'axios';
-import { defineStore, StoreDefinition } from "pinia";
+import { defineStore } from "pinia";
 import { reactive, ref } from "vue";
 import { DondaType, EvaluationDailyType, EvaluationType, GraphAllType, GraphDefaultType, IndicatorDailyType, IndicatorSectorDailyType, IndicatorSectorType, IndicatorType, NewsType, SimilarType, StatementAllType, StatementType, StateType, StocksType, StockType, VolumeType } from "../models/stock";
 import { AsyncPayload } from './payload';
@@ -8,7 +8,7 @@ import { ResponseType } from '@/api/types';
 
 export type AsyncState<T = StateType, E = any> = {
   loading: boolean
-  data: T 
+  data: T
   error: E | unknown
 }
 
@@ -50,9 +50,7 @@ export const useStockStore = defineStore('stock', () => {
   const recommendStocks = reactive<AsyncState<StocksType>>(utils.initial())
   const recommendStockCodes = reactive<AsyncState<any>>(utils.initial())
 
-  const asset = reactive({})
   
-
   const request = async (payload: AsyncPayload): Promise<void> => {    
 
     const { state, url, callback } = payload    
