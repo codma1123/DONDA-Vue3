@@ -60,7 +60,7 @@ body {
 // }
 
 // .fade-enter-active {
-//   transition: all .3s ease;
+//   transition: all .1s ease;
 // }
 
 .ProgressCircular {

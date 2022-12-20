@@ -3,7 +3,9 @@
     <v-card       
       class="CardLayout"
       color="cardlayout"
+      elevation="0"
       v-if="loading"
+      @click="push(`/detail/${stock.data.code}/statement`)"
     >
       <v-card-title class="innerTitle">        
         <div class="d-flex justify-center">
@@ -26,10 +28,11 @@
   import { computed } from 'vue';
   import _ from 'lodash'
   import { StatementType } from '@/models/stock';
-  import ProgressCircular from '../global/ProgressCircular.vue';
+  import { NavigationFailure, useRouter } from 'vue-router';
 
 
   const { statement, stock } = useStockStore()
+  const router = useRouter()
 
   const loading = computed<boolean>(() => !statement.loading && !stock.loading)
   const statementData = computed<StatementType>(() => statement.data)
@@ -38,16 +41,14 @@
   
   const error = computed(() => statement.error)
 
+  const push = (link: string): Promise<void | NavigationFailure | undefined> => router.push(link)
+
+
 </script>
 
 <style scoped lang="scss">
 .CardLayout {  
 }
 
-.fade-enter-active {
-  .innerTitle {
-    transition: all 0.3s ease-in-out;  
-    transition-delay: .35s;
-  }
-}
+
 </style>

@@ -142,6 +142,9 @@ export interface IStockEvaluationResponse {
 type MarketType = 'KOSPI' | 'NASDAQ' | 'S&P500' | 'US1YT' | 'US5YT' | 'US10YT' | 'USD/KRW'
 export type RankTypes = 'change_incr' | 'change_redu' | 'marcap' | 'volume'
 
+export type StatementType = 'asset' | 'cash' | 'current_asset' | 'ebitda' | 'equity' | 'equity_non' | 'gross_margin' |    
+  'liability' | 'profit' | 'profit_non' | 'revenue'
+
 export type MarketResponse = {
   [date: string]: {
     [marketType in MarketType]: {
