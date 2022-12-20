@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { onMounted, ref, VueElement } from 'vue';
+  import { onMounted, ref } from 'vue';
   import { useLayout } from './mixins/layout';
   import NavBar from './pages/NavBar.vue'
   import { getMarketValuation, getRank, getSearchTable, getTodayMarket } from './store/payload';

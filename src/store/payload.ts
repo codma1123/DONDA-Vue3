@@ -53,8 +53,9 @@ export type StoreStates =
 'stockVolume' |
 'similarContents' |
 'statement' | 
-'stockDonda' |
+'stockDonda' | 
 StatementType
+
 
 
 

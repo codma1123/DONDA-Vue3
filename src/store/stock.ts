@@ -4,10 +4,11 @@ import { defineStore, StoreDefinition } from "pinia";
 import { reactive, ref } from "vue";
 import { DondaType, EvaluationDailyType, EvaluationType, GraphAllType, GraphDefaultType, IndicatorDailyType, IndicatorSectorDailyType, IndicatorSectorType, IndicatorType, NewsType, SimilarType, StatementAllType, StatementType, StateType, StocksType, StockType, VolumeType } from "../models/stock";
 import { AsyncPayload } from './payload';
+import { ResponseType } from '@/api/types';
 
-export type AsyncState<T extends StateType, E = any> = {
+export type AsyncState<T = StateType, E = any> = {
   loading: boolean
-  data: T
+  data: T 
   error: E | unknown
 }
 
@@ -19,7 +20,7 @@ const utils = {
   })
 }
 
-export const useStockStore: StoreDefinition = defineStore('stock', () => {
+export const useStockStore = defineStore('stock', () => {
 
   const store = useStockStore()
 
@@ -48,25 +49,27 @@ export const useStockStore: StoreDefinition = defineStore('stock', () => {
   const stockDonda = reactive<AsyncState<DondaType>>(utils.initial())
   const recommendStocks = reactive<AsyncState<StocksType>>(utils.initial())
   const recommendStockCodes = reactive<AsyncState<any>>(utils.initial())
+
+  const asset = reactive({})
   
-  // ACTIONS
+
   const request = async (payload: AsyncPayload): Promise<void> => {    
 
     const { state, url, callback } = payload    
 
-    const targetState = store[state]
+    const targetState: AsyncState = (store as any)[state]
     targetState.loading = true
 
     try {
-      const res = await axios.get(url)         
+      const response = await axios.get<ResponseType>(url)
       
-      targetState.data = callback(res)      
+      targetState.data = callback(response)
       targetState.loading = false
 
-    } catch (e) {
+    } catch (error: unknown) {
 
-      targetState.error = e
-      targetState.loading = false      
+      targetState.error = error
+      targetState.loading = false
       
     }
   }

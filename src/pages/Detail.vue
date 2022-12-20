@@ -71,7 +71,7 @@
   import StockStatement from '@/components/detail/StockStatement.vue'
     
   const route = useRoute()  
-  const store = useStockStore()
+  const { request, currentStock } = useStockStore()
   const param = computed(() => route.params.id as string)
 
   const convertPrice = (price: number) => priceFormatter.format(price)
@@ -81,10 +81,10 @@
   const getPriceColor = (price: number) => price > 0 ? 'text-red' : 'text-blue'
 
   const fetch = (code: string): void => {    
-    if (store.currentStock === code) return
+    if (currentStock.value === code) return
     
-    stockPayloads.forEach(payload => store.request(payload(code)))
-    store.currentStock = code    
+    stockPayloads.forEach(payload => request(payload(code)))
+    currentStock.value = code    
   }
   
   onMounted(() => fetch(route.params.code as string))
