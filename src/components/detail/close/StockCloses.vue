@@ -109,7 +109,7 @@
 
   const computedChanges = computed<string>(() => {
     const change = stockData.changes
-    return change > 0 ? '+' + change.toLocaleString() : '₩' + change.toLocaleString()
+    return change > 0 ? '+' + change.toLocaleString() : change.toLocaleString()
   })
 
   const computedChangeRatio = computed<string>(() => {

@@ -1,4 +1,6 @@
 <template>
+  <v-divider />
+  
   <v-card elevation="0">
     <v-card-title v-font-size="35" :class="[evaluation.textClass, 'mt-2']">
       <!-- {{ evaluation.value }}% {{ evaluation.text  }} -->

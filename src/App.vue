@@ -46,9 +46,9 @@
 }
 body {
   background-color: #111111;
-  font-family: 'Hahmlet', serif;
+  // font-family: 'Hahmlet', serif;
   font-family: 'Noto Sans KR', sans-serif;
-  font-family: 'Poppins', sans-serif;
+  // font-family: 'Poppins', sans-serif;
 }
 
 .fade-enter-from {

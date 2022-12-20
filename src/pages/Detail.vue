@@ -17,6 +17,8 @@
 
     <!-- 보조지표 -->
     <StockIndicator />
+
+    <StockStatement />
     
     <!-- 재무제표 -->
     <!-- <StockFinance /> -->
@@ -65,6 +67,7 @@
   import StockIndicator from '@/components/detail/StockIndicator.vue'
   import StockTitle from '@/components/detail/StockTitle.vue'
   import StockEvaluation from '@/components/detail/StockEvaluation.vue'
+  import StockStatement from '@/components/detail/StockStatement.vue'
     
   const route = useRoute()  
   const store = useStockStore()

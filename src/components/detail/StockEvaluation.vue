@@ -3,9 +3,8 @@
     <v-card 
       class="CardLayout" 
       color="cardlayout" 
-      elevation="0"
-      v-if="loading"
-      @click="goRoute"
+      elevation="0"      
+      @click="push"
     >
       <v-card-title class="innerTitle">        
         <div class="d-flex justify-center">
@@ -20,17 +19,20 @@
         </div>    
       </v-card-title>    
       
-      <v-card-text>
+      <v-card-text v-if="loading && !_.isEmpty(stockEvaluation.data)">
         <StockEvaluationChart />
       </v-card-text>  
+      <v-card-text v-else>
+        데이터가 없습니다.
+      </v-card-text>
 
       <v-card-actions>
         <div class="innerMore-absolute">
           적정주가 확인하기
         </div>
       </v-card-actions>
-    </v-card>
-  </transition>
+    </v-card> 
+  </transition>  
 </template>
 
 <script setup lang="ts">
@@ -38,13 +40,14 @@
   import { computed } from 'vue';
   import { useRouter } from 'vue-router';
   import StockEvaluationChart from '@/components/detail/StockEvaluationChart.vue';
+  import _ from 'lodash'
 
   const router = useRouter()
   const { stockEvaluation, stock } = useStockStore()
 
   const loading = computed(() => !stockEvaluation.loading && !stock.loading)
 
-  const goRoute = () => router.push(`/detail/${stock.data.code}/evaluation`)
+  const push = () => router.push(`/detail/${stock.data.code}/evaluation`)
   
 </script>
 

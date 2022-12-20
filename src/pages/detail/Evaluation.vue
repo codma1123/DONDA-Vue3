@@ -6,10 +6,12 @@
 
     <StockEvaluationInfo />
 
-    <v-card class="CardLayout">
+    <v-card class="CardLayout" elevation="0">
       <StockEvaluationChart propKey="detail"/>
     </v-card>
 
+
+    <!-- <StockEvaluationLineChart /> -->
     <StockEvaluationText />
 
 
@@ -19,14 +21,20 @@
 <script setup lang="ts">
 
   import { computed, onMounted } from 'vue'
-  import StockEvaluationChart from '@/components/detail/StockEvaluationChart.vue';
-  import { useStockStore } from '@/store/stock';
-  import StockTitle from '@/components/detail/StockTitle.vue';
-  import StockEvaluationInfo from '@/components/detail/evaluation/EvaluationInfo.vue';
+  import StockEvaluationChart from '@/components/detail/StockEvaluationChart.vue'
+  import { useStockStore } from '@/store/stock'
+  import StockTitle from '@/components/detail/StockTitle.vue'
+  import StockEvaluationInfo from '@/components/detail/evaluation/EvaluationInfo.vue'
+  import StockEvaluationLineChart from '@/components/detail/evaluation/EvaluationLineChart.vue'
   import StockEvaluationText from '@/components/detail/evaluation/EvaluationText.vue'
+  
 
-  const { stockEvaluation, stock } = useStockStore()
+  const { stockEvaluation, stockEvaluationDaily, stock, stockGraphAll } = useStockStore()
   const loading = computed(() => !stockEvaluation.loading && !stock.loading)
+
+  onMounted(() => {
+    console.log(stockEvaluation)
+  })
   
 </script>
 

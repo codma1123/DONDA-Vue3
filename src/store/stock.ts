@@ -5,14 +5,14 @@ import { reactive, ref } from "vue";
 import { DondaType, EvaluationDailyType, EvaluationType, GraphAllType, GraphDefaultType, IndicatorDailyType, IndicatorSectorDailyType, IndicatorSectorType, IndicatorType, NewsType, SimilarType, StatementAllType, StatementType, StateType, StocksType, StockType, VolumeType } from "../models/stock";
 import { AsyncPayload } from './payload';
 
-export type AsyncState<T extends StateType = any> = {
+export type AsyncState<T extends StateType, E = any> = {
   loading: boolean
   data: T
-  error: any
+  error: E | unknown
 }
 
 const utils = {
-  initial: <T extends StateType>(initialData?: any): AsyncState<T> => ({
+  initial: <T extends StateType, E = any>(initialData?: any): AsyncState<T, E> => ({
     loading: true,
     data: initialData ?? null,
     error: null

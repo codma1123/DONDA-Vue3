@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 
-  import { onMounted, ref, computed } from 'vue'
+  import { onMounted, ref, computed, onBeforeUnmount } from 'vue'
   import { Chart } from 'chart.js'
   import { useStockStore } from '@/store/stock';
   import { priceCompactFormatter } from '@/mixins/tools';
@@ -29,6 +29,7 @@
     scales: {
       x: {
         beginAtZero: false,
+        border: { display: false },
         grid: { color: (ctx: any) => ctx.tick.value === 0 ? '#fff': '' },              
         ticks: {
           display: false,
@@ -43,11 +44,14 @@
           color: 'white'
         }
       }
+    },
+
+    animation: {
+      duration: 500
     }
   } as any
 
   const renderChart = () => {
-    console.log(propKey)
     const ctx = document.getElementById(propKey) as HTMLCanvasElement
         
     chart.value = new Chart(ctx, {
