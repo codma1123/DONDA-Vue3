@@ -5,7 +5,8 @@
       class="CardLayout"
       color="cardlayout"
     >
-      {{ labels }}
+      {{ labels[0] }}
+      {{ datas[0 ]}}
     </v-card>
   </transition>
 
@@ -15,13 +16,15 @@
   import { useStockStore } from '@/store/stock';
   import { computed } from 'vue';
   import _ from 'lodash'
+import { StatementType } from '@/models/stock';
 
 
   const { statement, stock } = useStockStore()
 
   const loading = computed<boolean>(() => !statement.loading && !stock.loading)
-  const statementData = computed(() => statement.data)
-  const labels = computed(() => [...Object.keys(statement.data).reverse()])
+  const statementData = computed<StatementType>(() => statement.data)
+  const labels = computed<string[]>(() => statement.data.date)
+  const datas = computed<any>(() => statement.data.data)
   
   const error = computed(() => statement.error)
 

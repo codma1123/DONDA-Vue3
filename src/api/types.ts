@@ -51,7 +51,7 @@ export type StockStatementElement = {
 }
 
 export interface IStockStatementResponse {
-  [date: string]: StockStatementElement
+  [date: string]: [StockStatementElement]
 }
 
 export interface IStockEvaluationDailyResponse {

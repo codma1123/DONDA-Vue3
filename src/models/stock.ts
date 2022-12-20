@@ -5,7 +5,7 @@ import {
   IStockSimilarResponse,
   IStockNewsResponse,
   IStockIndicatorSectorResponse,
-  MarketValuationResponse, RankResponse, SearchTableResponse 
+  MarketValuationResponse, RankResponse, SearchTableResponse, StockStatementElement 
 } from "../api/types"
 
 export type MarketTypes = 'kospi' | 'nasdaq' | 'usdkrw' | 'snp500' | 'us1yt' | 'us5yt' | 'us10yt' | 'usdkrw'
@@ -51,7 +51,10 @@ export type EvaluationDailyType = IStockEvaluationDailyResponse
 export type SimilarType = IStockSimilarResponse[]
 export type NewsType = IStockNewsResponse
 
-export type StatementType = IDateValue
+export type StatementType = {
+  date: string[],
+  data: StockStatementElement[]
+}
 export type StatementAllType = ISimpleStock
 export type IndicatorType = IDateValue
 export type IndicatorSectorType = IStockIndicatorSectorResponse

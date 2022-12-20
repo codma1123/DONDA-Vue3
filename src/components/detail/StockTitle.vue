@@ -1,13 +1,15 @@
 <template>
-  <v-card-title v-if="!stock.loading" class="d-flex justify-space-between StockTitle"> 
-    <div>
-      <span v-font-size="30" class="font-weight-bold"> {{ stockData.name }} </span>
-      <span v-font-size="15" class="code"> {{ stockData.code }} </span>
-    </div>
-    <v-btn icon variant="text" @click="iconToggle = !iconToggle">
-      <v-icon class="icon">{{icon}}</v-icon>
-    </v-btn>
-  </v-card-title>
+  <v-sheet elevation="0" class="StockTitle">
+    <v-card-title v-if="!stock.loading" class="d-flex justify-space-between"> 
+      <div>
+        <span v-font-size="30" class="font-weight-bold"> {{ stockData.name }} </span>
+        <span v-font-size="15" class="code"> {{ stockData.code }} </span>
+      </div>
+      <v-btn icon variant="text" @click="iconToggle = !iconToggle">
+        <v-icon class="icon">{{icon}}</v-icon>
+      </v-btn>
+    </v-card-title>
+  </v-sheet>
 </template>
 
 <script setup lang="ts">
@@ -27,7 +29,8 @@
 .StockTitle {
   overflow: auto;
   position: sticky !important;
-  top: 33px;
+  top: 45px;
+  z-index: 1000;
 }
 .icon {
   transition: all 1s ease-in-out;
