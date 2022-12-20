@@ -16,8 +16,9 @@
     <StockEvaluation />
 
     <!-- 보조지표 -->
-    <StockIndicator />
+    <!-- <StockIndicator /> -->
 
+    <!-- 재무제표 -->
     <StockStatement />
     
     <!-- 재무제표 -->
@@ -170,11 +171,11 @@ $margin: 1rem;
 
 .fade-leave-active {
   .innerTitle {
-    transition: all 0.3s ease-in-out;
+    // transition: all 0.001s ease-in-out;
   }
 
   .innerMore {
-    transition: opacity 0.3s ease-in-out;
+    // transition: opacity 0.001s ease-in-out;
   }
 }
 

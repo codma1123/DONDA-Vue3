@@ -1,22 +1,32 @@
 <template>
-  <transition>
-    <v-card 
-      v-if="loading && !_.isEmpty(statementData)"
+  <transition name="fade" :duration="2200">
+    <v-card       
       class="CardLayout"
       color="cardlayout"
+      v-if="loading"
     >
-      {{ labels[0] }}
-      {{ datas[0 ]}}
-    </v-card>
-  </transition>
+      <v-card-title class="innerTitle">        
+        <div class="d-flex justify-center">
+          <v-chip label variant="text">
+            <v-icon start class="mr-3" icon="mdi-cash-register"/>
+            재무제표
+          </v-chip>          
+        </div>
+        <div class="innerMore">
+          재무제표 자세히보기
+        </div>
 
+      </v-card-title>            
+    </v-card>    
+  </transition>
 </template>
 
 <script setup lang="ts">
   import { useStockStore } from '@/store/stock';
   import { computed } from 'vue';
   import _ from 'lodash'
-import { StatementType } from '@/models/stock';
+  import { StatementType } from '@/models/stock';
+  import ProgressCircular from '../global/ProgressCircular.vue';
 
 
   const { statement, stock } = useStockStore()
@@ -30,6 +40,14 @@ import { StatementType } from '@/models/stock';
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.CardLayout {  
+}
 
+.fade-enter-active {
+  .innerTitle {
+    transition: all 0.3s ease-in-out;  
+    transition-delay: .35s;
+  }
+}
 </style>
