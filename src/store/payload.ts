@@ -14,11 +14,12 @@ import {
   getMarketValuationUrl,
   getStockUrl,
   getTodayMarketUrl,
-  getStockStatementUrl
+  getStockStatementUrl,
+  getStockStatementAllUrl
 } from '@/api/api';
 
 import { AxiosResponse } from "axios"
-import { IStockGraphResponse, ResponseType, } from "@/api/types"
+import { IStockGraphResponse, ResponseType, StatementType } from "@/api/types"
 import { 
   rankParser, 
   todayMarketParser, 
@@ -51,7 +52,12 @@ export type StoreStates =
 'searchTable' |
 'stockVolume' |
 'similarContents' |
-'statement'
+'statement' | 
+'stockDonda' |
+StatementType
+
+
+
 
 
 export type AsyncPayload = {
@@ -84,6 +90,7 @@ const getStockVolume = (code: string) => createAsyncPayload('stockVolume', getSt
 const getStockSimilarContents = (code: string) => createAsyncPayload('similarContents', getStockSimilarContentsUrl(code))
 
 const getStockStatement = (code: string) => createAsyncPayload('statement', getStockStatementUrl(code), statementParser)
+const getStockStatmentAll = (code: string, statementType: StatementType) => createAsyncPayload(statementType, getStockStatementAllUrl(code, statementType))
 
 
 
