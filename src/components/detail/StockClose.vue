@@ -50,6 +50,8 @@
     }
   })
 
+  
+  
   const goRoute = () => enableLink && router.push(route.fullPath + '/close')
 
 </script>

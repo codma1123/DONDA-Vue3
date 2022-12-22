@@ -92,7 +92,7 @@ const getStockVolume = (code: string) => createAsyncPayload('stockVolume', getSt
 const getStockSimilarContents = (code: string) => createAsyncPayload('similarContents', getStockSimilarContentsUrl(code))
 
 const getStockStatement = (code: string) => createAsyncPayload('statement', getStockStatementUrl(code), statementParser)
-const getStockStatmentAll = (code: string, statementType: StatementType) => createAsyncPayload(statementType, getStockStatementAllUrl(code, statementType))
+// const getStockStatmentAll = (code: string, statementType: StatementType) => createAsyncPayload(statementType, getStockStatementAllUrl(code, statementType))
 
 
 

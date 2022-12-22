@@ -2,7 +2,6 @@ import { createRouter, createWebHashHistory, createWebHistory } from "vue-router
 import Home from '../pages/Home.vue'
 import Market from '../pages/Market.vue'
 
-
 const routes = [
   {
     path: '/', 
@@ -37,6 +36,10 @@ const routes = [
   {
     path: '/detail/:code/evaluation',
     component: () => import('@/pages/detail/Evaluation.vue')
+  },
+  {
+    path: '/detail/:code/statement',
+    component: () => import('@/pages/detail/Statement.vue')
   }
 ]
 
