@@ -33,7 +33,7 @@
   const loading = computed(() => !stockEvaluation.loading && !stock.loading)
 
   onMounted(() => {
-    console.log(stockEvaluation)
+    
   })
   
 </script>
