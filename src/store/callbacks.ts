@@ -103,6 +103,7 @@ export const indicatorSectorDailyParser = (response: AxiosResponse<IStockIndicat
 
 export const statementParser = (response: AxiosResponse<IStockStatementResponse>): StatementType => {
   const date = Object.keys(response.data)
+  console.log(response.data)
   return {
     date,
     data: date.map(key => response.data[key][0])
