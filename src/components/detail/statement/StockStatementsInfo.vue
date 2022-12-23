@@ -23,6 +23,7 @@
   import { useStockStore } from '@/store/stock';
   import { computed, onMounted } from 'vue'
   import _ from 'lodash'
+  import * as utils from '@/utils'
 
   type StatementTypes = 'type' |
   'asset' |
@@ -52,14 +53,11 @@
     const removedKeys = keys.filter(key => !banish.includes(key))
     
     return removedKeys.map((key: StatementTypes): StatementContents => ({
-      type: toPascalCase(key),
+      type: utils.toPascalCase(key),
       chartData: statement.data.data.map(v => v[key] as number)
     }))
 
   })
-
-  const toPascalCase = (type: string): string => type
-    .replace(/(^\w|_\w)/g, text => text.replace(/_/, '').toUpperCase())
 
 </script>
 
