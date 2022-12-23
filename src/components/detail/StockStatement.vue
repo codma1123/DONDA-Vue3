@@ -4,8 +4,8 @@
       class="CardLayout"
       color="cardlayout"
       elevation="0"
-      v-if="loading"
       @click="push(`/detail/${stock.data.code}/statement`)"
+      v-if="loading"
     >
       <v-card-title class="innerTitle">        
         <div class="d-flex justify-center">
@@ -31,15 +31,10 @@
   import { NavigationFailure, useRouter } from 'vue-router';
 
 
-  const { statement, stock } = useStockStore()
+  const { stock } = useStockStore()
   const router = useRouter()
+  const loading = computed(() => !stock.loading)
 
-  const loading = computed<boolean>(() => !statement.loading && !stock.loading)
-  const statementData = computed<StatementType>(() => statement.data)
-  const labels = computed<string[]>(() => statement.data.date)
-  const datas = computed<any>(() => statement.data.data)
-  
-  const error = computed(() => statement.error)
 
   const push = (link: string): Promise<void | NavigationFailure | undefined> => router.push(link)
 

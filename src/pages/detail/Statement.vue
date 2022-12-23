@@ -11,7 +11,7 @@
 <script setup lang="ts">
 
   import StockTitle from '@/components/detail/StockTitle.vue'
-  import StockStatement from '@/components/detail/statement/StockStatements.vue'
+  import StockStatement from '@/components/detail/statement/StockStatementsInfo.vue'
 
 </script>
 
