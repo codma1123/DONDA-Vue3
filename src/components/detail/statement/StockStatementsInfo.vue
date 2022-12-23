@@ -9,11 +9,16 @@
       elevation="0"
       v-for="statementContent in statementContents" :key="statementContent.type"
     >
-      <v-card-title>
+      <v-card-title v-font-size="35" class="font-weight-bold">
         {{ statementContent.type }}
       </v-card-title>
       <v-card-text>
-        {{ statementContent.chartData }}
+        <StockStatementSimpleChart 
+          :type="statementContent.type"
+          :propKey="statementContent.type" 
+          :labels="labels"
+          :chartData="statementContent.chartData"
+        />
       </v-card-text>
     </v-sheet>
   </div>
@@ -24,6 +29,7 @@
   import { computed, onMounted } from 'vue'
   import _ from 'lodash'
   import * as utils from '@/utils'
+  import StockStatementSimpleChart from '@/components/detail/statement/StockStatementSimpleChart.vue';
 
   type StatementTypes = 'type' |
   'asset' |
@@ -45,8 +51,12 @@
 
   const banish = ['equity_non', 'profit_non']
 
+
   const { statement, stock } = useStockStore()
-  const loading = computed(() => !statement.loading && !stock.loading)
+
+  const loading = computed(() => !statement.loading && !stock.loading && !_.isEmpty(statement.data))
+  const labels = computed<string[]>(() => statement.data.date)
+  
 
   const statementContents = computed<StatementContents[]>(() => {
     const keys = Object.keys(statement.data.data[0]).slice(1) as StatementTypes[]

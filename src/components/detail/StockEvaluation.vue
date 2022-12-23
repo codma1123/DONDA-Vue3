@@ -5,6 +5,7 @@
       color="cardlayout" 
       elevation="0"      
       @click="push"
+      v-if="loading && !_.isEmpty(stockEvaluation.data)"
     >
       <v-card-title class="innerTitle">        
         <div class="d-flex justify-center">
@@ -19,13 +20,10 @@
         </div>    
       </v-card-title>    
       
-      <v-card-text v-if="loading && !_.isEmpty(stockEvaluation.data)">
+      <v-card-text>
         <StockEvaluationChart />
       </v-card-text>  
-      <v-card-text v-else>
-        데이터가 없습니다.
-      </v-card-text>
-
+      
       <v-card-actions>
         <div class="innerMore-absolute">
           적정주가 확인하기
