@@ -19,17 +19,23 @@ import { Chart } from 'chart.js'
   const chart = ref<Chart>()
 
   const options = {
+
     plugins: {
-      legend: { display: false }
+      legend: { display: false },
+      tooltip: {
+        
+      }
     },
 
     scales: {
       y: {
+        display: false,
+        beginAtZero: false,
         border: { display: false },
         grid: { display: false },
         ticks: {
           color: 'white',
-          callback: (ctx: number) => priceCompactFormatter.format(ctx)
+          callback: (ctx: number) => priceCompactFormatter.format(ctx).slice(1)
         }
       },
 
@@ -53,7 +59,8 @@ import { Chart } from 'chart.js'
         datasets: [{      
           label: type,    
           type: 'bar',
-          data: chartData
+          data: chartData,
+          backgroundColor: '#1DE9B6',
         }]
       },
       options

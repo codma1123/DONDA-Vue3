@@ -1,12 +1,10 @@
-import { NavigationFailure, useRouter } from "vue-router"
+import { NavigationFailure, useRouter, Router } from "vue-router"
 
-export const customRouter = () => {
+export const useCustomRouter = () => {
 
-  const router = useRouter()
+  const router: Router = useRouter()
 
-  const push = (link: string): Promise<void | NavigationFailure | undefined> => router.push(link)
-
-  return {
-    push
+  return { 
+    push: (link: string): Promise<void | NavigationFailure | undefined> => router.push(link)
   }
 }
