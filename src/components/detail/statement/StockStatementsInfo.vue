@@ -7,20 +7,20 @@
       class="CardLayout"       
       elevation="0"
       v-for="(statementContent, index) in statementContents"
-      :key="statementContent.type"            
+      @click="expands[index] = !expands[index]"
+      :key="statementContent.type"       
     >
       <v-card-title v-font-size="35" class="font-weight-bold">
         {{ statementContent.type }}
       </v-card-title>
 
-      <v-card-text class="mt-3">
         <StockStatementSimpleChart 
           :type="statementContent.type"
           :propKey="statementContent.type" 
           :labels="labels"
           :chartData="statementContent.chartData"
         />
-      </v-card-text>
+
 
       <v-expand-transition>
         <div v-show="expands[index]">
@@ -31,12 +31,6 @@
           </v-card-text>
         </div>
       </v-expand-transition>
-
-      <v-card-actions>
-        <v-btn @click="expands[index] = !expands[index]">
-          클릭~
-        </v-btn>
-      </v-card-actions>
 
     </v-card>
     
@@ -86,15 +80,11 @@
 
     expands.value = keys.map(_ => false)
 
-    const contents = removedKeys.map((key: StatementTypes): StatementContents => ({
+    return removedKeys.map((key: StatementTypes): StatementContents => ({
       type: utils.toPascalCase(key),
       chartData: [...statement.data.data.map(v => v[key] as number).reverse()],
       expand: false
     }))
-
-    
-    
-    return contents
 
   })
 
@@ -105,6 +95,10 @@
 <style scoped>
 .CardLayout {
   border-radius: 5px;
+}
+
+.ChartLayout {
+  
 }
 
 </style>

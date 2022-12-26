@@ -100,7 +100,6 @@ export const stockPayloads = [
   getStock,
   getStockEvaluation,
   getStockGraphAll,
-  getStockNews,
   getStockIndicator,
   getStockIndicatorSector,
   getStockIndicatorDaily,
@@ -108,7 +107,8 @@ export const stockPayloads = [
   getStockVolume,
   getStockSimilarContents,
   getStockEvaluationDaily,
-  getStockStatement
+  getStockStatement,
+  getStockNews,
 ]
 
 export {

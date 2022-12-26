@@ -1,10 +1,10 @@
 <template>
-  <canvas :id="propKey"></canvas>
+  <canvas :id="propKey" class="StockStatementSimpleChart"></canvas>
 </template>
 
 <script setup lang="ts">
   import { priceCompactFormatter } from '@/mixins/tools';
-import { Chart } from 'chart.js'
+  import { Chart } from 'chart.js'
   import { ref, onMounted } from 'vue';
 
   interface Prop {
@@ -20,11 +20,12 @@ import { Chart } from 'chart.js'
 
   const options = {
 
+    responsive: true,
+    maintainAspectRatio: true,
+
     plugins: {
       legend: { display: false },
-      tooltip: {
-        
-      }
+      tooltip: { }
     },
 
     scales: {
@@ -60,20 +61,20 @@ import { Chart } from 'chart.js'
           label: type,    
           type: 'bar',
           data: chartData,
-          backgroundColor: '#1DE9B6',
+          backgroundColor: 'rgba(75, 192, 192, 0.3)',
+          borderColor: 'rgb(75, 192, 192)',
+          borderWidth: 2
         }]
       },
       options
     })
-
   }
 
-  onMounted(() => {
-    renderChart()
-  })
+  onMounted(() => renderChart())
 
 </script>
 
 <style scoped>
-
+.StockStatementSimpleChart {
+}
 </style>

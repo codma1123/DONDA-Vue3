@@ -42,8 +42,5 @@
 </script>
 
 <style scoped lang="scss">
-.CardLayout {  
-}
-
 
 </style>

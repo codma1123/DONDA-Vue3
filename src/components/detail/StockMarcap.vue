@@ -1,5 +1,5 @@
 <template>
-  <transition name="fade" :duration="1200">    
+  <transition name="fade" :duration="1200"> 
     <v-card 
       v-if="(!loading && data)"
       class="CardLayout"
