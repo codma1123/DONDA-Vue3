@@ -43,7 +43,7 @@ const routes = [
   },
   {
     path: '/detail/:code/news',
-    component: () => import('@/pages/detial/News.vue')
+    component: () => import('@/pages/detail/News.vue')
   }
 ]
 

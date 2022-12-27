@@ -41,13 +41,17 @@
   import StockNewsContent from '@/components/detail/StockNewsContent.vue';
   import ProgressCircular from '@/components/global/ProgressCircular.vue';
   import Observer from '@/components/global/Observer.vue';
+  import { useCustomRouter } from '@/mixins/customRouter';
+  import router from '@/router';
 
   const contentsCount = ref<number>(3)
   const contentCountLoad = ref<boolean>(true)
 
-  const { news } = useStockStore()
+  const { news, stock } = useStockStore()
+  const { push } = useCustomRouter()
   const contents = computed(() => news.data?.slice(0, contentsCount.value))
   const loading = computed(() => !news.loading)
+  
 
   const loadMore = (): void => {        
     if(contentsCount.value > news.data.length - 5) {
@@ -63,8 +67,11 @@
     })
   }
 
-  const goRoute = () => {}
-  
+  const goRoute = () => {
+    const code = `/detail/${stock.data.code}/news`
+    push(code)
+  }
+    
 </script>
 
 <style scoped>
