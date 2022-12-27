@@ -5,9 +5,9 @@
       <StockTitle />
 
       <v-divider />
-      
+
       <StockNewsContent 
-        v-for="(content, i) in contents"
+        v-for="(content, i) in contents.slice(0, contentsCount)"
         :key="i"
         :content="content"
       />
@@ -26,9 +26,10 @@
   import StockNewsContent from '@/components/detail/StockNewsContent.vue'
   import ProgressCircular from '@/components/global/ProgressCircular.vue'
   import StockTitle from '@/components/detail/StockTitle.vue'
+  import Observer from '@/components/global/Observer.vue';
 
   const { news, stock } = useStockStore()
-  const contentsCount = ref<number>(3)
+  const contentsCount = ref<number>(5)
   const contentCountLoad = ref<boolean>(true)
 
   const loading = computed(() => !news.loading && !stock.loading)
@@ -43,6 +44,7 @@
     new Promise(resolve => {
         setTimeout(() => {
         contentsCount.value += 3
+        console.log('tetst')
         resolve(contentsCount.value)
       }, 500)      
     })
