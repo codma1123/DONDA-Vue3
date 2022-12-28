@@ -48,8 +48,7 @@
   const contentCountLoad = ref<boolean>(true)
 
   const { news, stock } = useStockStore()
-  const { push } = useCustomRouter()
-  const contents = computed(() => news.data?.slice(0, contentsCount.value))
+  const { push } = useCustomRouter()  
   const loading = computed(() => !news.loading)
   
 
