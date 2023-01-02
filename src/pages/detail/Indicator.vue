@@ -1,6 +1,9 @@
 <template>
   <div class="DetailLayout" v-if="loading">
+
     <StockTitle /> 
+
+    <IndicatorInfo />
   </div>
 </template>
 
@@ -8,6 +11,7 @@
   import StockTitle from '@/components/detail/StockTitle.vue';
   import { useStockStore } from '@/store/stock';
   import { computed } from 'vue'
+  import IndicatorInfo from '@/components/detail/indicator/IndicatorInfo.vue'
 
   const { stock, indicator, indicatorSector, indicatorDaily, indicatorSectorDaily } = useStockStore()
 
