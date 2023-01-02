@@ -97,6 +97,7 @@ const getStockStatement = (code: string) => createAsyncPayload('statement', getS
 
 
 export const stockPayloads = [
+  getStockNews,
   getStock,
   getStockEvaluation,
   getStockGraphAll,
@@ -108,7 +109,6 @@ export const stockPayloads = [
   getStockSimilarContents,
   getStockEvaluationDaily,
   getStockStatement,
-  getStockNews,
 ]
 
 export {

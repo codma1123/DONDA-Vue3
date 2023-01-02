@@ -1,11 +1,15 @@
 <template>  
-  <transition name="fade" :duration="4000">
+  <transition name="fade" :duration="4000">    
     <v-card
       class="CardLayout IndicatorCardLayout"
       color="cardlayout"    
       link
       v-if="loading"
     >      
+      <v-card-title class="innerTitle">
+        
+      </v-card-title>
+
       <v-card-text class="d-flex align-cetner justify-center mt-1">
         <StockIndicatorChart />      
       </v-card-text>
@@ -28,7 +32,7 @@
 
 <style scoped lang="scss">
 .IndicatorCardLayout {
-  height: 250px;  
+  height: 280px;  
 }
 
 .innerAction {

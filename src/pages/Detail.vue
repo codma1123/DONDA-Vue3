@@ -12,58 +12,34 @@
 
     <!-- 종가 -->
     <StockClose enableLink/>
-  
+
+    <!-- 적정주가 -->
     <StockEvaluation />
 
     <!-- 보조지표 -->
-    <!-- <StockIndicator /> -->
+    <StockIndicator />
 
     <!-- 재무제표 -->
     <StockStatement />
-    
-    <!-- 재무제표 -->
-    <!-- <StockFinance /> -->
 
-    <!-- 유사종목 -->
-    <!-- <StockSimilar /> -->
-    
     <!-- 종목뉴스 -->
     <StockNews />
 
+    <!-- 기타 -->
     <Etcs />
 
-
-
-    <!-- <v-card 
-      class="CardLayout" 
-      color="cardlayout"
-      elevation="2"
-      link    
-      v-if="(!_.isEmpty(stockEvaluation.data) && !stockEvaluation.loading)"
-    >
-      <EvaluationChart           
-        :chartData="stockEvaluation.data"
-      />                        
-    </v-card> -->
-
-    <!-- <StockNews /> -->
   </div> 
     
 </template>
 
 <script setup lang="ts">
-  import { computed, onMounted, toRefs, watch } from 'vue';
+  import { onMounted } from 'vue';
   import * as _ from 'lodash'
   import { useRoute, onBeforeRouteUpdate, RouteLocationNormalized } from 'vue-router';
   
   import { useStockStore } from '@/store/stock';
   import { stockPayloads } from '@/store/payload'
-  import { priceFormatter, priceCompactFormatter } from '@/mixins/tools';
 
-  import ProgressCircular from '@/components/global/ProgressCircular.vue';
-  import EvaluationChart from '@/components/detail/evaluation/EvaluationChart.vue'
-
-  import StockInfo from '@/components/detail/StockInfo.vue';
   import StockMarcap from '@/components/detail/StockMarcap.vue';
   import StockClose from '@/components/detail/StockClose.vue'
   import StockNews from '@/components/detail/StockNews.vue'
@@ -75,14 +51,7 @@
     
   const route = useRoute()  
   const store = useStockStore()
-  const param = computed(() => route.params.id as string)
-
-  const convertPrice = (price: number) => priceFormatter.format(price)
-  const convertCompactPrice = (price: number) => priceCompactFormatter.format(price)
-
-  const getPrefixer = (price: number) => price > 0 ? '+' + price.toLocaleString() : price.toLocaleString()
-  const getPriceColor = (price: number) => price > 0 ? 'text-red' : 'text-blue'
-
+  
   const fetch = (code: string): void => {    
     if (store.currentStock === code) return
     
@@ -92,7 +61,7 @@
   
   onMounted(() => fetch(route.params.code as string))
   
-  onBeforeRouteUpdate((to: RouteLocationNormalized) => fetch(to.params.code as string))    
+  onBeforeRouteUpdate((to: RouteLocationNormalized) => fetch(to.params.code as string))
     
 </script>
 

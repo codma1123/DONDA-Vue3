@@ -65,7 +65,7 @@
       }, 500)      
     })
   }
-
+ 
   const goRoute = () => {
     const code = `/detail/${stock.data.code}/news`
     push(code)
