@@ -5,7 +5,7 @@
 <script setup lang="ts">
 
   import { Chart } from 'chart.js'
-  import { onMounted, computed, ref } from 'vue'
+  import { onMounted, computed, ref, onUpdated } from 'vue'
   import { useStockStore } from '@/store/stock';
 
   const options = computed(() => ({
@@ -52,6 +52,7 @@
       duration: 2000
     },
   }))
+
 
   const { indicator, indicatorDaily, indicatorSector, indicatorSectorDaily, stock } = useStockStore()
   const labels = ['EPS', 'BPS', 'ROE']

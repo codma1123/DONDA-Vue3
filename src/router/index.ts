@@ -42,6 +42,10 @@ const routes = [
     component: () => import('@/pages/detail/Statement.vue')
   },
   {
+    path: '/detail/:code/indicator',
+    component: () => import('@/pages/detail/Indicator.vue')
+  },
+  {
     path: '/detail/:code/news',
     component: () => import('@/pages/detail/News.vue')
   }

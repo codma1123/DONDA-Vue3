@@ -3,8 +3,8 @@
     <v-card
       class="CardLayout IndicatorCardLayout"
       color="cardlayout"    
-      link
-      v-if="loading"
+      @click="push(`/detail/${route.params.param}/indicator`)"
+      v-if="loading"      
     >      
       <v-card-title class="innerTitle">        
         <v-chip label variant="text">
@@ -27,8 +27,14 @@
 
 <script setup lang="ts">
   import { computed } from 'vue'
-  import { useStockStore } from '@/store/stock';
-  import StockIndicatorChart from '@/components/detail/StockIndicatorChart.vue';
+  import { useStockStore } from '@/store/stock'
+  import StockIndicatorChart from '@/components/detail/StockIndicatorChart.vue'
+  import { useCustomRouter } from '@/mixins/customRouter';
+  import { useRoute } from 'vue-router';
+
+  const { push } = useCustomRouter()
+  const route = useRoute()
+  
 
   const { indicator, indicatorSector, indicatorDaily, indicatorSectorDaily } = useStockStore()
   const loading = computed<boolean>(() => !indicator.loading && !indicatorSector.loading && !indicatorSectorDaily.loading && !indicatorDaily.loading)
