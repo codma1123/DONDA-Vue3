@@ -6,9 +6,14 @@
       link
       v-if="loading"
     >      
-      <v-card-title class="innerTitle">
-        
-      </v-card-title>
+      <v-card-title class="innerTitle">        
+        <v-chip label variant="text">
+          <v-icon start class="mr-3">
+            mdi-cash-plus
+          </v-icon>
+          보조지표
+        </v-chip>
+      </v-card-title>    
 
       <v-card-text class="d-flex align-cetner justify-center mt-1">
         <StockIndicatorChart />      

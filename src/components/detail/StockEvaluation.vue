@@ -8,16 +8,12 @@
       v-if="loading && !_.isEmpty(stockEvaluation.data)"
     >
       <v-card-title class="innerTitle">        
-        <div class="d-flex justify-center">
-          <v-chip label variant="text">
-            <v-icon start class="mr-3">
-              mdi-chart-gantt
-            </v-icon>
-            적정주가
-          </v-chip>
-          <div class="ml-11">             
-          </div>
-        </div>    
+        <v-chip label variant="text">
+          <v-icon start class="mr-3">
+            mdi-chart-gantt
+          </v-icon>
+          적정주가
+        </v-chip>
       </v-card-title>    
       
       <v-card-text>
