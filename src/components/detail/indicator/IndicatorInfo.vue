@@ -6,13 +6,31 @@
     elevation="0"
   >
     <!-- EPS -->
-  <IndicatorSingleChart 
-    propId="EPS"
-    :title="title"
-    :labels="labels"
-    :chartData="epsChartData"
-    :sectorData="epsSectorData"
-  />  
+    <IndicatorSingleChart 
+      propId="EPS"
+      :title="title"
+      :labels="labels"
+      :chartData="epsChartData"
+      :sectorData="epsSectorData"
+    />  
+
+    <!-- BPS -->
+    <IndicatorSingleChart 
+      propId="BPS"
+      :title="title"
+      :labels="labels"
+      :chartData="bpsChartData"
+      :sectorData="bpsSectorData"
+    />  
+
+    <!-- ROE -->
+    <IndicatorSingleChart 
+      propId="ROE"
+      :title="title"
+      :labels="labels"
+      :chartData="roeChartData"
+      :sectorData="roeSectorData"
+    />  
 
   </v-card>
 </template>
@@ -29,6 +47,10 @@ import { useStockStore } from '@/store/stock'
 
   const epsChartData = computed<number[]>(() => createChartData('eps'))
   const epsSectorData = computed<number[]>(() => createSectorData('sector_eps'))
+  const bpsChartData = computed<number[]>(() => createChartData('bps'))
+  const bpsSectorData = computed<number[]>(() => createSectorData('sector_bps'))
+  const roeChartData = computed<number[]>(() => createChartData('roe'))
+  const roeSectorData = computed<number[]>(() => createSectorData('sector_roe'))
 
 
   const createChartData = (indicatorType: string) => [...indicator.data[indicatorType].value].reverse()
