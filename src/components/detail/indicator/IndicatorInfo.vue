@@ -1,6 +1,7 @@
 <template>
 
   <v-divider />
+
   <v-card 
     class="CardLayout" 
     elevation="0"
@@ -37,7 +38,7 @@
 
 <script setup lang="ts">
   import { IndicatorSectorType } from '@/models/stock';
-import { useStockStore } from '@/store/stock'
+  import { useStockStore } from '@/store/stock'
   import { computed } from 'vue';
   import IndicatorSingleChart from './IndicatorSingleChart.vue';
 
@@ -52,14 +53,9 @@ import { useStockStore } from '@/store/stock'
   const roeChartData = computed<number[]>(() => createChartData('roe'))
   const roeSectorData = computed<number[]>(() => createSectorData('sector_roe'))
 
-
   const createChartData = (indicatorType: string) => [...indicator.data[indicatorType].value].reverse()
   const createSectorData = (indicatorType: keyof IndicatorSectorType) => [...indicatorSector.data[indicatorType]].reverse() as number[]
-
-
   
-
-
 </script>
 
 <style scoped lang="scss">
