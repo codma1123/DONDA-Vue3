@@ -7,7 +7,7 @@
     elevation="0"
   >
     <!-- EPS -->
-    <IndicatorSingleChart 
+    <IndicatorInfo 
       propId="EPS"
       :title="title"
       :labels="labels"
@@ -16,7 +16,7 @@
     />  
 
     <!-- BPS -->
-    <IndicatorSingleChart 
+    <IndicatorInfo 
       propId="BPS"
       :title="title"
       :labels="labels"
@@ -25,7 +25,7 @@
     />  
 
     <!-- ROE -->
-    <IndicatorSingleChart 
+    <IndicatorInfo 
       propId="ROE"
       :title="title"
       :labels="labels"
@@ -41,6 +41,7 @@
   import { useStockStore } from '@/store/stock'
   import { computed } from 'vue';
   import IndicatorSingleChart from './IndicatorSingleChart.vue';
+  import IndicatorInfo from './IndicatorInfo.vue'
 
   const { stock, indicator, indicatorSector, indicatorDaily, indicatorSectorDaily } = useStockStore()
   const labels = computed<string[]>(() => [...indicator.data.eps.date].reverse())
