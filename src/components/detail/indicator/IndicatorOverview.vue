@@ -1,5 +1,5 @@
 <template>
-  <IndicatorOverviewChart />
+  <!-- <IndicatorOverviewChart /> -->
 </template>
 
 <script setup lang="ts">

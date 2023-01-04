@@ -3,7 +3,6 @@
   import { onMounted, ref } from 'vue';
   import { Chart } from 'chart.js' 
 
-
   const chart = ref<Chart | null>()
 
   const options = {} as any
@@ -21,7 +20,7 @@
         }]
       },
       options
-    })
+    }) 
   }
 
   onMounted(() => renderChart())

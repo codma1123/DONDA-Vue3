@@ -5,7 +5,7 @@
 
     <IndicatorOverview />
 
-    <IndicatorInfo />
+    <IndicatorInfos />
   </div>
 </template>
 
@@ -13,7 +13,7 @@
   import StockTitle from '@/components/detail/StockTitle.vue';
   import { useStockStore } from '@/store/stock';
   import { computed } from 'vue'
-  import IndicatorInfo from '@/components/detail/indicator/IndicatorInfo.vue'
+  import IndicatorInfos from '@/components/detail/indicator/IndicatorInfos.vue'
   import IndicatorOverview from '@/components/detail/indicator/IndicatorOverview.vue'
 
   const { stock, indicator, indicatorSector, indicatorDaily, indicatorSectorDaily } = useStockStore()

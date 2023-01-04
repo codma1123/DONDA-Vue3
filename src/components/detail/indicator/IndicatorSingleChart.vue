@@ -14,7 +14,21 @@
   const chart = ref<Chart | null>()
 
   const options = {
+    scales: {
+      x: {
+        grid: { display: false },
+        ticks: {
+          color: 'white',
+        }
+      },
 
+      y: {
+        grid: { display: false },
+        ticks: {
+          color: 'white'
+        }
+      }
+    }
   } as any
 
 
@@ -40,16 +54,10 @@
     })
   }
 
-  // hook
   onMounted(() => renderChart())
 
 </script>
 
 <template>
   <canvas :id="propId"></canvas>
-
 </template>
-
-<style scoped>
-
-</style>
