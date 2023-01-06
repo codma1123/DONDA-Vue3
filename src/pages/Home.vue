@@ -6,7 +6,7 @@
       class="MarketCard"
       theme="dark"
       color="cardlayout"
-      elevation="3"
+      elevation="0"
     >
       <v-card-title> 시장 동향 </v-card-title>
       <v-card-subtitle> 주식 시장이 어떻게 변하고 있는지 알아보세요. </v-card-subtitle>      
@@ -24,7 +24,7 @@
       class="MarketCard"      
       theme="dark"   
       color="cardlayout"   
-      elevation="3"
+      elevation="0"
     >
       <v-card-title> 추천 종목 </v-card-title>
       <v-card-subtitle class="vCardSubtitle"> DONDA 가 기업 가치가 상대적으로 저평가된 종목들을 추천해줍니다.</v-card-subtitle>
@@ -58,7 +58,7 @@
       class="MarketCard"      
       theme="dark"
       color="#333333"
-      elevation="2"
+      elevation="0"
       @click="$router.push(`/detail/${rankContent.code}`)"
     >
       <v-card-subtitle v-font-size="15" class="mt-2"> 
@@ -136,7 +136,7 @@ $margin-size : 1rem;
 .MarketCard {  
   margin: $margin-size;
   padding-top: 10px;
-  border-radius: 1.2rem;
+  border-radius: .5rem;
           
   transition: all .5s ease-in-out;
   cursor: pointer;

@@ -2,38 +2,35 @@
 
   <v-divider />
 
-  <v-card 
-    class="CardLayout" 
-    elevation="0"
-  >
-    <!-- EPS -->
-    <IndicatorInfo 
-      propId="EPS"
-      :title="title"
-      :labels="labels"
-      :chartData="epsChartData"
-      :sectorData="epsSectorData"
-    />  
 
-    <!-- BPS -->
-    <IndicatorInfo 
-      propId="BPS"
-      :title="title"
-      :labels="labels"
-      :chartData="bpsChartData"
-      :sectorData="bpsSectorData"
-    />  
+      <!-- EPS -->
+      <IndicatorInfo 
+        propId="EPS"
+        :title="title"
+        :labels="labels"
+        :chartData="epsChartData"
+        :sectorData="epsSectorData"
+      />  
+  
+      <!-- BPS -->
+      <IndicatorInfo 
+        propId="BPS"
+        :title="title"
+        :labels="labels"
+        :chartData="bpsChartData"
+        :sectorData="bpsSectorData"
+      />  
+  
+      <!-- ROE -->
+      <IndicatorInfo 
+        propId="ROE"
+        :title="title"
+        :labels="labels"
+        :chartData="roeChartData"
+        :sectorData="roeSectorData"
+      />  
 
-    <!-- ROE -->
-    <IndicatorInfo 
-      propId="ROE"
-      :title="title"
-      :labels="labels"
-      :chartData="roeChartData"
-      :sectorData="roeSectorData"
-    />  
 
-  </v-card>
 </template>
 
 <script setup lang="ts">

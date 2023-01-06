@@ -1,13 +1,18 @@
 <template>
-  <v-card class="IndicatorInfoLayout">
-    <IndicatorSingleChart 
-      :propId="propId"
-      :title="title"
-      :labels="labels"
-      :chartData="chartData"
-      :sectorData="sectorData"
-    />  
-  </v-card>
+  <v-sheet class="IndicatorInfoLayout">
+    <v-card-title v-font-size="40" class="font-weight-bold">
+      {{ propId }}
+    </v-card-title>
+    <v-card-text>
+      <IndicatorSingleChart 
+        :propId="propId"
+        :title="title"
+        :labels="labels"
+        :chartData="chartData"
+        :sectorData="sectorData"
+      />  
+    </v-card-text>
+  </v-sheet>
 </template>
 
 <script setup lang="ts">
@@ -25,7 +30,7 @@
 
 <style scoped lang="scss">
 .IndicatorInfoLayout {
-
+  
 }
 
 
