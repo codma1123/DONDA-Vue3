@@ -11,11 +11,11 @@
     <MainStocks />
 
   </div>    
-  <ProgressCircular absolute v-else />
+  <ProgressCircular v-else absolute />
 </template>
 
 <script setup lang="ts">
-  import { ref, computed } from "vue"
+  import { computed } from "vue"
   import { useStockStore } from "@/store/stock"
 
   import MarketTrend from "@/components/home/MarketTrend.vue"

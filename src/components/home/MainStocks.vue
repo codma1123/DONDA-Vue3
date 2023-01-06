@@ -1,19 +1,18 @@
 <template>
-  <div>
-    <!-- Title -->
-    <MainStockTitle />
-  
-    <!-- Contents -->
-    <MainStock 
-      v-for="rankContent in marcap"
-      :rankContent="rankContent"
-      :key="rankContent.code"
-    />
-  
-    <div :class="CENTER_CLASS">      
-      <ProgressCircular v-if="rankCountLoad" class="mb-2"/>      
-      <Observer v-if="rankCountLoad" @triggerIntersected="loadMore"/>
-    </div>
+  <!-- Title -->
+  <MainStockTitle />
+
+  <!-- Contents -->
+  <MainStock 
+    v-for="rankContent in marcap"
+    :rankContent="rankContent"
+    :key="rankContent.code"
+  />
+
+  <!-- Load More Datas -->
+  <div :class="CENTER_CLASS">      
+    <ProgressCircular v-if="rankCountLoad" class="mb-2"/>      
+    <Observer v-if="rankCountLoad" @triggerIntersected="loadMore"/>
   </div>
 </template>
 
@@ -22,7 +21,7 @@
   import { useLayout } from '@/mixins/layout'
   import { useStockStore } from '@/store/stock'
   import { RankContent } from '@/models/stock'
-  
+
   import MainStockTitle from '@/components/home/MainStockTitle.vue'
   import MainStock from '@/components/home/MainStock.vue'
   import ProgressCircular from "@/components/global/ProgressCircular.vue"
@@ -49,9 +48,7 @@
       }, 500)      
     })
   }
-
   
-
 </script>
 
 <style scoped>

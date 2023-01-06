@@ -37,6 +37,5 @@
 
   const { rankContent } = defineProps<{ rankContent: RankContent }>()
   const { CONTENT_WIDTH } = useLayout()
-  const { push } = useCustomRouter()
-  
+  const { push } = useCustomRouter()  
 </script>
