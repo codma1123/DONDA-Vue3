@@ -79,7 +79,8 @@ export type MarketType = {
 }
 
 export type MarketValuationType = MarketValuationResponse
-export type RankType = Record<keyof RankResponse, {
+
+export type RankContent = {
   code: string,
   title: string,
   market: string,
@@ -89,7 +90,9 @@ export type RankType = Record<keyof RankResponse, {
   volume: BigInt,
   marcap: BigInt,
   prefix: string,
-}[]>
+}
+
+export type RankType = Record<keyof RankResponse, RankContent[]>
 
 export type MarketRecentType = {
 	[marketType in MarketTypes]: {
