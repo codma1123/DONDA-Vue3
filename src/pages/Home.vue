@@ -1,5 +1,5 @@
 <template>
-  <div v-if="(!market.loading && !marketValuation.loading && !rank.loading)">
+  <div v-if="loading">
 
     <!-- 시장 동향 -->
     <MarketTrend />
@@ -23,28 +23,8 @@
   import ProgressCircular from "@/components/global/ProgressCircular.vue"
   import MainStocks from "@/components/home/MainStocks.vue"
 
-  const emit = defineEmits<{ (e: 'mount'): void }>()
-
   const { market, marketValuation, rank } = useStockStore()
-
-  const rankCount = ref<number>(8)
-  const rankCountLoad = ref<boolean>(true)
-
-  const marcap = computed(() => rank.data.marcap.slice(0, rankCount.value))
-    
-  const loadMore = (): void => { 
-    if (rankCount.value > 44) {
-      rankCountLoad.value = false
-      return
-    }
-
-    new Promise(resolve => {
-        setTimeout(() => {
-        rankCount.value += 5 
-        resolve(rankCount.value)
-      }, 500)      
-    })
-  }
+  const loading = computed<boolean>(() => (!market.loading && !marketValuation.loading && !rank.loading))
 
 
 </script>
