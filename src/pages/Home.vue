@@ -26,7 +26,6 @@
   const { market, marketValuation, rank } = useStockStore()
   const loading = computed<boolean>(() => (!market.loading && !marketValuation.loading && !rank.loading))
 
-
 </script>
 
 <style lang="scss">

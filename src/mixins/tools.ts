@@ -13,4 +13,6 @@ export const priceCompactFormatter = new Intl.NumberFormat('ko-KR', {
   notation: 'compact', 
 })
 
+export const getKeyByValue = (obj: any, value: string) => Object.keys(obj).find(key => obj[key] === value)
+
 

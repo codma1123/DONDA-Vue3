@@ -34,7 +34,6 @@
 
 <script setup lang="ts">
   import { onMounted } from 'vue';
-  import * as _ from 'lodash'
   import { useRoute, onBeforeRouteUpdate, RouteLocationNormalized } from 'vue-router';
   
   import { useStockStore } from '@/store/stock';

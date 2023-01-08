@@ -40,6 +40,7 @@
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
   import { useStockStore } from '@/store/stock';
+  import { getKeyByValue } from '@/mixins/tools';
 
   const { searchTable } = useStockStore()
   const router = useRouter()
@@ -49,8 +50,6 @@
   const autofocus = ref(false)
   const searchBar = ref<HTMLInputElement | null>(null)
   const searchBarContent = ref<string>('')
-
-  const getKeyByValue = (obj: any, value: string) => Object.keys(obj).find(key => obj[key] === value)
 
   
   const toggle = () => {
