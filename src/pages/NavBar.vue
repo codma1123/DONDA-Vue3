@@ -38,13 +38,12 @@
 
 <script setup lang="ts">
   import { ref } from 'vue';
-  import { useRouter } from 'vue-router';
   import { useStockStore } from '@/store/stock';
   import { getKeyByValue } from '@/mixins/tools';
+  import { useCustomRouter } from '@/mixins/customRouter';
 
   const { searchTable } = useStockStore()
-  const router = useRouter()
-
+  const { push } = useCustomRouter()
 
   const searchBarToggle = ref(true)
   const autofocus = ref(false)
@@ -54,14 +53,12 @@
   
   const toggle = () => {
     searchBarToggle.value = false
-    setTimeout(() => {
-      searchBar.value?.focus()
-    }, 90)
+    setTimeout(() => searchBar.value?.focus(), 90)
   }
 
   const searchBarEnter = () => {
     const code = getKeyByValue(searchTable.data, searchBarContent.value)    
-    code && router.push(`/detail/${code}`)    
+    code && push(`/detail/${code}`)    
     searchBarContent.value = ''
     searchBarToggle.value = true
   }
