@@ -123,8 +123,10 @@
 
   // hooks  
   const renderChart = (): void => {    
-    const ctx = document.getElementById('closeChart') as HTMLCanvasElement
+    const ctx = document.getElementById('closeChart')
     chart.value?.destroy()
+
+    if (!(ctx instanceof HTMLCanvasElement)) return
     chart.value = new Chart(ctx, {
       data: { 
         labels: labels.value,
