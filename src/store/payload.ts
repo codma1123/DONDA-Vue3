@@ -78,6 +78,7 @@ const getTodayMarket = () => createAsyncPayload('market', getTodayMarketUrl(), t
 const getMarketValuation = () => createAsyncPayload('marketValuation', getMarketValuationUrl())
 const getRank = () => createAsyncPayload('rank', getRankUrl(), rankParser)
 const getSearchTable = () => createAsyncPayload('searchTable', getSearchTableUrl())
+// const getRecommendCodes = () => createAsyncPayload('')
 
 const getStock = (code: string) => createAsyncPayload('stock', getStockUrl(code))
 const getStockEvaluation = (code: string) => createAsyncPayload('stockEvaluation', getStockEvaluationUrl(code))

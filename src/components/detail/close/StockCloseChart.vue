@@ -32,13 +32,13 @@
   import { GraphAllType } from '@/models/stock';
   import { priceCompactFormatter } from '@/mixins/tools';
   import { useStockStore } from '@/store/stock';
-  import { myCrossHair } from '@/plugins/chart';
+  import { createChartInstance, myCrossHair } from '@/mixins/chartTools';
 
   const { stockVolume, stock, stockGraphAll } = useStockStore()
   const { chartData } = defineProps<{ chartData: GraphAllType}>()
 
   const count = ref<number>(7)
-  const chart = ref<Chart>()
+  const chart = ref<Chart | null>()
 
   const labels = computed(() => Object.keys(chartData))
   const data = computed(() => Object.values(chartData))
@@ -120,49 +120,43 @@
     },
   } as any
 
+  const ctx = computed<HTMLElement | null>(() => document.getElementById('closeChart'))
+  const config = computed(() => ({
+    data: { 
+      labels: labels.value,
+      datasets: [
+        {
+          type: 'line',
+          label: '종가',
+          data: data.value,
+          pointRadius: 0,
+          tension: 0.3,
+          borderColor: '#1DE9B6',
+          backgroundColor: '#fff',
+          pointHitRadius: 50,
+          yAxisID: 'y',
+          order: 1
+        },
+        {
+          type: 'bar',
+          label: '거래량',
+          data: volumeData.value,
+          borderColor: 'rgb(201, 203, 207)',
+          backgroundColor: 'rgba(201, 203, 207, 0.2)',
+          yAxisID: 'y1',
+          order: 2
+        }
+      ]
+    },
+    options,
+    plugins: [myCrossHair]
+  }))
 
-  // hooks  
-  const renderChart = (): void => {    
-    const ctx = document.getElementById('closeChart')
-    chart.value?.destroy()
 
-    if (!(ctx instanceof HTMLCanvasElement)) return
-    chart.value = new Chart(ctx, {
-      data: { 
-        labels: labels.value,
-        datasets: [
-          {
-            type: 'line',
-            label: '종가',
-            data: data.value,
-            pointRadius: 0,
-            tension: 0.3,
-            borderColor: '#1DE9B6',
-            backgroundColor: '#fff',
-            pointHitRadius: 50,
-            yAxisID: 'y',
-            order: 1
-          },
-          {
-            type: 'bar',
-            label: '거래량',
-            data: volumeData.value,
-            borderColor: 'rgb(201, 203, 207)',
-            backgroundColor: 'rgba(201, 203, 207, 0.2)',
-            yAxisID: 'y1',
-            order: 2
-          }
-        ]
-      },
-      options,
-      plugins: [myCrossHair]
-    })
-  }
-
-  const resetZoom = (): void => chart.value?.resetZoom()
+  const renderChart = () => chart.value = createChartInstance(ctx.value, config.value)  
+  const resetZoom = () => chart.value?.resetZoom()
   
   onMounted(() => renderChart())
-
   onUnmounted(() => chart.value?.destroy())
   
 </script>

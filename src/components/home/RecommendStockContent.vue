@@ -8,7 +8,7 @@
   import { useStockStore } from '@/store/stock';
 
 
-  const { } = useStockStore()
+  const { recommendStockCodes } = useStockStore()
 
 </script>
 

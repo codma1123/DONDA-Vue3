@@ -37,6 +37,7 @@
     request(getMarketValuation())
     request(getRank())
     request(getSearchTable())
+    // request(getRe)
   })
 
 </script>

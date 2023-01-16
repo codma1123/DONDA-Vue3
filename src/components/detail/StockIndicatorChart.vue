@@ -4,9 +4,10 @@
 
 <script setup lang="ts">
 
-  import { Chart } from 'chart.js'
+  import { Chart, ChartConfiguration, ChartConfigurationCustomTypesPerDataset } from 'chart.js'
   import { onMounted, computed, ref } from 'vue'
   import { useStockStore } from '@/store/stock';
+  import { createChartInstance } from '@/mixins/chartTools';
 
   const options = computed(() => ({
     responsive: true,
@@ -79,34 +80,35 @@
     // (indicatorSectorDailyChartData.value.psr.value.at(-1) as number) + 50,
   ])
 
-  const renderChart = () => { 
-    const ctx = document.getElementById('indicatorChart') as HTMLCanvasElement    
-    chart.value = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels,
-        datasets: [
-          {
-            label: stock.data.name,
-            data: currentData.value,
-            borderColor: 'rgb(255, 99, 132)',
-            backgroundColor: 'rgba(255, 99, 132, 0.9)',
-            borderSkipped: false,
-            borderRadius: 3
-          },
-          {
-            label: '섹터 평균',
-            data: sectorData.value,
-            backgroundColor: 'rgba(54, 162, 235, 0.9)',
-            borderColor: 'rgb(54, 162, 235)',
-            borderSkipped: false,
-            borderRadius: 3
-          }
-        ]
-      },
-      options: options.value as any
-    })    
-  }
+  const ctx = computed<HTMLElement | null>(() => document.getElementById('indicatorChart'))
+  const config = computed(() => ({
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: stock.data.name,
+          data: currentData.value,
+          borderColor: 'rgb(255, 99, 132)',
+          backgroundColor: 'rgba(255, 99, 132, 0.9)',
+          borderSkipped: false,
+          borderRadius: 3
+        },
+        {
+          label: '섹터 평균',
+          data: sectorData.value,
+          backgroundColor: 'rgba(54, 162, 235, 0.9)',
+          borderColor: 'rgb(54, 162, 235)',
+          borderSkipped: false,
+          borderRadius: 3.                    
+        }
+      ]
+    },
+    options: options.value
+  }))
+
+  const renderChart = () => chart.value = createChartInstance(ctx.value, config.value)
+  
 
   onMounted(() => renderChart())
 

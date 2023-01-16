@@ -14,7 +14,7 @@
       
       <div class="d-flex justify-center align-center">
         <ProgressCircular v-if="contentCountLoad" class="mb-2 mt-4"/>      
-        <Observer v-if="contentCountLoad" @triggerIntersected="loadMore"/>
+      <Observer v-if="contentCountLoad" @triggerIntersected="loadMore"/>
       </div>
     </div>
   </div>

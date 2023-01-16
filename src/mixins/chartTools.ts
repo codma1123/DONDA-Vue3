@@ -1,3 +1,10 @@
+import { ChartConfiguration, Chart } from "chart.js";
+
+export const createChartInstance = (ctx: HTMLCanvasElement | HTMLElement| undefined | null, config: any): Chart | null => {
+  if(!(ctx instanceof HTMLCanvasElement)) return null
+  return new Chart(ctx, config as ChartConfiguration)
+}
+
 export const myCrossHair = {
   id: 'mycrosshair',
   afterInit: function(chart: any) {
