@@ -69,7 +69,7 @@
 $margin: 1rem;
 .DetailLayout {
   margin: $margin;
-  margin-top: 55px;  
+  margin-top: 40px;  
 }
 
 .CardLayout {

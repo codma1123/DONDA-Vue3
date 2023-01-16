@@ -4,60 +4,20 @@
 
 <script setup lang="ts">
 
-  import { Chart, ChartConfiguration, ChartConfigurationCustomTypesPerDataset } from 'chart.js'
+  import { Chart } from 'chart.js'
   import { onMounted, computed, ref } from 'vue'
   import { useStockStore } from '@/store/stock';
   import { createChartInstance } from '@/mixins/chartTools';
 
-  const options = computed(() => ({
-    responsive: true,
 
-    plugins: {      
-      tooltip: { enabled: false },      
-      
-      legend: {
-        labels: { color: '#fff' }
-      }
-    },
-
-    grid: {
-      x: { display: false }
-    },
-
-
-    scales: {
-      x: {
-        grid: { display: false },
-        border: { display: false },        
-        ticks: { color: '#fff' }        
-      },
-
-      y: {
-        grid: { display: false },
-        border: { display: false },
-        ticks: { display: false }
-      },
-
-      r: {
-        ticks: { display: false },
-        max: Math.max(...sectorData.value),        
-        pointLabels: {
-          fontSize: 20,
-          color: '#fff'
-        }
-      }
-    },
-
-    animation: {      
-      easing: 'easeInOutCubic',
-      duration: 2000
-    },
-  }))
-
-
+  // Custom Hooks
   const { indicator, indicatorDaily, indicatorSector, indicatorSectorDaily, stock } = useStockStore()
-  const labels = ['EPS', 'BPS', 'ROE']
+
+
+  // Prop --
+  // Computed Values
   const chart = ref<Chart | null>()
+  const labels = ['EPS', 'BPS', 'ROE']
 
   const indicatorChartData = computed(() => indicator.data)
   const indicatorSectorChartData = computed(() => indicatorSector.data)
@@ -107,9 +67,55 @@
     options: options.value
   }))
 
-  const renderChart = () => chart.value = createChartInstance(ctx.value, config.value)
+  const options = computed(() => ({
+    responsive: true,
+
+    plugins: {      
+      tooltip: { enabled: false },      
+      
+      legend: {
+        labels: { color: '#fff' }
+      }
+    },
+
+    grid: {
+      x: { display: false }
+    },
+
+
+    scales: {
+      x: {
+        grid: { display: false },
+        border: { display: false },        
+        ticks: { color: '#fff' }        
+      },
+
+      y: {
+        grid: { display: false },
+        border: { display: false },
+        ticks: { display: false }
+      },
+
+      r: {
+        ticks: { display: false },
+        max: Math.max(...sectorData.value),        
+        pointLabels: {
+          fontSize: 20,
+          color: '#fff'
+        }
+      }
+    },
+
+    animation: {      
+      easing: 'easeInOutCubic',
+      duration: 2000
+    },
+  }))
   
 
+  // Hooks
+  const renderChart = () => chart.value = createChartInstance(ctx.value, config.value)
+  
   onMounted(() => renderChart())
 
 </script>

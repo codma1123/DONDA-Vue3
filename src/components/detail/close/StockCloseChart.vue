@@ -34,9 +34,15 @@
   import { useStockStore } from '@/store/stock';
   import { createChartInstance, myCrossHair } from '@/mixins/chartTools';
 
+  // Custom Hooks
   const { stockVolume, stock, stockGraphAll } = useStockStore()
+
+
+  // Props
   const { chartData } = defineProps<{ chartData: GraphAllType}>()
 
+
+  // Computed Values
   const count = ref<number>(7)
   const chart = ref<Chart | null>()
 
@@ -153,6 +159,7 @@
   }))
 
 
+  // Hooks
   const renderChart = () => chart.value = createChartInstance(ctx.value, config.value)  
   const resetZoom = () => chart.value?.resetZoom()
   

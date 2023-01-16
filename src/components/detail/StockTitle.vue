@@ -1,4 +1,4 @@
-<template>
+<template>  
   <v-sheet elevation="0" class="StockTitle">
     <v-card-title v-if="!stock.loading" class="d-flex justify-space-between"> 
       <div>
@@ -27,10 +27,9 @@
 <style lang="scss" scoped>
 
 .StockTitle {
-  overflow: auto;
   position: sticky !important;
-  top: 45px;
-  z-index: 1000;
+  top: 40px;
+  z-index: 100;
 }
 .icon {
   transition: all 1s ease-in-out;

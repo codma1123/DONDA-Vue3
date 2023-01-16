@@ -18,42 +18,65 @@
             flat size="25" 
             @click="toggle"
           />
-          <v-text-field v-else 
-            ref="searchBar"
-            absolute
-            :autofocus="autofocus"
-            variant="underlined"
-            class="SearchBar" 
-            @blur="(searchBarToggle = true)"
-            @keyup.enter="searchBarEnter"
-            v-model="searchBarContent"
-          />
+          <div v-else class="SearchBar" >
+            <v-text-field 
+              ref="searchBar"
+              absolute
+              :autofocus="autofocus"
+              variant="underlined"              
+              @blur="(searchBarToggle = true)"
+              @keyup.enter="searchBarEnter"
+              v-model="searchBarContent"
+            />            
+          </div>
           
         </transition>
         <v-btn icon="mdi-home" flat size="25" @click="$router.push('/')" />
       </div>
+      <div v-if="!searchBarToggle" class="AutoCompleteContents">
+        <div v-for="item in autoCompleteContents" :key="item">
+          {{ item }}
+        </div>
+      </div>  
     </v-sheet>
+    
   </transition>
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { computed, onMounted, ref, watch } from 'vue';
   import { useStockStore } from '@/store/stock';
-  import { getKeyByValue } from '@/mixins/tools';
+  import { getKeyByValue, delay } from '@/mixins/tools';
   import { useCustomRouter } from '@/mixins/customRouter';
+  import { getRegExp } from 'korean-regexp'
 
+  // Custom Hooks
   const { searchTable } = useStockStore()
   const { push } = useCustomRouter()
 
+
+  // Refs
   const searchBarToggle = ref(true)
   const autofocus = ref(false)
   const searchBar = ref<HTMLInputElement | null>(null)
   const searchBarContent = ref<string>('')
+  const filteredAutoCompleteContents = ref<any>()
 
-  
+  const autoCompleteContents = computed(() => {
+    if(searchBarContent.value === '') return null
+    return filteredAutoCompleteContents.value
+  })
+
+
+  // Comuted Values
+  const searchTableEntries = computed<[string, string][]>(() => Object.entries(searchTable.data))
+
+
+  // Hooks
   const toggle = () => {
     searchBarToggle.value = false
-    setTimeout(() => searchBar.value?.focus(), 90)
+    searchBarContent.value = ''
+    setTimeout(() => searchBar.value?.focus(), 100)
   }
 
   const searchBarEnter = () => {
@@ -62,7 +85,13 @@
     searchBarContent.value = ''
     searchBarToggle.value = true
   }
-    
+  
+
+  watch(searchBarContent, (v: string) => {
+    const reg = getRegExp(v)
+    filteredAutoCompleteContents.value = searchTableEntries.value.filter(title => title[1].match(reg))
+  })
+
 
 </script>
 
@@ -116,6 +145,11 @@
 .slide-up-leave-to {
   opacity: 0;
   transform: translateY(-30px);
+}
+
+.AutoCompleteContents {
+  position: absolute;
+  
 }
 
 
