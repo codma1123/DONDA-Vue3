@@ -68,7 +68,8 @@ export const useStockStore = defineStore('stock', () => {
 
       targetState.error = error
       targetState.loading = false
-      
+
+      throw error      
     }
   }
 

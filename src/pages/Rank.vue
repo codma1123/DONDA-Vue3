@@ -32,7 +32,7 @@
       :widtd="CONTENT_WIDTH"
       :key="i"
       @click="push(content.code)"
-      elevation="2"
+      elevation="0"
     >
       <v-card-subtitle v-font-size="15" class="mt-2"> {{ content.market }} </v-card-subtitle>
       <div class="d-flex align-end justify-space-between">
@@ -129,9 +129,9 @@
   .RankContent {
     margin: $margin;
     margin-top: 2px;
-    padding-top: 10px;
+    padding-top: 5px;
       
-    border-radius: 1.2rem;
+    border-radius: .5rem;
 
     cursor: pointer;
 

@@ -27,24 +27,38 @@
               @blur="(searchBarToggle = true)"
               @keyup.enter="searchBarEnter"
               v-model="searchBarContent"
+              @keydown="searchBarSelect"
             />            
           </div>
           
         </transition>
         <v-btn icon="mdi-home" flat size="25" @click="$router.push('/')" />
-      </div>
-      <div v-if="!searchBarToggle" class="AutoCompleteContents">
-        <div v-for="item in autoCompleteContents" :key="item">
-          {{ item }}
-        </div>
-      </div>  
+      </div>      
     </v-sheet>
     
   </transition>
+  <div v-if="!searchBarToggle" class="AutoCompleteContents">
+    <transition name="slide-up">
+      <v-list v-if="autoCompleteContents"> 
+        <div         
+          v-for="autoCompleteContent in autoCompleteContents" 
+          :key="autoCompleteContent.code" 
+          class="AutoCompleteContent"
+          active-color="primary"
+          rounded="xl"
+          @click="sss"
+        >
+          <!-- <div class="divider"></div> -->
+          <span class="title"> {{ autoCompleteContent[1] }} </span>
+          <span class="code"> {{ autoCompleteContent[0] }} </span>
+        </div>
+      </v-list>
+    </transition>
+  </div>  
 </template>
 
 <script setup lang="ts">
-  import { computed, onMounted, ref, watch } from 'vue';
+  import { computed, ref, watch } from 'vue';
   import { useStockStore } from '@/store/stock';
   import { getKeyByValue, delay } from '@/mixins/tools';
   import { useCustomRouter } from '@/mixins/customRouter';
@@ -55,23 +69,45 @@
   const { push } = useCustomRouter()
 
 
+  // Map
+  const KeyBoardEventMap: { [key: string]: () => void } = {
+    'ArrowUp': () => {
+            
+      // 맨위
+      if(!(currentCursor.value - 1)) return
+
+      currentCursor.value--
+    },
+    'ArrowDown': () => {
+
+      // 맨아래
+      if(currentCursor.value === (maxCursorLength.value - 1) || currentCursor === undefined) return
+
+      currentCursor.value++
+    },
+  }
+
+  const sss = () => console.log('s')
+
   // Refs
   const searchBarToggle = ref(true)
   const autofocus = ref(false)
   const searchBar = ref<HTMLInputElement | null>(null)
   const searchBarContent = ref<string>('')
   const filteredAutoCompleteContents = ref<any>()
+  const currentCursor = ref<number>(1)
+  
+  
+  // Comuted Values
+  const searchTableEntries = computed<[string, string][]>(() => Object.entries(searchTable.data))
+  const maxCursorLength = computed(() => filteredAutoCompleteContents.value?.length)
 
   const autoCompleteContents = computed(() => {
     if(searchBarContent.value === '') return null
     return filteredAutoCompleteContents.value
   })
-
-
-  // Comuted Values
-  const searchTableEntries = computed<[string, string][]>(() => Object.entries(searchTable.data))
-
-
+  
+  
   // Hooks
   const toggle = () => {
     searchBarToggle.value = false
@@ -85,10 +121,18 @@
     searchBarContent.value = ''
     searchBarToggle.value = true
   }
+
+  const searchBarSelect = (e: KeyboardEvent) => {
+
+    if(e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return
+
+    KeyBoardEventMap[e.key]()
+  }
   
 
   watch(searchBarContent, (v: string) => {
     const reg = getRegExp(v)
+    currentCursor.value = 1
     filteredAutoCompleteContents.value = searchTableEntries.value.filter(title => title[1].match(reg))
   })
 
@@ -148,7 +192,39 @@
 }
 
 .AutoCompleteContents {
+  background-color: #333333;
+  max-height: 200px;
+  width: 150px;
+  overflow-x: hidden;
+  overflow-y: scroll;
   position: absolute;
+  top: 60px;
+  margin-left: 175px;
+  z-index: 101;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  
+  .AutoCompleteContent {
+    padding: .25rem;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    .divider {
+      opacity: .5;
+      border-bottom: .5px solid #888888;
+
+    }
+    .title {
+      font-size: 18px;
+    }
+
+    .code {
+      opacity: .8;
+      font-size: 13px;
+      margin-left: .25rem;
+    }
+  }
   
 }
 
