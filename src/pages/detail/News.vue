@@ -46,7 +46,6 @@
     new Promise(resolve => {
         setTimeout(() => {
         contentsCount.value += 3
-        console.log('tetst')
         resolve(contentsCount.value)
       }, 500)      
     })
