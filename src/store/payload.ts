@@ -122,6 +122,7 @@ const requestOptions: RequestOptionsType[] = [
   }
 ]
 
+// 'stockPayloads -> payloads로 형식 변경중'
 const payloads = (code: string) => requestOptions.map(request => createAsyncPayload(request.state, request.url(code), request.callback))
 
 
