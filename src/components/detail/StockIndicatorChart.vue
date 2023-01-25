@@ -5,7 +5,7 @@
 <script setup lang="ts">
 
   import { Chart } from 'chart.js'
-  import { onMounted, computed, ref } from 'vue'
+  import { onMounted, computed, ref, onBeforeUnmount } from 'vue'
   import { useStockStore } from '@/store/stock';
   import { createChartInstance } from '@/mixins/chartTools';
 
@@ -117,6 +117,7 @@
   const renderChart = () => chart.value = createChartInstance(ctx.value, config.value)
   
   onMounted(() => renderChart())
+  onBeforeUnmount(() => chart.value?.options.plugins as undefined)
 
 </script>
 
