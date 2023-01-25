@@ -58,10 +58,6 @@ export type StoreStates =
 StatementType
 
 
-
-
-
-
 export type AsyncPayload = {
   state: StoreStates,
   url: string

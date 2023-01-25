@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 
-  import { onMounted, ref, computed } from 'vue'
+  import { onMounted, ref, computed, onUnmounted } from 'vue'
   import { Chart } from 'chart.js'
   import { useStockStore } from '@/store/stock';
   import { priceCompactFormatter } from '@/mixins/tools';
@@ -70,7 +70,7 @@
     },
 
     animation: {
-      duration: 500
+      duration: 500,
     }
   } as any
 
@@ -79,6 +79,10 @@
   const renderChart = () => chart.value = createChartInstance(ctx.value, config.value)
 
   onMounted(() => renderChart())
+  onUnmounted(() => {
+    chart.value?.destroy()
+    console.log(chart.value)
+  })
 
 </script>
 

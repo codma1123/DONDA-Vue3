@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, onMounted, ref, onUnmounted } from 'vue';
+  import { computed, onMounted, ref, onUnmounted, onBeforeUnmount } from 'vue';
   import { Chart } from 'chart.js'
   import { GraphAllType } from '@/models/stock';
   import { priceCompactFormatter } from '@/mixins/tools';
@@ -124,6 +124,10 @@
         grid: { drawOnChartArea: false }
       }
     },
+
+    animation: {
+      duration: 1000
+    }
   } as any
 
   const ctx = computed<HTMLElement | null>(() => document.getElementById('closeChart'))
@@ -164,7 +168,8 @@
   const resetZoom = () => chart.value?.resetZoom()
   
   onMounted(() => renderChart())
-  onUnmounted(() => chart.value?.destroy())
+  onBeforeUnmount(() => chart.value?.options.plugins as undefined)
+  
   
 </script>
 
