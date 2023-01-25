@@ -96,6 +96,34 @@ const getStockStatement = (code: string) => createAsyncPayload('statement', getS
 // const getStockStatmentAll = (code: string, statementType: StatementType) => createAsyncPayload(statementType, getStockStatementAllUrl(code, statementType))
 
 
+type RequestOptionsType = {
+  state: StoreStates,
+  url: (code: string) => string,
+  callback?: (response: AxiosResponse<any>) => StateType
+}
+
+const requestOptions: RequestOptionsType[] = [
+  {
+    state: 'stock',
+    url: getStockUrl
+  },
+  {
+    state: 'news',
+    url: getStockNewsUrl
+  },
+  {
+    state: 'stockGraphAll',
+    url: getStockGraphAllUrl,
+    callback: (response: AxiosResponse<IStockGraphResponse>) => response.data.origin
+  },
+  {
+    state: 'stockEvaluationDaily',
+    url: getStockEvaluationDailyUrl
+  }
+]
+
+const payloads = (code: string) => requestOptions.map(request => createAsyncPayload(request.state, request.url(code), request.callback))
+
 
 export const stockPayloads = [
   getStockNews,
