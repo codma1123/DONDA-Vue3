@@ -28,8 +28,10 @@
   import StockTitle from '@/components/detail/StockTitle.vue'
   import Observer from '@/components/global/Observer.vue';
 
+  const NEWS_CONTENTS_LENGTH = 8
+
   const { news, stock } = useStockStore()
-  const contentsCount = ref<number>(5)
+  const contentsCount = ref<number>(NEWS_CONTENTS_LENGTH)
   const contentCountLoad = ref<boolean>(true)
 
   const loading = computed(() => !news.loading && !stock.loading)

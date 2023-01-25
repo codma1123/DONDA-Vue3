@@ -26,7 +26,7 @@
     <StockNews />
 
     <!-- 기타 -->
-    <Etcs />
+    <!-- <Etcs /> -->
 
   </div> 
     

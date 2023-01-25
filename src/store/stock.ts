@@ -20,6 +20,9 @@ const utils = {
   })
 }
 
+const CancleToken = axios.CancelToken
+const source = CancleToken.source()
+
 export const useStockStore = defineStore('stock', () => {
 
   const store = useStockStore()
@@ -57,22 +60,22 @@ export const useStockStore = defineStore('stock', () => {
 
     const targetState: AsyncState = (store as any)[state]
     targetState.loading = true
-
+    
     try {
-      const response = await axios.get<ResponseType>(url)
+      const response = await axios.get<ResponseType>(url, { cancelToken: source.token })
       
       targetState.data = callback(response)
       targetState.loading = false
 
     } catch (error: unknown) {
-
+      console.log(error, url)
       targetState.error = error
       targetState.loading = false
 
       throw error      
     }
   }
-
+  
   return {
     request,
 
