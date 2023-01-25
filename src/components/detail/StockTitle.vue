@@ -1,6 +1,9 @@
 <template>  
   <v-sheet elevation="0" class="StockTitle">
-    <v-card-title v-if="!stock.loading" class="d-flex justify-space-between"> 
+    <v-card-title 
+      v-if="!stock.loading" class="d-flex justify-space-between"
+      @click="push('/detail/' + stockData.code)"
+    > 
       <div>
         <span v-font-size="30" class="font-weight-bold"> {{ stockData.name }} </span>
         <span v-font-size="15" class="code"> {{ stockData.code }} </span>
@@ -13,10 +16,12 @@
 </template>
 
 <script setup lang="ts">
+  import { useCustomRouter } from '@/mixins/customRouter';
   import { useStockStore } from '@/store/stock';
   import { computed, ref } from 'vue'
 
   const { stock } = useStockStore()
+  const { push } = useCustomRouter()
 
   const iconToggle = ref<boolean>(false)
   
