@@ -19,17 +19,21 @@ export const myCrossHair = {
       dragEndX: null,  
     }
   },
+
   getXScale: function(chart: any) {
     return chart.data.datasets.length ? chart.scales[chart.getDatasetMeta(0).xAxisID] : null;
   },
+
   getYScale: function(chart: any) {
     return chart.scales[chart.getDatasetMeta(0).yAxisID];
   },
+
   afterEvent: function(chart: any, e: any) {
     chart.crosshair.x = e.event.x
     chart.crosshair.y = e.event.y
     chart.draw();
   },
+
   drawTraceLine: (chart: any) => {
     const {ctx, data, chartArea: {top, bottom, left, right}, scales, width} = chart      
     const x = scales['x-axis-0']
@@ -51,6 +55,7 @@ export const myCrossHair = {
 
     // crosshairPoint(chart, chart.crosshair)
   },
+  
   afterDraw: function(chart: any, e: any) {      
     if(e.y > chart.chartArea.bottom || e.y < chart.chartArea.top || e.x < chart.chartArea.left || e.x > chart.chartArea.right) {
       return true
