@@ -53,8 +53,7 @@
   
   const fetch = (code: string): void => {    
     if (store.currentStock === code) return
-    
-    stockPayloads.forEach(payload => store.request(payload(code)))
+    store.stockRequests(code)    
     store.currentStock = code    
   }
   
