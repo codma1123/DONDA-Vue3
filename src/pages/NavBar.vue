@@ -23,11 +23,10 @@
               ref="searchBar"
               absolute
               :autofocus="autofocus"
-              variant="underlined"              
-              @blur="searchBarBlur"
-              @keyup.enter="searchBarEnter"
+              variant="underlined"
+              @blur="onSearchBarBlur"
+              @keydown="onSearchBarKeydown"
               v-model="searchBarContent"
-              @keydown="searchBarSelect"
             />            
           </div>
           
@@ -41,10 +40,9 @@
     <transition name="slide-up">
       <v-list v-if="autoCompleteContents"> 
         <div         
-          v-for="[code, title] in autoCompleteContents" 
-          :key="code" 
-          class="AutoCompleteContent"
-          active-color="primary"
+          v-for="[code, title], i in autoCompleteContents" 
+          :key="code"           
+          :class="['AutoCompleteContent', i + 1 === currentCursor ? 'active' : '']"
           rounded="xl"
           @mousedown="push('/detail/' + code)"
         >
@@ -58,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, ref, watch } from 'vue';
+  import { computed, Ref, ref, watch } from 'vue';
   import { useStockStore } from '@/store/stock';
   import { getKeyByValue, delay } from '@/mixins/tools';
   import { useCustomRouter } from '@/mixins/customRouter';
@@ -70,22 +68,36 @@
 
 
   // Map
-  const KeyBoardEventMap: { [key: string]: () => void } = {
-    'ArrowUp': () => {
-            
-      // 맨위
-      if(!(currentCursor.value - 1)) return
-
-      currentCursor.value--
+  const KeyBoardEventMap: { [key: string]: (cursor: Ref<number>) => void } = {
+    'ArrowUp': cursor => {                  
+      if(!cursor.value) return
+      cursor.value--      
     },
-    'ArrowDown': () => {
 
-      // 맨아래
-      if(currentCursor.value === (maxCursorLength.value - 1) || currentCursor === undefined) return
-
-      currentCursor.value++
+    'ArrowDown': cursor => {
+      if(cursor.value === (maxCursorLength.value - 1)) return      
+      cursor.value++
     },
+
+    'Enter': cursor => {
+      let code: string | undefined = ''
+
+      if (!cursor.value) {
+        code = getKeyByValue(searchTable.data, searchBarContent.value)
+        if(code === '') return                 
+      }
+      else {
+        if (!autoCompleteContents.value) return
+        code = autoCompleteContents.value[currentCursor.value - 1][0]
+      }
+
+      push(`/detail/${code}`)
+      searchBarContent.value = ''
+      searchBarToggle.value = true
+    }
   }
+
+  
 
 
   // Refs
@@ -93,7 +105,7 @@
   const autofocus = ref(false)
   const searchBar = ref<HTMLInputElement | null>(null)
   const searchBarContent = ref<string>('')
-  const currentCursor = ref<number>(1)  
+  const currentCursor = ref<number>(0)
   
   
   // Comuted Values
@@ -115,32 +127,35 @@
     searchBarToggle.value = false
     searchBarContent.value = ''
     setTimeout(() => searchBar.value?.focus(), 100)
-  }
+  }  
 
-  const searchBarEnter = () => {
-    const code = getKeyByValue(searchTable.data, searchBarContent.value)    
-    code && push(`/detail/${code}`)    
-    searchBarContent.value = ''
+  const onSearchBarBlur = () => {
     searchBarToggle.value = true
+    currentCursor.value = 0
   }
 
-  const searchBarBlur = () => {
-    searchBarToggle.value = true
+  const checkPreventKey = (key: string): boolean => {
+    switch (key) {      
+      case 'ArrowUp':            
+      case 'ArrowDown':
+      case 'Process':
+      case 'Enter':
+        return true
+      default: return false
+    }
   }
 
-  const searchBarSelect = (e: KeyboardEvent) => {
+  const onSearchBarKeydown = (e: KeyboardEvent) => {
+    
+    if (checkPreventKey(e.key)) e.preventDefault()    
+    if(e.key !== 'ArrowUp' && e.key !== 'ArrowDown' && e.key !== 'Enter') return
 
-    if(e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return
-
-    KeyBoardEventMap[e.key]()
+    KeyBoardEventMap[e.key](currentCursor)
+    console.log(currentCursor.value)
   }
 
-  const onAutoCompleteContent = (e: MouseEvent) => {
-    console.log(e)
-  }
+  
 
-
-  watch(searchBarContent, (v: string) => currentCursor.value = 1)
 
 
 </script>
@@ -232,7 +247,10 @@
       margin-left: .25rem;
     }
   }
-  
+
+  .active {
+    background-color: #666666;
+  }
 }
 
 
