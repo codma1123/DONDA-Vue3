@@ -22,7 +22,7 @@
   const chart = ref<Chart | null>()
 
   const stockChartData = computed<number>(() => stock.data.close)
-  const evaluationChartData = computed<number>(() => stockEvaluation.data['S-rim'].at(-1) as number)
+  const evaluationChartData = computed<number>(() => stockEvaluation.data['S-rim']?.at(-1) as number)
   
   const ctx = computed<HTMLElement | null>(() => document.getElementById(propKey))
   const config = computed(() => ({

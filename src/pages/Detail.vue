@@ -51,9 +51,10 @@
   const route = useRoute()  
   const store = useStockStore()
   
-  const fetch = (code: string): void => {    
+  const fetch = (code: string): void => {
     if (store.currentStock === code) return
-    store.stockRequests(code)    
+    console.log(stockPayloads)
+    stockPayloads.forEach(payload => store.request(payload(code)))
     store.currentStock = code    
   }
   

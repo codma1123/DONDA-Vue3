@@ -49,7 +49,7 @@
   const labels = computed(() => Object.keys(chartData))
   const data = computed(() => Object.values(chartData))
   const volumeData = computed(() => Object.values(stockVolume.data))
-  const loading = computed((): boolean => !stock.loading && !stockGraphAll.loading)
+  const loading = computed(() => !stock.loading && !stockGraphAll.loading)
 
   const options = {
     responsive: true,

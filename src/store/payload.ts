@@ -95,7 +95,7 @@ const getStockStatement = (code: string) => createAsyncPayload('statement', getS
 type RequestOptionsType = {
   state: StoreStates,
   url: (code: string) => string,
-  callback?: (response: AxiosResponse<any>) => StateType
+  callback?: (response: AxiosResponse) => StateType
 }
 
 const requestOptions: RequestOptionsType[] = [
@@ -118,7 +118,6 @@ const requestOptions: RequestOptionsType[] = [
   }
 ]
 
-// 'stockPayloads -> payloads로 형식 변경중'
 const payloads = (code: string) => requestOptions.map(request => createAsyncPayload(request.state, request.url(code), request.callback))
 
 
@@ -144,5 +143,6 @@ export {
   getMarketValuation,
   getRank,
   getStockGraphAll,
-  getSearchTable
+  getSearchTable,
+  payloads
 }

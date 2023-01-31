@@ -18,7 +18,7 @@
 <script setup lang="ts">
   import { useCustomRouter } from '@/mixins/customRouter';
   import { useStockStore } from '@/store/stock';
-  import { computed, ref } from 'vue'
+  import { computed, onMounted, ref } from 'vue'
 
   const { stock } = useStockStore()
   const { push } = useCustomRouter()
@@ -26,7 +26,10 @@
   const iconToggle = ref<boolean>(false)
   
   const stockData = computed(() => stock.data)
-  const icon = computed(() => iconToggle.value ? 'mdi-bookmark' : 'mdi-bookmark-outline')  
+  const icon = computed(() => iconToggle.value ? 'mdi-bookmark' : 'mdi-bookmark-outline')
+
+  onMounted(() => console.log(stock.data))
+
 </script>
 
 <style lang="scss" scoped>
