@@ -24,7 +24,7 @@
               absolute
               :autofocus="autofocus"
               variant="underlined"              
-              @blur="(searchBarToggle = true)"
+              @blur="searchBarBlur"
               @keyup.enter="searchBarEnter"
               v-model="searchBarContent"
               @keydown="searchBarSelect"
@@ -41,16 +41,16 @@
     <transition name="slide-up">
       <v-list v-if="autoCompleteContents"> 
         <div         
-          v-for="autoCompleteContent in autoCompleteContents" 
-          :key="autoCompleteContent.code" 
+          v-for="[code, title] in autoCompleteContents" 
+          :key="code" 
           class="AutoCompleteContent"
           active-color="primary"
           rounded="xl"
-          @click="sss"
+          @mousedown="push('/detail/' + code)"
         >
           <!-- <div class="divider"></div> -->
-          <span class="title"> {{ autoCompleteContent[1] }} </span>
-          <span class="code"> {{ autoCompleteContent[0] }} </span>
+          <span class="title"> {{ title }} </span>
+          <span class="code"> {{ code }} </span>
         </div>
       </v-list>
     </transition>
@@ -87,26 +87,28 @@
     },
   }
 
-  const sss = () => console.log('s')
 
   // Refs
   const searchBarToggle = ref(true)
   const autofocus = ref(false)
   const searchBar = ref<HTMLInputElement | null>(null)
   const searchBarContent = ref<string>('')
-  const filteredAutoCompleteContents = ref<any>()
-  const currentCursor = ref<number>(1)
+  const currentCursor = ref<number>(1)  
   
   
   // Comuted Values
   const searchTableEntries = computed<[string, string][]>(() => Object.entries(searchTable.data))
   const maxCursorLength = computed(() => filteredAutoCompleteContents.value?.length)
-
+  
   const autoCompleteContents = computed(() => {
     if(searchBarContent.value === '') return null
     return filteredAutoCompleteContents.value
   })
   
+  const filteredAutoCompleteContents = computed(() => {
+    const reg = getRegExp(searchBarContent.value)
+    return searchTableEntries.value.filter(title => title[1].match(reg))
+  })
   
   // Hooks
   const toggle = () => {
@@ -122,19 +124,23 @@
     searchBarToggle.value = true
   }
 
+  const searchBarBlur = () => {
+    searchBarToggle.value = true
+  }
+
   const searchBarSelect = (e: KeyboardEvent) => {
 
     if(e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return
 
     KeyBoardEventMap[e.key]()
   }
-  
 
-  watch(searchBarContent, (v: string) => {
-    const reg = getRegExp(v)
-    currentCursor.value = 1
-    filteredAutoCompleteContents.value = searchTableEntries.value.filter(title => title[1].match(reg))
-  })
+  const onAutoCompleteContent = (e: MouseEvent) => {
+    console.log(e)
+  }
+
+
+  watch(searchBarContent, (v: string) => currentCursor.value = 1)
 
 
 </script>
@@ -209,6 +215,7 @@
     overflow-x: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    cursor: pointer;
 
     .divider {
       opacity: .5;
