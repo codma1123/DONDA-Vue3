@@ -116,8 +116,8 @@
   })
   
   const onSearchBarKeydown = (e: KeyboardEvent) => {
-    if (!FILTERING_KEYS.includes(e.key)) e.preventDefault()    
-    if (PREVENT_KEYS.includes(e.key)) return
+    if (PREVENT_KEYS.includes(e.key)) e.preventDefault()    
+    if (!FILTERING_KEYS.includes(e.key)) return
     
     KeyBoardEventMap[e.key](currentCursor)
   }
