@@ -7,8 +7,13 @@
       ref="navBar"
       v-if="!searchTable.loading"
     > 
+      <!-- 로고 -->
       <div class="logo">DONDA - VUE3</div>
+
+      <!-- 우상단 메뉴 -->
       <div class="IconBox">
+
+        <!-- 검색창 -->
         <transition name="slide-up">
           <v-btn 
             v-if="searchBarToggle"
@@ -16,26 +21,28 @@
             class="SearchBtn" 
             icon="mdi-magnify" 
             flat size="25" 
-            @click="toggle"
+            @click="onSearchBarClick"
           />
           <div v-else class="SearchBar" >
             <v-text-field 
               ref="searchBar"
               absolute
-              :autofocus="autofocus"
+              :autofocus="searchBarAutoFocus"
               variant="underlined"
               @blur="onSearchBarBlur"
               @keydown="onSearchBarKeydown"
               v-model="searchBarContent"
             />            
-          </div>
-          
+          </div>          
         </transition>
+
+        <!-- 홈버튼 -->
         <v-btn icon="mdi-home" flat size="25" @click="$router.push('/')" />
       </div>      
-    </v-sheet>
-    
+    </v-sheet>    
   </transition>
+
+  <!-- 자동완성 창 -->
   <div v-if="!searchBarToggle" class="AutoCompleteContents">
     <transition name="slide-up">
       <v-list v-if="autoCompleteContents"> 
@@ -56,18 +63,65 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, Ref, ref, watch } from 'vue';
+  import { computed, Ref, ref } from 'vue';
   import { useStockStore } from '@/store/stock';
-  import { getKeyByValue, delay } from '@/mixins/tools';
+  import { getKeyByValue } from '@/mixins/tools';
   import { useCustomRouter } from '@/mixins/customRouter';
   import { getRegExp } from 'korean-regexp'
+
 
   // Custom Hooks
   const { searchTable } = useStockStore()
   const { push } = useCustomRouter()
 
+  
+  // 검색창 활성화
+  const searchBarAutoFocus = ref(false)
+  const searchBarToggle = ref(true)
 
-  // Map
+  const onSearchBarClick = () => {
+    searchBarToggle.value = false
+    searchBarContent.value = ''
+    setTimeout(() => searchBar.value?.focus(), 100)
+  }  
+
+  
+  
+  // 검색창
+  const searchBar = ref<HTMLInputElement | null>(null)
+  const searchBarContent = ref<string>('')
+  const searchTableEntries = computed(() => Object.entries(searchTable.data))
+
+  const onSearchBarBlur = () => {
+    searchBarToggle.value = true
+    currentCursor.value = 0
+  }
+
+
+
+  // 자동완성
+  const FILTERING_KEYS = ['ArrowUp', 'ArrowDown', 'Enter']
+  const PREVENT_KEYS = ['ArrowUp', 'ArrowDown', 'Enter', 'Process']
+
+  const currentCursor = ref<number>(0)
+  const maxCursorLength = computed(() => filteredAutoCompleteContents.value?.length)
+
+  const autoCompleteContents = computed(() => {
+    return searchBarContent.value === '' ? null : filteredAutoCompleteContents.value     
+  })
+  
+  const filteredAutoCompleteContents = computed(() => {
+    const reg = getRegExp(searchBarContent.value)
+    return searchTableEntries.value.filter(title => title[1].match(reg))
+  })
+  
+  const onSearchBarKeydown = (e: KeyboardEvent) => {
+    if (!FILTERING_KEYS.includes(e.key)) e.preventDefault()    
+    if (PREVENT_KEYS.includes(e.key)) return
+    
+    KeyBoardEventMap[e.key](currentCursor)
+  }
+  
   const KeyBoardEventMap: { [key: string]: (cursor: Ref<number>) => void } = {
     'ArrowUp': cursor => {                  
       if(!cursor.value) return
@@ -75,17 +129,20 @@
     },
 
     'ArrowDown': cursor => {
-      if(cursor.value === (maxCursorLength.value - 1)) return      
+      if(cursor.value === maxCursorLength.value) return      
       cursor.value++
     },
 
     'Enter': cursor => {
       let code: string | undefined = ''
 
+      // 커서가 검색창을 가르키고 있을 경우
       if (!cursor.value) {
         code = getKeyByValue(searchTable.data, searchBarContent.value)
         if(code === '') return                 
       }
+
+      // 커서가 자동완성 창을 가르키고 있을 경우
       else {
         if (!autoCompleteContents.value) return
         code = autoCompleteContents.value[currentCursor.value - 1][0]
@@ -96,67 +153,6 @@
       searchBarToggle.value = true
     }
   }
-
-  
-
-
-  // Refs
-  const searchBarToggle = ref(true)
-  const autofocus = ref(false)
-  const searchBar = ref<HTMLInputElement | null>(null)
-  const searchBarContent = ref<string>('')
-  const currentCursor = ref<number>(0)
-  
-  
-  // Comuted Values
-  const searchTableEntries = computed<[string, string][]>(() => Object.entries(searchTable.data))
-  const maxCursorLength = computed(() => filteredAutoCompleteContents.value?.length)
-  
-  const autoCompleteContents = computed(() => {
-    if(searchBarContent.value === '') return null
-    return filteredAutoCompleteContents.value
-  })
-  
-  const filteredAutoCompleteContents = computed(() => {
-    const reg = getRegExp(searchBarContent.value)
-    return searchTableEntries.value.filter(title => title[1].match(reg))
-  })
-  
-  // Hooks
-  const toggle = () => {
-    searchBarToggle.value = false
-    searchBarContent.value = ''
-    setTimeout(() => searchBar.value?.focus(), 100)
-  }  
-
-  const onSearchBarBlur = () => {
-    searchBarToggle.value = true
-    currentCursor.value = 0
-  }
-
-  const checkPreventKey = (key: string): boolean => {
-    switch (key) {      
-      case 'ArrowUp':            
-      case 'ArrowDown':
-      case 'Process':
-      case 'Enter':
-        return true
-      default: return false
-    }
-  }
-
-  const onSearchBarKeydown = (e: KeyboardEvent) => {
-    
-    if (checkPreventKey(e.key)) e.preventDefault()    
-    if(e.key !== 'ArrowUp' && e.key !== 'ArrowDown' && e.key !== 'Enter') return
-
-    KeyBoardEventMap[e.key](currentCursor)
-    console.log(currentCursor.value)
-  }
-
-  
-
-
 
 </script>
 
