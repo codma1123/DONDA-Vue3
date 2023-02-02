@@ -22,19 +22,20 @@
 
 <script lang="ts" setup>
   import { storeToRefs } from 'pinia';
-  import { onMounted, ref } from 'vue';
+  import { DefineComponent, onMounted, ref } from 'vue';
   import { useLayout } from './mixins/layout';
   import NavBar from './pages/NavBar.vue'
   import { useAppStore } from './store/app';
   import { getMarketValuation, getRank, getSearchTable, getTodayMarket } from './store/payload';
   import { useStockStore } from './store/stock';
+  import { VSheet } from "vuetify/components";
 
   const { MAIN_WIDTH, MAIN_HEIGHT } = useLayout()
   const { request } = useStockStore()
   const { target } = storeToRefs(useAppStore())
 
   const isNav = ref<boolean>(true)
-  const targetSheet = ref<Element | null>(null)
+  const targetSheet = ref<DefineComponent<VSheet> | null>(null)
 
   onMounted(() => {
     request(getTodayMarket())

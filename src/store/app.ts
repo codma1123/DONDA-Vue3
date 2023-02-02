@@ -1,8 +1,9 @@
 import { defineStore } from "pinia";
-import { reactive, ref, toRef } from "vue";
+import { DefineComponent, reactive, ref, toRef } from "vue";
+import { VSheet } from "vuetify/components";
 
 export const useAppStore = defineStore('app', () => {
-  const target = ref<any | null>(null)
+  const target = ref<DefineComponent<VSheet> | null>(null)
   return { 
     target
   }
