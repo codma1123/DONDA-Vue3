@@ -9,10 +9,10 @@
             rounded="xl"
             :width="MAIN_WIDTH" 
             :height="MAIN_HEIGHT" 
-            ref="target"
+            ref="targetSheet"
           >
             <transition name="fade">
-              <component :is="Component" />
+              <component :is="Component"/>
             </transition>
           </v-sheet>
         </router-view>
@@ -21,23 +21,27 @@
 </template>
 
 <script lang="ts" setup>
+  import { storeToRefs } from 'pinia';
   import { onMounted, ref } from 'vue';
   import { useLayout } from './mixins/layout';
   import NavBar from './pages/NavBar.vue'
+  import { useAppStore } from './store/app';
   import { getMarketValuation, getRank, getSearchTable, getTodayMarket } from './store/payload';
   import { useStockStore } from './store/stock';
 
   const { MAIN_WIDTH, MAIN_HEIGHT } = useLayout()
   const { request } = useStockStore()
+  const { target } = storeToRefs(useAppStore())
+
   const isNav = ref<boolean>(true)
-  const target = ref<Element>()  
+  const targetSheet = ref<Element | null>(null)
 
   onMounted(() => {
     request(getTodayMarket())
     request(getMarketValuation())
     request(getRank())
     request(getSearchTable())
-    // request(getRe)
+    target.value = targetSheet.value
   })
 
 </script>

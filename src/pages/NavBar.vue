@@ -45,10 +45,12 @@
   <!-- 자동완성 창 -->
   <div v-if="!searchBarToggle" class="AutoCompleteContents">
     <transition name="slide-up">
-      <v-list v-if="autoCompleteContents"> 
-        <div         
+      <div v-if="autoCompleteContents" ref="autoCompleteContentsRef"> 
+        <div
           v-for="[code, title], i in autoCompleteContents" 
-          :key="code"           
+          :key="code"
+          :tabindex="i"
+          ref="autoCompleteContent"
           :class="['AutoCompleteContent', i + 1 === currentCursor ? 'active' : '']"
           rounded="xl"
           @mousedown="push('/detail/' + code)"
@@ -57,13 +59,13 @@
           <span class="title"> {{ title }} </span>
           <span class="code"> {{ code }} </span>
         </div>
-      </v-list>
+      </div>
     </transition>
   </div>  
 </template>
 
 <script setup lang="ts">
-  import { computed, Ref, ref } from 'vue';
+  import { computed, Ref, ref, getCurrentInstance } from 'vue';
   import { useStockStore } from '@/store/stock';
   import { getKeyByValue } from '@/mixins/tools';
   import { useCustomRouter } from '@/mixins/customRouter';
@@ -92,7 +94,7 @@
   const searchBarContent = ref<string>('')
   const searchTableEntries = computed(() => Object.entries(searchTable.data))
 
-  const onSearchBarBlur = () => {
+  const onSearchBarBlur = (e: any) => {
     searchBarToggle.value = true
     currentCursor.value = 0
   }
@@ -103,6 +105,8 @@
   const FILTERING_KEYS = ['ArrowUp', 'ArrowDown', 'Enter']
   const PREVENT_KEYS = ['ArrowUp', 'ArrowDown', 'Enter', 'Process']
 
+  const autoCompleteContentsRef = ref<HTMLElement | null>(null)
+
   const currentCursor = ref<number>(0)
   const maxCursorLength = computed(() => filteredAutoCompleteContents.value?.length)
 
@@ -111,6 +115,7 @@
   })
   
   const filteredAutoCompleteContents = computed(() => {
+    currentCursor.value = 0
     const reg = getRegExp(searchBarContent.value)
     return searchTableEntries.value.filter(title => title[1].match(reg))
   })
@@ -120,17 +125,25 @@
     if (!FILTERING_KEYS.includes(e.key)) return
     
     KeyBoardEventMap[e.key](currentCursor)
+    autoCompleteContentsRef.value?.focus()
+    refreshScroll()
+  }
+
+  const refreshScroll = () => {
+    if (!autoCompleteContentsRef.value) return
+    autoCompleteContentsRef.value.scrollTo({ top: 100 })
   }
   
   const KeyBoardEventMap: { [key: string]: (cursor: Ref<number>) => void } = {
     'ArrowUp': cursor => {                  
       if(!cursor.value) return
-      cursor.value--      
+      cursor.value--            
     },
 
     'ArrowDown': cursor => {
       if(cursor.value === maxCursorLength.value) return      
       cursor.value++
+      
     },
 
     'Enter': cursor => {
@@ -212,7 +225,7 @@
   background-color: #333333;
   max-height: 200px;
   width: 150px;
-  overflow-x: hidden;
+  overflow-x: auto;
   overflow-y: scroll;
   position: absolute;
   top: 60px;

@@ -1,5 +1,8 @@
 <template>
-  <div class="DetailLayout">
+  <div 
+    class="DetailLayout"
+    ref="detailLayout"
+  >
     <!-- <ProgressCircular v-if="stockEvaluation.loading" absolute />     -->
 
     <!--  종목 개괄 -->
@@ -33,11 +36,12 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted } from 'vue';
+  import { onMounted, ref } from 'vue';
   import { useRoute, onBeforeRouteUpdate, RouteLocationNormalized } from 'vue-router';
   
   import { useStockStore } from '@/store/stock';
   import { stockPayloads } from '@/store/payload'
+  import { useAppStore } from '@/store/app';
 
   import StockMarcap from '@/components/detail/StockMarcap.vue';
   import StockClose from '@/components/detail/StockClose.vue'
@@ -47,18 +51,26 @@
   import StockEvaluation from '@/components/detail/StockEvaluation.vue'
   import StockStatement from '@/components/detail/StockStatement.vue'
   import Etcs from '@/components/detail/Etcs.vue'
+  import { storeToRefs } from 'pinia';
     
   const route = useRoute()  
   const store = useStockStore()
-  
+  const { target } = storeToRefs(useAppStore())
+    
   const fetch = (code: string): void => {
-    if (store.currentStock === code) return
-    console.log(stockPayloads)
+    if (store.currentStock === code) return    
     stockPayloads.forEach(payload => store.request(payload(code)))
     store.currentStock = code    
   }
+
   
-  onMounted(() => fetch(route.params.code as string))
+  onMounted(() => {
+    fetch(route.params.code as string);
+    (target.value?.$el as HTMLElement).scrollTo({ 
+      top: 0,
+      behavior: 'smooth'
+    })
+  })
   
   onBeforeRouteUpdate((to: RouteLocationNormalized) => fetch(to.params.code as string))
     
@@ -69,7 +81,7 @@
 $margin: 1rem;
 .DetailLayout {
   margin: $margin;
-  margin-top: 40px;  
+  margin-top: 40px;
 }
 
 .CardLayout {
