@@ -55,7 +55,7 @@
 
     <div :class="CENTER_CLASS">      
       <ProgressCircular v-if="rankCountLoad" class="mb-2"/>      
-      <Observer v-if="rankCountLoad" @triggerIntersected="loadMore"/>
+      <Observer v-if="rankCountLoad" @triggerIntersected="triggerIntersected"/>
     </div>
   </div>
   <ProgressCircular absolute v-else />
@@ -80,6 +80,8 @@
   } as const
 
   const RANK_INIT_COUNT = 10
+  const RANK_MAX_COUNT = 44
+  const LOAD_TIME = 500
 
   const { rank } = useStockStore()
   const { CONTENT_WIDTH, CENTER_CLASS } = useLayout()   
@@ -99,22 +101,36 @@
 
   watch(selectedTag, (v: TagType) => {    
     rankCount.value = 10
-    currentSortType.value = marketMapping[v] as keyof RankType
+    currentSortType.value = marketMapping[v]
     router.push(`/rank/${currentSortType.value}`)    
   })
 
-  const loadMore = (): void => { 
+  const createEffectLoading = (loadTime: number) => (callback: () => unknown, examine: () => unknown) => new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if(!examine()) reject()
+      resolve(callback())
+    }, loadTime)
+  })
+   
+  const loadRankCountCallback = () => rankCount.value += 5 
+  const examineRankCount = () => {
+    if (rankCount.value > RANK_MAX_COUNT) {
+      rankCountLoad.value = false
+      return false
+    }
+    return true
+  }
+
+  const effectLoading = createEffectLoading(500)
+
+
+  const triggerIntersected = async () => { 
     if (rankCount.value > 44) {
       rankCountLoad.value = false
       return
     }
-
-    new Promise(resolve => {
-        setTimeout(() => {
-        rankCount.value += 5 
-        resolve(rankCount.value)
-      }, 500)      
-    })
+    const k = await effectLoading(loadRankCountCallback, examineRankCount)
+    console.log(k)
   }
     
 </script>
