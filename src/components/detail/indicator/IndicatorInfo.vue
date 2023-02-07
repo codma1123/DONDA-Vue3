@@ -18,13 +18,15 @@
 <script setup lang="ts">
   import IndicatorSingleChart from '@/components/detail/indicator/IndicatorSingleChart.vue'
 
-  const { propId, labels, chartData, sectorData, title } = defineProps<{ 
+  interface IndicatorInfoProp {
     propId: string
     labels: string[]
     chartData: number[]
     sectorData: number[]
     title: string
-   }>()
+  }
+
+  const { propId, labels, chartData, sectorData, title } = defineProps<IndicatorInfoProp>()
 
 </script>
 

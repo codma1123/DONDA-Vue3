@@ -13,7 +13,7 @@
             mdi-chart-gantt
           </v-icon>
           적정주가
-        </v-chip>
+      </v-chip>
       </v-card-title>    
       
       <v-card-text>

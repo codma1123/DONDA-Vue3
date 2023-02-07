@@ -7,7 +7,7 @@
   import { priceCompactFormatter } from '@/mixins/tools';
   import { useStockStore } from '@/store/stock';
   import { Chart } from 'chart.js'
-  import { computed, onMounted, ref } from 'vue';
+  import { onMounted, ref } from 'vue';
 
   const { stockEvaluation, stockGraphAll } = useStockStore()
 

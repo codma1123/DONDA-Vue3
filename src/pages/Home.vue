@@ -61,6 +61,4 @@ $margin-size : 1rem;
     bottom: 5px;
     right: 5px;
   }
-
-
 </style>

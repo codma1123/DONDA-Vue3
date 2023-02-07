@@ -6,10 +6,9 @@
 
     <StockEvaluationInfo />
 
-    <v-card class="CardLayout" elevation="0">
+    <!-- <v-card class="CardLayout" elevation="0">
       <StockEvaluationChart propKey="detail"/>
-    </v-card>
-
+    </v-card> -->
 
     <!-- <StockEvaluationLineChart /> -->
     <StockEvaluationText />
@@ -31,9 +30,9 @@
 
   const { stockEvaluation, stockEvaluationDaily, stock, stockGraphAll } = useStockStore()
   const loading = computed(() => !stockEvaluation.loading && !stock.loading)
-
+  
   onMounted(() => {
-    
+    console.log(stockEvaluation.data)
   })
   
 </script>

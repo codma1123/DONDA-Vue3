@@ -1,50 +1,50 @@
 <template>
   <v-divider />
 
-  <v-card class="" elevation="0">
-
-    <v-sheet class="EvaluationChartSheet">      
-      {{ evaluation.value }}% 
-      <div :class="evaluation.textClass" v-font-size="40">
-        {{ evaluation.text  }}
-      </div>
-    </v-sheet>
-
+  <v-card class="" elevation="0">    
     <div class="date"> 기준일 : {{ date }}</div>
 
-    <v-card-subtitle class="mt-2 closeIcon" @click="push(`/detail/${stock.data.code}/close`)">
-      현재 주가 <v-icon>mdi-information</v-icon>
-    </v-card-subtitle>
-    <v-card-text v-font-size="35">
-      <number 
-        :from="0"
-        :to="stockClose"
-        :format="priceFormat"
-        :duration="1.2"
-        :delay="0"
-        easing="Power4.easeOut"
-      />
+    <v-card-text class="d-flex">
+      <div>
+        <v-card-subtitle class="closeIcon" @click="push(`/detail/${stock.data.code}/close`)">
+          현재 주가 <v-icon>mdi-information</v-icon>
+        </v-card-subtitle>
+    
+        <v-card-text v-font-size="35">
+          <number 
+            :from="0"
+            :to="stockClose"
+            :format="priceFormat"
+            :duration="1.2"
+            :delay="0"
+            easing="Power4.easeOut"
+          />
+        </v-card-text>        
+      </div>
+
+      <div>
+        <v-card-subtitle>
+          적정 주가      
+        </v-card-subtitle>
+        <v-card-text v-font-size="35">
+          <number 
+            :from="0"
+            :to="evaluationClose"
+            :format="priceFormat"
+            :duration="1.4"
+            :delay="0"
+            easing="Power4.easeOut"
+          />
+        </v-card-text>
+      </div>
     </v-card-text>
 
-    <v-card-subtitle class="mt-5">
-      적정 주가      
-    </v-card-subtitle>
-    <v-card-text v-font-size="35">
-      <number 
-        :from="0"
-        :to="evaluationClose"
-        :format="priceFormat"
-        :duration="1.4"
-        :delay="0"
-        easing="Power4.easeOut"
-      />
-    </v-card-text>
+
 
   </v-card>
 </template>
 
 <script setup lang="ts">
-  import { priceCompactFormatter, priceFormatter } from '@/mixins/tools';
   import { useStockStore } from '@/store/stock';
   import { computed } from 'vue'
   import { useRouter } from 'vue-router';

@@ -70,20 +70,22 @@
   import { RankType } from '@/models/stock';
   import { useRouter } from 'vue-router';
 
-  type TagType = '시가총액' | '거래량' | '상승률' | '하락률'
+  type TagType = keyof (typeof marketMapping)
   
-  const marketMapping: Record<TagType, string> = {
+  const marketMapping = {
     '시가총액': 'marcap',
     '거래량': 'volume',
     '상승률': 'change_incr',
-    '하락률': 'change_redu'
-  }
+    '하락률': 'change_redu' 
+  } as const
+
+  const RANK_INIT_COUNT = 10
 
   const { rank } = useStockStore()
   const { CONTENT_WIDTH, CENTER_CLASS } = useLayout()   
   const router = useRouter()
 
-  const rankCount = ref(10)    
+  const rankCount = ref(RANK_INIT_COUNT)
   const rankCountLoad = ref<boolean>(true)
   const tags = ref<TagType[]>(['시가총액', '거래량', '상승률', '하락률'])
   const selectedTag = ref<TagType>('시가총액')
@@ -98,8 +100,7 @@
   watch(selectedTag, (v: TagType) => {    
     rankCount.value = 10
     currentSortType.value = marketMapping[v] as keyof RankType
-    router.push(`/rank/${currentSortType.value}`)
-    
+    router.push(`/rank/${currentSortType.value}`)    
   })
 
   const loadMore = (): void => { 
