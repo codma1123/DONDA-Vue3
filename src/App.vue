@@ -57,18 +57,6 @@ body {
   // font-family: 'Poppins', sans-serif;
 }
 
-// .fade-enter-from {
-//   opacity: 0;
-// }
-
-// .fade-enter-to {
-//   opacity: 1;
-// }
-
-// .fade-enter-active {
-//   transition: all .1s ease;
-// }
-
 .ProgressCircular {
   position: absolute;
   top: 50%;

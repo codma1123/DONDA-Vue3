@@ -36,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, ref } from 'vue';
+  import { onMounted, ref, VueElement } from 'vue';
   import { useRoute, onBeforeRouteUpdate, RouteLocationNormalized } from 'vue-router';
   
   import { useStockStore } from '@/store/stock';
@@ -53,23 +53,22 @@
   import Etcs from '@/components/detail/Etcs.vue'
   import { storeToRefs } from 'pinia';
     
-  const route = useRoute()  
-  const store = useStockStore()
+  const { params } = useRoute()  
+  const { currentStock } = storeToRefs(useStockStore())
+  const { request } = useStockStore()
   const { target } = storeToRefs(useAppStore())
     
   const fetch = (code: string): void => {
-    if (store.currentStock === code) return    
-    stockPayloads.forEach(payload => store.request(payload(code)))
-    store.currentStock = code    
+    if (currentStock.value === code) return    
+    stockPayloads.forEach(payload => request(payload(code)))
+    currentStock.value = code    
   }
 
+  const scrollReset = (target: HTMLElement) => target.scrollTo({ top: 0, behavior: 'smooth' })
   
   onMounted(() => {
-    fetch(route.params.code as string);
-    (target.value?.$el as HTMLElement).scrollTo({ 
-      top: 0,
-      behavior: 'smooth'
-    })
+    fetch(params.code as string)
+    scrollReset(target.value?.$el)
   })
   
   onBeforeRouteUpdate((to: RouteLocationNormalized) => fetch(to.params.code as string))

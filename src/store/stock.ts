@@ -57,7 +57,6 @@ export const useStockStore = defineStore('stock', () => {
   const request = async (payload: AsyncPayload): Promise<void> => {    
 
     const { state, url, callback } = payload
-    console.log(payload)
 
     const targetState: AsyncState = (store as any)[state]
     targetState.loading = true

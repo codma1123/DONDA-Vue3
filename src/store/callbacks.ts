@@ -93,7 +93,6 @@ export const indicatorSectorDailyParser = (response: AxiosResponse<IStockIndicat
   const date = Object.keys(response.data)
   const values = Object.values(response.data)
 
-
   return {
     per: { date, value: values.map(v => v[0].per) },
     pbr: { date, value: values.map(v => v[0].pbr) },
