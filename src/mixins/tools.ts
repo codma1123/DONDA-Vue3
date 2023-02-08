@@ -17,6 +17,4 @@ export const getKeyByValue = (obj: any, value: string) => Object.keys(obj).find(
 
 export const delay = (time: number) => new Promise<void>(resolve => setTimeout(() => resolve(), time))
 
-export const scrollReset = (target: HTMLElement, option: ScrollOptions) => target.scrollTo({ top: 0, ...option})
-
 

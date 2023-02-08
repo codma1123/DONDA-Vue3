@@ -6,7 +6,7 @@ export const useAppStore = defineStore('app', () => {
 
   // scroll
   const target = ref<DefineComponent<VSheet> | null>(null)
-  const scrollReset = () => target.value?.$el.scrollTo({ top: 0, behavior: 'smooth'})
+  const scrollReset = () => target.value?.$el.scrollTo({ top: 0 })
 
   return { 
     target, 

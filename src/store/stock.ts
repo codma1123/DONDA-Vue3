@@ -72,9 +72,16 @@ export const useStockStore = defineStore('stock', () => {
       targetState.loading = false
     } 
   }
+
+  const fetchStock = (code: string) => {
+    if(currentStock.value === code) return
+    stockPayloads.forEach(payload => request(payload(code)))
+    currentStock.value = code
+  }
       
   return {
     request,
+    fetchStock,
 
     stock,
     stockGraphDefault,

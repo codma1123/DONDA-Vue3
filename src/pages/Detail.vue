@@ -54,22 +54,15 @@
   import { storeToRefs } from 'pinia';
     
   const { params } = useRoute()  
-  const { currentStock } = storeToRefs(useStockStore())
-  const { request } = useStockStore()
+  const { fetchStock } = useStockStore()
   const { scrollReset } = useAppStore()
-    
-  const fetch = (code: string): void => {
-    if (currentStock.value === code) return    
-    stockPayloads.forEach(payload => request(payload(code)))
-    currentStock.value = code    
-  }
-    
+          
   onMounted(() => {
-    fetch(params.code as string)
+    fetchStock(params.code as string)
     scrollReset()
   })
-  
-  onBeforeRouteUpdate((to: RouteLocationNormalized) => fetch(to.params.code as string))
+    
+  onBeforeRouteUpdate((to: RouteLocationNormalized) => fetchStock(to.params.code as string))
     
 </script>
 

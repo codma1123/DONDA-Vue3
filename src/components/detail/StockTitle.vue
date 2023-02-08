@@ -27,9 +27,7 @@
   
   const stockData = computed(() => stock.data)
   const icon = computed(() => iconToggle.value ? 'mdi-bookmark' : 'mdi-bookmark-outline')
-
-  onMounted(() => console.log(stock.data))
-
+  
 </script>
 
 <style lang="scss" scoped>
