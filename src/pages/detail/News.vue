@@ -22,15 +22,18 @@
 
 <script setup lang="ts">
   import { useStockStore } from '@/store/stock'
-  import { computed, ref } from 'vue'
+  import { computed, onMounted, ref } from 'vue'
   import StockNewsContent from '@/components/detail/StockNewsContent.vue'
   import ProgressCircular from '@/components/global/ProgressCircular.vue'
   import StockTitle from '@/components/detail/StockTitle.vue'
   import Observer from '@/components/global/Observer.vue';
+  import { useAppStore } from '@/store/app'
 
   const NEWS_CONTENTS_LENGTH = 8
 
   const { news, stock } = useStockStore()
+  const { scrollReset } = useAppStore()
+
   const contentsCount = ref<number>(NEWS_CONTENTS_LENGTH)
   const contentCountLoad = ref<boolean>(true)
 
@@ -51,7 +54,7 @@
     })
   }
 
-
+  onMounted(() => scrollReset())
 
 </script>
 

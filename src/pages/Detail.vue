@@ -56,19 +56,17 @@
   const { params } = useRoute()  
   const { currentStock } = storeToRefs(useStockStore())
   const { request } = useStockStore()
-  const { target } = storeToRefs(useAppStore())
+  const { scrollReset } = useAppStore()
     
   const fetch = (code: string): void => {
     if (currentStock.value === code) return    
     stockPayloads.forEach(payload => request(payload(code)))
     currentStock.value = code    
   }
-
-  const scrollReset = (target: HTMLElement) => target.scrollTo({ top: 0, behavior: 'smooth' })
-  
+    
   onMounted(() => {
     fetch(params.code as string)
-    scrollReset(target.value?.$el)
+    scrollReset()
   })
   
   onBeforeRouteUpdate((to: RouteLocationNormalized) => fetch(to.params.code as string))

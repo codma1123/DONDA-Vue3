@@ -121,7 +121,7 @@
     return true
   }
 
-  const effectLoading = createEffectLoading(500)
+  const effectLoading = () => createEffectLoading(LOAD_TIME)(loadRankCountCallback, examineRankCount)
 
 
   const triggerIntersected = async () => { 
@@ -129,8 +129,7 @@
       rankCountLoad.value = false
       return
     }
-    const k = await effectLoading(loadRankCountCallback, examineRankCount)
-    console.log(k)
+    const k = await effectLoading()
   }
     
 </script>

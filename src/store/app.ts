@@ -3,6 +3,13 @@ import { DefineComponent, ref } from "vue";
 import { VSheet } from "vuetify/components";
 
 export const useAppStore = defineStore('app', () => {
+
+  // scroll
   const target = ref<DefineComponent<VSheet> | null>(null)
-  return { target }
+  const scrollReset = () => target.value?.$el.scrollTo({ top: 0, behavior: 'smooth'})
+
+  return { 
+    target, 
+    scrollReset 
+  }
 })
