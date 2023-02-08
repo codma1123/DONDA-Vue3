@@ -36,11 +36,10 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, ref, VueElement } from 'vue';
+  import { onMounted } from 'vue';
   import { useRoute, onBeforeRouteUpdate, RouteLocationNormalized } from 'vue-router';
   
   import { useStockStore } from '@/store/stock';
-  import { stockPayloads } from '@/store/payload'
   import { useAppStore } from '@/store/app';
 
   import StockMarcap from '@/components/detail/StockMarcap.vue';
@@ -51,18 +50,17 @@
   import StockEvaluation from '@/components/detail/StockEvaluation.vue'
   import StockStatement from '@/components/detail/StockStatement.vue'
   import Etcs from '@/components/detail/Etcs.vue'
-  import { storeToRefs } from 'pinia';
     
   const { params } = useRoute()  
   const { fetchStock } = useStockStore()
   const { scrollReset } = useAppStore()
           
   onMounted(() => {
-    fetchStock(params.code as string)
+    fetchStock(params.code)
     scrollReset()
   })
     
-  onBeforeRouteUpdate((to: RouteLocationNormalized) => fetchStock(to.params.code as string))
+  onBeforeRouteUpdate((to: RouteLocationNormalized) => fetchStock(to.params.code))
     
 </script>
 

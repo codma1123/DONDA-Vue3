@@ -29,34 +29,9 @@ import {
   statementParser
 } from "@/store/callbacks"
 import { StateType } from '@/models/stock';
+import { useStockStore } from './stock';
 
-export type StoreStates = 
-'stock' | 
-'stockGraphDefault' |
-'stockGraphAll' | 
-'stockEvaluation' | 
-'stockEvaluationDaily' | 
-'similarContents' | 
-'news' | 
-'statement' | 
-'statementAll' | 
-'indicator' | 
-'indicatorSector' | 
-'indicatorDaily' | 
-'indicatorSectorDaily' | 
-'stockDonda' | 
-'recommendStocks' | 
-'recommendStockCodes' |
-'market' |
-'marketValuation' | 
-'rank' |
-'searchTable' |
-'stockVolume' |
-'similarContents' |
-'statement' | 
-'stockDonda' | 
-StatementType
-
+export type StoreStates = keyof ReturnType<typeof useStockStore>
 
 export type AsyncPayload = {
   state: StoreStates,

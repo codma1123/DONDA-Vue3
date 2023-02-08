@@ -1,7 +1,7 @@
 import { MarketType, MarketValuationType, RankType, SearchTableType } from './../models/stock';
 import axios from 'axios';
 import { defineStore } from "pinia";
-import { reactive, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import { DondaType, EvaluationDailyType, EvaluationType, GraphAllType, GraphDefaultType, IndicatorDailyType, IndicatorSectorDailyType, IndicatorSectorType, IndicatorType, NewsType, SimilarType, StatementAllType, StatementType, StateType, StocksType, StockType, VolumeType } from "../models/stock";
 import { AsyncPayload, stockPayloads } from './payload';
 import { ResponseType } from '@/api/types';
@@ -26,8 +26,8 @@ const initialState = utils.initial()
 
 export const useStockStore = defineStore('stock', () => {
 
-  const store = useStockStore()
 
+  const store = useStockStore()
   
   // STATES
   const currentStock = ref<string>('')
@@ -52,32 +52,36 @@ export const useStockStore = defineStore('stock', () => {
   const stockDonda = reactive<AsyncState<DondaType>>(utils.initial())
   const recommendStocks = reactive<AsyncState<StocksType>>(utils.initial())
   const recommendStockCodes = reactive<AsyncState<any>>(utils.initial())
-
     
   const request = async (payload: AsyncPayload): Promise<void> => {    
 
     const { state, url, callback } = payload
 
-    const targetState: AsyncState = (store as any)[state]
+    const targetState = store[state] as AsyncState 
     targetState.loading = true
     
     try {
       const response = await axios.get<ResponseType>(url)
       
-      targetState.data = callback(response)
+      targetState.data = callback(response) ?? {}
       targetState.loading = false
 
     } catch (error: unknown) {
       targetState.error = error
       targetState.loading = false
+
+      throw error
     } 
   }
 
-  const fetchStock = (code: string) => {
-    if(currentStock.value === code) return
+  const fetchStock = (code: string | string[]) => {
+    if(currentStock.value === code || code instanceof Array) return
     stockPayloads.forEach(payload => request(payload(code)))
     currentStock.value = code
   }
+
+  // store mount
+  onMounted(() => console.log('store mount'))
       
   return {
     request,
