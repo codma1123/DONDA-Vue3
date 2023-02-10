@@ -65,7 +65,7 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, Ref, ref, getCurrentInstance } from 'vue';
+  import { computed, Ref, ref } from 'vue';
   import { useStockStore } from '@/store/stock';
   import { getKeyByValue } from '@/mixins/tools';
   import { useCustomRouter } from '@/mixins/customRouter';

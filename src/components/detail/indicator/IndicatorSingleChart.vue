@@ -1,7 +1,6 @@
 <script setup lang="ts">
   import { Chart } from 'chart.js';
   import { onMounted, ref } from 'vue'
-
   
   const { propId, labels, chartData, sectorData, title } = defineProps<{ 
     propId: string
@@ -11,7 +10,9 @@
     title: string
    }>()
 
+   
   const chart = ref<Chart | null>()
+  const delayed = ref<boolean>()
 
   const options = {
     scales: {
@@ -27,6 +28,21 @@
         ticks: {
           color: 'white'
         }
+      }
+    },
+
+    animation: {
+      onComplete: () => {
+        delayed.value = true
+      },
+
+      delay: (context: any) => {
+        let delay = 0
+        if (context.type === 'data' && context.mode === 'default' && !delayed.value) {
+          delay = context.dataIndex * 300 + context.datasetIndex * 100
+        }
+
+        return delay
       }
     }
   } as any

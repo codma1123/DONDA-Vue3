@@ -31,9 +31,6 @@
 </script>
 
 <style scoped lang="scss">
-.IndicatorInfoLayout {
-  
-}
 
 
 </style>

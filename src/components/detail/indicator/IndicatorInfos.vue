@@ -2,34 +2,32 @@
 
   <v-divider />
 
+  <!-- EPS -->
+  <IndicatorInfo 
+    propId="EPS"
+    :title="title"
+    :labels="labels"
+    :chartData="epsChartData"
+    :sectorData="epsSectorData"
+  />  
 
-      <!-- EPS -->
-      <IndicatorInfo 
-        propId="EPS"
-        :title="title"
-        :labels="labels"
-        :chartData="epsChartData"
-        :sectorData="epsSectorData"
-      />  
-  
-      <!-- BPS -->
-      <IndicatorInfo 
-        propId="BPS"
-        :title="title"
-        :labels="labels"
-        :chartData="bpsChartData"
-        :sectorData="bpsSectorData"
-      />  
-  
-      <!-- ROE -->
-      <IndicatorInfo 
-        propId="ROE"
-        :title="title"
-        :labels="labels"
-        :chartData="roeChartData"
-        :sectorData="roeSectorData"
-      />  
+  <!-- BPS -->
+  <IndicatorInfo 
+    propId="BPS"
+    :title="title"
+    :labels="labels"
+    :chartData="bpsChartData"
+    :sectorData="bpsSectorData"
+  />  
 
+  <!-- ROE -->
+  <IndicatorInfo 
+    propId="ROE"
+    :title="title"
+    :labels="labels"
+    :chartData="roeChartData"
+    :sectorData="roeSectorData"
+  />  
 
 </template>
 

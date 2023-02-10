@@ -20,7 +20,6 @@
 <script setup lang="ts">
 
   import { computed, onMounted } from 'vue'
-  import StockEvaluationChart from '@/components/detail/StockEvaluationChart.vue'
   import { useStockStore } from '@/store/stock'
   import StockTitle from '@/components/detail/StockTitle.vue'
   import StockEvaluationInfo from '@/components/detail/evaluation/EvaluationInfo.vue'

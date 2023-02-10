@@ -27,9 +27,7 @@
   import { useStockStore } from '@/store/stock';
   import { computed } from 'vue';
   import _ from 'lodash'
-  import { StatementType } from '@/models/stock';
   import { NavigationFailure, useRouter } from 'vue-router';
-
 
   const { stock } = useStockStore()
   const router = useRouter()
@@ -37,6 +35,7 @@
 
 
   const push = (link: string): Promise<void | NavigationFailure | undefined> => router.push(link)
+
 
 
 </script>

@@ -3,7 +3,7 @@
     <v-main class="d-flex justify-center align-center">
       <router-view v-slot="{ Component }">
         <NavBar v-if="isNav"/>
-          <v-sheet 
+          <v-sheet             
             class="overflow-y-auto mt-5" 
             theme="dark"
             rounded="xl"
@@ -21,10 +21,10 @@
 </template>
 
 <script lang="ts" setup>
+  import NavBar from './pages/NavBar.vue'
   import { storeToRefs } from 'pinia';
   import { DefineComponent, onMounted, ref } from 'vue';
   import { useLayout } from './mixins/layout';
-  import NavBar from './pages/NavBar.vue'
   import { useAppStore } from './store/app';
   import { getMarketValuation, getRank, getSearchTable, getTodayMarket } from './store/payload';
   import { useStockStore } from './store/stock';

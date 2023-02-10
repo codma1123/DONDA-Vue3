@@ -1,9 +1,9 @@
 import { MarketType, MarketValuationType, RankType, SearchTableType } from './../models/stock';
 import axios from 'axios';
 import { defineStore } from "pinia";
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, reactive, ref, UnwrapNestedRefs } from "vue";
 import { DondaType, EvaluationDailyType, EvaluationType, GraphAllType, GraphDefaultType, IndicatorDailyType, IndicatorSectorDailyType, IndicatorSectorType, IndicatorType, NewsType, SimilarType, StatementAllType, StatementType, StateType, StocksType, StockType, VolumeType } from "../models/stock";
-import { AsyncPayload, stockPayloads } from './payload';
+import { AsyncPayload, stockPayloads, StoreStates } from './payload';
 import { ResponseType } from '@/api/types';
 
 export type AsyncState<T = StateType, E = unknown> = {
@@ -13,11 +13,31 @@ export type AsyncState<T = StateType, E = unknown> = {
 }
 
 const utils = {
-  initial: <T extends StateType = any, E = unknown>(initialData?: any): AsyncState<T, E> => ({
+  initial: <T extends StateType, E = unknown>(initialData?: any): AsyncState<T, E> => ({
     loading: true,
     data: initialData ?? null,
     error: null
+  }),
+
+  loading: (): AsyncState<null, null> => ({
+    loading: true,
+    data: null,
+    error: null
+  }),
+
+  error: (error: unknown): AsyncState<null, typeof error> => ({
+    loading: false,
+    data: null,
+    error
+  }),
+
+  fulfilled: (data: StateType): AsyncState<typeof data, null> => ({
+    loading: false,
+    data,
+    error: null
   })
+
+
 }
 
 const CancleToken = axios.CancelToken
@@ -31,6 +51,8 @@ export const useStockStore = defineStore('stock', () => {
   
   // STATES
   const currentStock = ref<string>('')
+
+  // AsyncStates
   const market = reactive<AsyncState<MarketType>>(utils.initial())
   const marketValuation = reactive<AsyncState<MarketValuationType>>(utils.initial())
   const rank = reactive<AsyncState<RankType>>(utils.initial())
@@ -57,7 +79,7 @@ export const useStockStore = defineStore('stock', () => {
 
     const { state, url, callback } = payload
 
-    const targetState = store[state] as AsyncState 
+    const targetState = store[state]
     targetState.loading = true
     
     try {
@@ -66,7 +88,9 @@ export const useStockStore = defineStore('stock', () => {
       targetState.data = callback(response) ?? {}
       targetState.loading = false
 
+
     } catch (error: unknown) {
+
       targetState.error = error
       targetState.loading = false
 
@@ -79,10 +103,7 @@ export const useStockStore = defineStore('stock', () => {
     stockPayloads.forEach(payload => request(payload(code)))
     currentStock.value = code
   }
-
-  // store mount
-  onMounted(() => console.log('store mount'))
-      
+            
   return {
     request,
     fetchStock,

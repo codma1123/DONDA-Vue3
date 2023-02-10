@@ -32,12 +32,3 @@
   const stockData = computed(() => stock.data)
   
 </script>
-
-<style scoped lang="scss">
-$margin: 1rem;
-.DetailLayout {
-  margin: $margin;
-  margin-top: 55px;  
-}
-
-</style>
