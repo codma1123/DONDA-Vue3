@@ -15,19 +15,19 @@ export type AsyncState<T = StateType, E = unknown> = {
 const utils = {
   initial: <T extends StateType, E = unknown>(initialData?: any): AsyncState<T, E> => ({
     loading: true,
-    data: initialData ?? null,
+    data: initialData ?? {},
     error: null
   }),
 
-  loading: (): AsyncState<null, null> => ({
+  loading: (): AsyncState<StateType, unknown> => ({
     loading: true,
-    data: null,
+    data: {},
     error: null
   }),
 
-  error: (error: unknown): AsyncState<null, typeof error> => ({
+  error: (error: unknown): AsyncState<StateType, typeof error> => ({
     loading: false,
-    data: null,
+    data: {},
     error
   }),
 
@@ -49,8 +49,35 @@ export const useStockStore = defineStore('stock', () => {
 
   const store = useStockStore()
   
-  // STATES
-  const currentStock = ref<string>('')
+  // State
+  const states = reactive({
+    currentStock: ''
+  })
+  
+
+  const asyncStates = reactive<Record<string, AsyncState>>({
+    market: utils.initial(),
+    marketValuation: utils.initial(),
+    rank: utils.initial(),
+    searchTable: utils.initial(),
+    stock: utils.initial() as AsyncState<StockType>,
+    stockGraphDefault: utils.initial(),
+    stockVolume: utils.initial(),
+    stockGraphAll: utils.initial(),
+    stockEvaluation: utils.initial(),
+    stockEvaluationDaily: utils.initial(),
+    similarContents: utils.initial(),
+    news: utils.initial(),
+    statement: utils.initial(),
+    statementAll: utils.initial(),
+    indicator: utils.initial(),
+    indicatorSector: utils.initial(),
+    indicatorDaily: utils.initial(),
+    indicatorSectorDaily: utils.initial(),
+    stockDonda: utils.initial(),
+    recommendStocks: utils.initial(),
+    recommendStockCodes: utils.initial()
+  })
 
   // AsyncStates
   const market = reactive<AsyncState<MarketType>>(utils.initial())
@@ -80,6 +107,8 @@ export const useStockStore = defineStore('stock', () => {
     const { state, url, callback } = payload
 
     const targetState = store[state]
+    asyncStates[state] = utils.loading()
+
     targetState.loading = true
     
     try {
@@ -87,22 +116,30 @@ export const useStockStore = defineStore('stock', () => {
       
       targetState.data = callback(response) ?? {}
       targetState.loading = false
+      asyncStates[state] = utils.fulfilled(callback(response) ?? {})
 
 
     } catch (error: unknown) {
 
       targetState.error = error
       targetState.loading = false
+      asyncStates[state] = utils.error(error)
 
       throw error
     } 
   }
 
   const fetchStock = (code: string | string[]) => {
-    if(currentStock.value === code || code instanceof Array) return
+    if(states.currentStock === code || code instanceof Array) return
     stockPayloads.forEach(payload => request(payload(code)))
-    currentStock.value = code
+    states.currentStock = code
   }
+
+  onMounted(() => {
+    const sy = Object.keys(asyncStates) as StoreStates[]
+
+    sy.forEach(s => asyncStates[s] = utils.initial())
+  })
             
   return {
     request,
@@ -125,12 +162,12 @@ export const useStockStore = defineStore('stock', () => {
     recommendStocks,
     recommendStockCodes,
     stockVolume,
+    asyncStates,
 
     rank,
     market,
     marketValuation,
     searchTable,
 
-    currentStock
   }
 })

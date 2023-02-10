@@ -34,8 +34,9 @@ import { _StoreWithState } from 'pinia';
 
 export type StoreStates = keyof Omit<
   ReturnType<typeof useStockStore>,
-  "request" | "fetchStock" | "currentStock" | keyof _StoreWithState<"stock", any, any, any>
+  "request" | "fetchStock" | "states" | keyof _StoreWithState<"stock", any, any, any>
 >
+
 
 export type AsyncPayload = {
   state: StoreStates,
