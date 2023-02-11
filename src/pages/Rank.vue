@@ -7,23 +7,7 @@
       <v-card-subtitle> 다양한 기준으로 정렬된 종목을 살펴보세요.</v-card-subtitle>
     </div>
 
-    <v-chip-group
-      v-model="selectedTag"
-      mandatory        
-      selected-class="text-secondary"
-      class="vChipGroup"
-    >
-      <v-chip                 
-        class="vChip" 
-        v-for="tag in tags"          
-        label
-        :key="tag"
-        :value="tag"
-      >
-        {{ tag }}
-      </v-chip>
-    </v-chip-group>
-
+    <RankMenu v-model="selectedTag" />
 
     <RankContent 
       v-for="(content, i) in contents"
@@ -31,7 +15,6 @@
       :key="i"
       :index="i"      
     />
-
 
     <div :class="CENTER_CLASS">      
       <ProgressCircular v-if="rankCountLoad" class="mb-2"/>      
@@ -42,14 +25,16 @@
 </template>
 
 <script setup lang="ts">
-  import {  computed, ref, watch } from 'vue';
-  import { useLayout } from '@/mixins/layout';
-  import { useStockStore } from '@/store/stock';
+  import { computed, ref, watch } from 'vue'
+  import { useLayout } from '@/mixins/layout'
+  import { useStockStore } from '@/store/stock'
+  import { useCustomRouter } from '@/mixins/customRouter'
+
+  import useLoader from '@/mixins/loader'
   import ProgressCircular from '@/components/global/ProgressCircular.vue'
-  import Observer from "@/components/global/Observer.vue";
-  import { RankType } from '@/models/stock';
-  import { useRouter } from 'vue-router';
-import RankContent from '@/components/rank/RankContent.vue';
+  import Observer from "@/components/global/Observer.vue"
+  import RankContent from '@/components/rank/RankContent.vue'
+  import RankMenu  from '@/components/rank/RankMenu.vue'
 
   type TagType = keyof (typeof marketMapping)
   
@@ -66,27 +51,19 @@ import RankContent from '@/components/rank/RankContent.vue';
 
   const { rank } = useStockStore()
   const { CENTER_CLASS } = useLayout()   
-  const router = useRouter()
+  const { push } = useCustomRouter()
+  const { createEffectLoading } = useLoader()
 
   const rankCount = ref(RANK_INIT_COUNT)
   const rankCountLoad = ref<boolean>(true)
-  const tags = ref<TagType[]>(['시가총액', '거래량', '상승률', '하락률'])
   const selectedTag = ref<TagType>('시가총액')
-  const currentSortType = ref<(keyof RankType)>('marcap')
+  const currentSortType = computed(() => marketMapping[selectedTag.value])
 
   const contents = computed(() => rank.data[currentSortType.value].slice(0, rankCount.value))
 
-  watch(selectedTag, (v: TagType) => {    
+  watch(selectedTag, () => {    
     rankCount.value = 10
-    currentSortType.value = marketMapping[v]
-    router.push(`/rank/${currentSortType.value}`)    
-  })
-
-  const createEffectLoading = (loadTime: number) => (callback: () => unknown, examine: () => unknown) => new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if(!examine()) reject()
-      resolve(callback())
-    }, loadTime)
+    push(`/rank/${currentSortType.value}`)    
   })
    
   const loadRankCountCallback = () => rankCount.value += 5 
@@ -106,44 +83,14 @@ import RankContent from '@/components/rank/RankContent.vue';
       rankCountLoad.value = false
       return
     }
-    const k = await effectLoading()
+    await effectLoading()
   }
     
 </script>
 
-<style scoped lang="scss">
-
-  $margin: 1rem;
+<style scoped>  
   .Title {
     margin-top: 55px;
     margin-left: 15px;
   }
-
-  .RankContent {
-    margin: $margin;
-    margin-top: 2px;
-    padding-top: 5px;
-      
-    border-radius: .5rem;
-
-    cursor: pointer;
-
-    &:nth-child(2n) {
-      background-color: #424242 !important;
-    }
-
-    &:hover {
-      background-color: lighten(#333333, 10%) !important;
-    }        
-  }
-
-  .vChipGroup {
-    display: flex;
-    justify-content: center;
-    margin: $margin;
-    margin-bottom: 0px;
-    flex-grow: auto;
-  }
-
-
 </style>
