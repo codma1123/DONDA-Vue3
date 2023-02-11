@@ -15,7 +15,7 @@
             <component :is="Component"/>
           </transition>
         </v-sheet>
-        </router-view>
+      </router-view>
     </v-main>
   </v-layout>
 </template>

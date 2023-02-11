@@ -5,6 +5,8 @@ import { NavigationFailure, useRouter, Router } from "vue-router"
   const router: Router = useRouter()
 
   return { 
-    push: (link: string): Promise<void | NavigationFailure | undefined> => router.push(link)
+    push: (link: string): Promise<void | NavigationFailure | undefined> => {
+      return router.push(link)
+    }
   }
 }

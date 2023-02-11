@@ -23,35 +23,15 @@
         {{ tag }}
       </v-chip>
     </v-chip-group>
-    
-    <v-card
+
+
+    <RankContent 
       v-for="(content, i) in contents"
-      class="RankContent"        
-      color="cardlayout"
-      height="90"
-      :widtd="CONTENT_WIDTH"
+      :content="content"
       :key="i"
-      @click="push(content.code)"
-      elevation="0"
-    >
-      <v-card-subtitle v-font-size="15" class="mt-2"> {{ content.market }} </v-card-subtitle>
-      <div class="d-flex align-end justify-space-between">
-        <v-card-title> 
-          <span v-font-size="23"> {{ i + 1 }}</span>
-          <span v-font-size="18" class="pl-2"> {{ content.title }} </span>            
-        </v-card-title>        
-        <div class="mr-3 mb-2"> 
-          <div>
-            <span v-font-size="20"> 
-              {{ content.close }}  
-            </span>
-            <span class="ml-1" v-font-size="12"> 
-              {{ content.prefix }}{{ content.change }}
-            </span>
-          </div>
-        </div>
-      </div>    
-    </v-card>
+      :index="i"      
+    />
+
 
     <div :class="CENTER_CLASS">      
       <ProgressCircular v-if="rankCountLoad" class="mb-2"/>      
@@ -69,6 +49,7 @@
   import Observer from "@/components/global/Observer.vue";
   import { RankType } from '@/models/stock';
   import { useRouter } from 'vue-router';
+import RankContent from '@/components/rank/RankContent.vue';
 
   type TagType = keyof (typeof marketMapping)
   
@@ -84,7 +65,7 @@
   const LOAD_TIME = 500
 
   const { rank } = useStockStore()
-  const { CONTENT_WIDTH, CENTER_CLASS } = useLayout()   
+  const { CENTER_CLASS } = useLayout()   
   const router = useRouter()
 
   const rankCount = ref(RANK_INIT_COUNT)
@@ -94,10 +75,6 @@
   const currentSortType = ref<(keyof RankType)>('marcap')
 
   const contents = computed(() => rank.data[currentSortType.value].slice(0, rankCount.value))
-
-  const push = (code: string) => { 
-    router.push(`/detail/${code}`)
-  }
 
   watch(selectedTag, (v: TagType) => {    
     rankCount.value = 10
