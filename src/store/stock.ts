@@ -3,7 +3,7 @@ import axios from 'axios';
 import { defineStore } from "pinia";
 import { onMounted, reactive, ref, UnwrapNestedRefs } from "vue";
 import { DondaType, EvaluationDailyType, EvaluationType, GraphAllType, GraphDefaultType, IndicatorDailyType, IndicatorSectorDailyType, IndicatorSectorType, IndicatorType, NewsType, SimilarType, StatementAllType, StatementType, StateType, StocksType, StockType, VolumeType } from "../models/stock";
-import { AsyncPayload, stockPayloads, StoreStates } from './payload';
+import { AsyncPayload, marketPayloads, stockPayloads, StoreStates } from './payload';
 import { ResponseType } from '@/api/types';
 
 export type AsyncState<T = StateType, E = unknown> = {
@@ -55,29 +55,29 @@ export const useStockStore = defineStore('stock', () => {
   })
   
 
-  const asyncStates = reactive<Record<string, AsyncState>>({
-    market: utils.initial(),
-    marketValuation: utils.initial(),
-    rank: utils.initial(),
-    searchTable: utils.initial(),
-    stock: utils.initial() as AsyncState<StockType>,
-    stockGraphDefault: utils.initial(),
-    stockVolume: utils.initial(),
-    stockGraphAll: utils.initial(),
-    stockEvaluation: utils.initial(),
-    stockEvaluationDaily: utils.initial(),
-    similarContents: utils.initial(),
-    news: utils.initial(),
-    statement: utils.initial(),
-    statementAll: utils.initial(),
-    indicator: utils.initial(),
-    indicatorSector: utils.initial(),
-    indicatorDaily: utils.initial(),
-    indicatorSectorDaily: utils.initial(),
-    stockDonda: utils.initial(),
-    recommendStocks: utils.initial(),
-    recommendStockCodes: utils.initial()
-  })
+  // const asyncStates = reactive<Record<string, AsyncState>>({
+  //   market: utils.initial(),
+  //   marketValuation: utils.initial(),
+  //   rank: utils.initial(),
+  //   searchTable: utils.initial(),
+  //   stock: utils.initial() as AsyncState<StockType>,
+  //   stockGraphDefault: utils.initial(),
+  //   stockVolume: utils.initial(),
+  //   stockGraphAll: utils.initial(),
+  //   stockEvaluation: utils.initial(),
+  //   stockEvaluationDaily: utils.initial(),
+  //   similarContents: utils.initial(),
+  //   news: utils.initial(),
+  //   statement: utils.initial(),
+  //   statementAll: utils.initial(),
+  //   indicator: utils.initial(),
+  //   indicatorSector: utils.initial(),
+  //   indicatorDaily: utils.initial(),
+  //   indicatorSectorDaily: utils.initial(),
+  //   stockDonda: utils.initial(),
+  //   recommendStocks: utils.initial(),
+  //   recommendStockCodes: utils.initial()
+  // })
 
   // AsyncStates
   const market = reactive<AsyncState<MarketType>>(utils.initial())
@@ -107,7 +107,7 @@ export const useStockStore = defineStore('stock', () => {
     const { state, url, callback } = payload
 
     const targetState = store[state]
-    asyncStates[state] = utils.loading()
+    // asyncStates[state] = utils.loading()
 
     targetState.loading = true
     
@@ -116,14 +116,14 @@ export const useStockStore = defineStore('stock', () => {
       
       targetState.data = callback(response) ?? {}
       targetState.loading = false
-      asyncStates[state] = utils.fulfilled(callback(response) ?? {})
+      // asyncStates[state] = utils.fulfilled(callback(response) ?? {})
 
 
     } catch (error: unknown) {
 
       targetState.error = error
       targetState.loading = false
-      asyncStates[state] = utils.error(error)
+      // asyncStates[state] = utils.error(error)
 
       throw error
     } 
@@ -135,15 +135,13 @@ export const useStockStore = defineStore('stock', () => {
     states.currentStock = code
   }
 
-  onMounted(() => {
-    const sy = Object.keys(asyncStates) as StoreStates[]
-
-    sy.forEach(s => asyncStates[s] = utils.initial())
-  })
+  const fetchMarket = () => marketPayloads.forEach(payload => request(payload()))
+      
             
   return {
     request,
     fetchStock,
+    fetchMarket,
 
     stock,
     stockGraphDefault,
@@ -162,7 +160,6 @@ export const useStockStore = defineStore('stock', () => {
     recommendStocks,
     recommendStockCodes,
     stockVolume,
-    asyncStates,
 
     rank,
     market,

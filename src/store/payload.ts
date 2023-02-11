@@ -34,9 +34,8 @@ import { _StoreWithState } from 'pinia';
 
 export type StoreStates = keyof Omit<
   ReturnType<typeof useStockStore>,
-  "request" | "fetchStock" | "states" | keyof _StoreWithState<"stock", any, any, any>
+  "request" | "fetchStock" | "fetchMarket" |  "currentStock" | keyof _StoreWithState<"stock", any, any, any>
 >
-
 
 export type AsyncPayload = {
   state: StoreStates,
@@ -114,6 +113,13 @@ export const stockPayloads = [
   getStockSimilarContents,
   getStockEvaluationDaily,
   getStockStatement,
+]
+
+export const marketPayloads = [
+  getTodayMarket,
+  getMarketValuation,
+  getRank,
+  getSearchTable
 ]
 
 export {

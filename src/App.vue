@@ -29,19 +29,17 @@
   import { getMarketValuation, getRank, getSearchTable, getTodayMarket } from './store/payload';
   import { useStockStore } from './store/stock';
   import { VSheet } from "vuetify/components";
+  import { marketPayloads } from '@/store/payload'
 
   const { MAIN_WIDTH, MAIN_HEIGHT } = useLayout()
-  const { request } = useStockStore()
+  const { fetchMarket } = useStockStore()
   const { target } = storeToRefs(useAppStore())
 
   const isNav = ref<boolean>(true)
   const targetSheet = ref<DefineComponent<VSheet> | null>(null)
 
   onMounted(() => {
-    request(getTodayMarket())
-    request(getMarketValuation())
-    request(getRank())
-    request(getSearchTable())
+    fetchMarket()
     target.value = targetSheet.value
   })
 
