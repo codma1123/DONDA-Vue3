@@ -3,18 +3,18 @@
     <v-main class="d-flex justify-center align-center">
       <router-view v-slot="{ Component }">
         <NavBar v-if="isNav"/>
-          <v-sheet             
-            class="overflow-y-auto mt-5" 
-            theme="dark"
-            rounded="xl"
-            :width="MAIN_WIDTH" 
-            :height="MAIN_HEIGHT" 
-            ref="targetSheet"
-          >
-            <transition name="fade">
-              <component :is="Component"/>
-            </transition>
-          </v-sheet>
+        <v-sheet             
+          class="overflow-y-auto mt-5" 
+          theme="dark"
+          rounded="xl"
+          :width="MAIN_WIDTH" 
+          :height="MAIN_HEIGHT" 
+          ref="targetSheet"
+        >
+          <transition name="fade">
+            <component :is="Component"/>
+          </transition>
+        </v-sheet>
         </router-view>
     </v-main>
   </v-layout>
@@ -26,10 +26,8 @@
   import { DefineComponent, onMounted, ref } from 'vue';
   import { useLayout } from './mixins/layout';
   import { useAppStore } from './store/app';
-  import { getMarketValuation, getRank, getSearchTable, getTodayMarket } from './store/payload';
   import { useStockStore } from './store/stock';
   import { VSheet } from "vuetify/components";
-  import { marketPayloads } from '@/store/payload'
 
   const { MAIN_WIDTH, MAIN_HEIGHT } = useLayout()
   const { fetchMarket } = useStockStore()
