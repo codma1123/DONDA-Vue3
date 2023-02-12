@@ -4,7 +4,7 @@
       class="CardLayout" 
       color="cardlayout" 
       elevation="0"      
-      @click="push"
+      @click="push(`/detail/${stock.data.code}/evaluation`)"
       v-if="loading && !_.isEmpty(stockEvaluation.data)"
     >
       <v-card-title class="innerTitle">        
@@ -32,16 +32,15 @@
 <script setup lang="ts">
   import { useStockStore } from '@/store/stock';
   import { computed } from 'vue';
-  import { useRouter } from 'vue-router';
   import StockEvaluationChart from '@/components/detail/StockEvaluationChart.vue';
   import _ from 'lodash'
+  import { useCustomRouter } from '@/mixins/customRouter';
 
-  const router = useRouter()
+  const { push } = useCustomRouter()
   const { stockEvaluation, stock } = useStockStore()
 
   const loading = computed(() => !stockEvaluation.loading && !stock.loading)
 
-  const push = () => router.push(`/detail/${stock.data.code}/evaluation`)
   
 </script>
 
