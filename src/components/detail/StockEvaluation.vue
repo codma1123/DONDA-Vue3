@@ -13,7 +13,7 @@
             mdi-chart-gantt
           </v-icon>
           적정주가
-      </v-chip>
+        </v-chip>
       </v-card-title>    
       
       <v-card-text class="d-flex justify-space-around align-center">
@@ -49,20 +49,17 @@
 <script setup lang="ts">
   import { useStockStore } from '@/store/stock';
   import { computed } from 'vue';
-  import StockEvaluationChart from '@/components/detail/StockEvaluationChart.vue';
   import _ from 'lodash'
   import { useCustomRouter } from '@/mixins/customRouter';
-import { priceCompactFormatter } from '@/utils';
+  import { priceCompactFormatter } from '@/utils';
 
   const { push } = useCustomRouter()
   const { stockEvaluation, stock } = useStockStore()
 
   const loading = computed(() => !stockEvaluation.loading && !stock.loading)
-
   const current = computed(() => priceCompactFormatter.format(stock.data.close))
   const evaluation = computed(() => priceCompactFormatter.format(stockEvaluation.data['S-rim'].at(-1) as number))
 
-  
 </script>
 
 <style scoped lang="scss">
