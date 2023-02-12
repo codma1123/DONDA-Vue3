@@ -16,7 +16,7 @@
         </v-chip>
       </v-card-title>    
       
-      <v-card-text class="d-flex justify-space-around align-center">
+      <v-card-text class="d-flex justify-space-around align-center innerMore">
         <!-- <StockEvaluationChart /> -->
         <p class="text-center">
           <v-card-subtitle>
@@ -65,6 +65,10 @@
 <style scoped lang="scss">
 .CardLayout {
   height: 135px;
+}
+
+.innerMore {
+  opacity: 1;
 }
 
 .fade-enter-active {

@@ -8,9 +8,7 @@
         <span v-font-size="30" class="font-weight-bold"> {{ stockData.name }} </span>
         <span v-font-size="15" class="code"> {{ stockData.code }} </span>
       </div>
-      <v-btn icon variant="text" @click="iconToggle = !iconToggle">
-        <v-icon class="icon">{{icon}}</v-icon>
-      </v-btn>
+
     </v-card-title>
   </v-sheet>
 </template>
