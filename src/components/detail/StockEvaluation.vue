@@ -16,8 +16,25 @@
       </v-chip>
       </v-card-title>    
       
-      <v-card-text>
-        <StockEvaluationChart />
+      <v-card-text class="d-flex justify-space-around align-center">
+        <!-- <StockEvaluationChart /> -->
+        <p class="text-center">
+          <v-card-subtitle>
+            현재 주가
+          </v-card-subtitle>
+          <span v-font-size="25">
+            {{ current }}
+          </span>
+        </p>
+
+        <p class="text-center">
+          <v-card-subtitle>
+            적정 주가
+          </v-card-subtitle>
+          <span v-font-size="25">
+            {{ evaluation }}
+          </span>
+        </p>
       </v-card-text>  
       
       <v-card-actions>
@@ -35,18 +52,22 @@
   import StockEvaluationChart from '@/components/detail/StockEvaluationChart.vue';
   import _ from 'lodash'
   import { useCustomRouter } from '@/mixins/customRouter';
+import { priceCompactFormatter } from '@/utils';
 
   const { push } = useCustomRouter()
   const { stockEvaluation, stock } = useStockStore()
 
   const loading = computed(() => !stockEvaluation.loading && !stock.loading)
 
+  const current = computed(() => priceCompactFormatter.format(stock.data.close))
+  const evaluation = computed(() => priceCompactFormatter.format(stockEvaluation.data['S-rim'].at(-1) as number))
+
   
 </script>
 
 <style scoped lang="scss">
 .CardLayout {
-  height: 200px;
+  height: 135px;
 }
 
 .fade-enter-active {
