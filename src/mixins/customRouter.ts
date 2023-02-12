@@ -1,6 +1,6 @@
 import { NavigationFailure, useRouter, Router } from "vue-router"
 
-  export const useCustomRouter = () => {
+export const useCustomRouter = () => {
 
   const router: Router = useRouter()
 

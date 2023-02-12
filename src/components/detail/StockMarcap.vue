@@ -5,7 +5,7 @@
       class="CardLayout"
       color="cardlayout"
       elevation="0"
-      @click="goRoute"
+      @click="push(`/detail/${stock.data.code}/similar`)"
     >          
       <v-card-title class="innerTitle">
         <div class="d-flex">
@@ -28,16 +28,14 @@
 <script setup lang="ts">
 
   import { computed } from 'vue';
-  import { useRouter } from 'vue-router';
   import { priceCompactFormatter } from '@/mixins/tools';
   import { useStockStore } from '@/store/stock';
+  import { useCustomRouter } from '@/mixins/customRouter';
 
   const { stock } = useStockStore()
-  const router = useRouter()
+  const { push } = useCustomRouter()
 
   const data = computed(() => stock.data)
   const loading = computed(() => stock.loading)
-
-  const goRoute = () => router.push(`/detail/${stock.data.code}/similar`)
 
 </script>
