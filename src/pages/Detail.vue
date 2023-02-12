@@ -25,6 +25,8 @@
     <!-- 종목뉴스 -->
     <StockNews />
 
+    <Etcs />    
+
 
   </div> 
     
@@ -44,6 +46,7 @@
   import StockTitle from '@/components/detail/StockTitle.vue'
   import StockEvaluation from '@/components/detail/StockEvaluation.vue'
   import StockStatement from '@/components/detail/StockStatement.vue'
+import Etcs from '@/components/detail/Etcs.vue';
     
   const { params } = useRoute()  
   const { fetchStock } = useStockStore()
@@ -59,6 +62,8 @@
 </script>
 
 <style lang="scss">
+
+
 
 $margin: 1rem;
 .DetailLayout {
@@ -134,15 +139,6 @@ $margin: 1rem;
   }
 }
 
-.fade-leave-active {
-  .innerTitle {
-    // transition: all 0.001s ease-in-out;
-  }
-
-  .innerMore {
-    // transition: opacity 0.001s ease-in-out;
-  }
-}
 
 .fade-leave-to {
   .innerTitle {
