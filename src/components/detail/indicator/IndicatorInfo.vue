@@ -29,8 +29,3 @@
   const { propId, labels, chartData, sectorData, title } = defineProps<IndicatorInfoProp>()
 
 </script>
-
-<style scoped lang="scss">
-
-
-</style>

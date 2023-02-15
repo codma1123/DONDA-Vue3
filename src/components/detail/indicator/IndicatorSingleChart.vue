@@ -24,6 +24,7 @@
       },
 
       y: {
+        display: false,
         grid: { display: false },
         ticks: {
           color: 'white'
