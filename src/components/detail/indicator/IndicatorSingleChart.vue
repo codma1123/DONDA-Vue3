@@ -15,27 +15,37 @@
   const delayed = ref<boolean>()
 
   const options = {
+
+    plugins: {
+      tooltip: {
+        intersect: true,
+        mode: 'index',
+        backgroundColor: '#black',
+        titleAlign: 'center',
+        bodyAlign: 'right',
+        bodySpacing: 5,
+        padding: 10,
+        cornerRadius: 15,        
+        bodyFont: { size: 12 },
+        boxPadding: 5,
+      }
+    },
+
     scales: {
       x: {
         grid: { display: false },
         ticks: {
           color: 'white',
+          font: { size: 15 }
         }
       },
 
-      y: {
-        display: false,
-        grid: { display: false },
-        ticks: {
-          color: 'white'
-        }
-      }
+      y: { display: false }
     },
 
+    
     animation: {
-      onComplete: () => {
-        delayed.value = true
-      },
+      onComplete: () => delayed.value = true,
 
       delay: (context: any) => {
         let delay = 0
