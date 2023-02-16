@@ -58,15 +58,6 @@
     }
   } as any
 
-  // label: 'Fully Rounded',
-  // data: Utils.numbers(NUMBER_CFG),
-  // borderColor: Utils.CHART_COLORS.red,
-  // backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
-  // borderWidth: 2,
-  // borderRadius: Number.MAX_VALUE,
-  // borderSkipped: false,
-
-
   const renderChart = () => {
     const ctx = document.getElementById(propId) as HTMLCanvasElement
 
@@ -81,7 +72,7 @@
             borderWidth: 3
           },
           {
-            label: '섹터',
+            label: '섹터평균',
             data: sectorData,
             borderWidth: 3
           }

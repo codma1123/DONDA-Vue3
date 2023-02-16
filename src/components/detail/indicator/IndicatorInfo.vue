@@ -29,3 +29,9 @@
   const { propId, labels, chartData, sectorData, title } = defineProps<IndicatorInfoProp>()
 
 </script>
+
+<style lang="scss" scoped>
+  .IndicatorInfoLayout {
+    margin-bottom: 50px;
+  }
+</style>

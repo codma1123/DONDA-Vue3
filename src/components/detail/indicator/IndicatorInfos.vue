@@ -2,32 +2,34 @@
 
   <v-divider />
 
+  <div>
+    <IndicatorInfo 
+      propId="EPS"
+      :title="title"
+      :labels="labels"
+      :chartData="epsChartData"
+      :sectorData="epsSectorData"
+    />  
+  
+    <!-- BPS -->
+    <IndicatorInfo 
+      propId="BPS"
+      :title="title"
+      :labels="labels"
+      :chartData="bpsChartData"
+      :sectorData="bpsSectorData"
+    />  
+  
+    <!-- ROE -->
+    <IndicatorInfo 
+      propId="ROE"
+      :title="title"
+      :labels="labels"
+      :chartData="roeChartData"
+      :sectorData="roeSectorData"
+    />  
+  </div>
   <!-- EPS -->
-  <IndicatorInfo 
-    propId="EPS"
-    :title="title"
-    :labels="labels"
-    :chartData="epsChartData"
-    :sectorData="epsSectorData"
-  />  
-
-  <!-- BPS -->
-  <IndicatorInfo 
-    propId="BPS"
-    :title="title"
-    :labels="labels"
-    :chartData="bpsChartData"
-    :sectorData="bpsSectorData"
-  />  
-
-  <!-- ROE -->
-  <IndicatorInfo 
-    propId="ROE"
-    :title="title"
-    :labels="labels"
-    :chartData="roeChartData"
-    :sectorData="roeSectorData"
-  />  
 
 </template>
 
@@ -35,7 +37,6 @@
   import { IndicatorSectorType } from '@/models/stock';
   import { useStockStore } from '@/store/stock'
   import { computed } from 'vue';
-  import IndicatorSingleChart from './IndicatorSingleChart.vue';
   import IndicatorInfo from './IndicatorInfo.vue'
 
   const { stock, indicator, indicatorSector, indicatorDaily, indicatorSectorDaily } = useStockStore()
@@ -54,22 +55,6 @@
   
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 
-$padding: 5px;
-
-.CardLayout {
-  padding: $padding;
-  padding-left: 0px;
-  padding-top: 0px;
-  margin-left: 0px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  .ChartLayout {
-    height: 500px;
-  }
-}
 </style>
