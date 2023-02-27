@@ -46,7 +46,7 @@
   import StockTitle from '@/components/detail/StockTitle.vue'
   import StockEvaluation from '@/components/detail/StockEvaluation.vue'
   import StockStatement from '@/components/detail/StockStatement.vue'
-import Etcs from '@/components/detail/Etcs.vue';
+  import Etcs from '@/components/detail/Etcs.vue';
     
   const { params } = useRoute()  
   const { fetchStock } = useStockStore()

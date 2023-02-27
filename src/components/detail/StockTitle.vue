@@ -1,14 +1,25 @@
 <template>  
   <v-sheet elevation="0" class="StockTitle">
     <v-card-title 
-      v-if="!stock.loading" class="d-flex justify-space-between"
+      v-if="!stock.loading" 
+      class="d-flex justify-space-between"
       @click="push('/detail/' + stockData.code)"
     > 
       <div>
-        <span v-font-size="30" class="font-weight-bold"> {{ stockData.name }} </span>
-        <span v-font-size="15" class="code"> {{ stockData.code }} </span>
+        <span 
+          class="font-weight-bold"
+          v-font-size="30" 
+        >
+          {{ stockData.name }} 
+        </span>
+        
+        <span 
+          class="code"
+          v-font-size="15"
+        > 
+          {{ stockData.code }}
+         </span>
       </div>
-
     </v-card-title>
   </v-sheet>
 </template>
@@ -16,15 +27,12 @@
 <script setup lang="ts">
   import { useCustomRouter } from '@/mixins/customRouter';
   import { useStockStore } from '@/store/stock';
-  import { computed, onMounted, ref } from 'vue'
+  import { computed } from 'vue'
 
   const { stock } = useStockStore()
   const { push } = useCustomRouter()
-
-  const iconToggle = ref<boolean>(false)
   
   const stockData = computed(() => stock.data)
-  const icon = computed(() => iconToggle.value ? 'mdi-bookmark' : 'mdi-bookmark-outline')
   
 </script>
 

@@ -5,12 +5,17 @@
       class="CardLayout"
       color="cardlayout"
       elevation="0"
-      @click="goRoute"
+      @click="enableLink && push(route.fullPath + '/close')"
     >      
       <v-card-title class="innerTitle">        
         <div class="d-flex justify-center">
           <v-chip label variant="text">
-            <v-icon start class="mr-3" :color="trend.color" :icon="trend.icon" />
+            <v-icon 
+              start 
+              class="mr-3"
+             :color="trend.color" 
+             :icon="trend.icon" 
+            />
             종가
           </v-chip>
           <div class="ml-11">             
@@ -33,12 +38,13 @@
   import { computed } from 'vue'
   import { priceFormatter } from '@/mixins/tools';
   import { useRoute, useRouter } from 'vue-router';
+  import { useCustomRouter } from '@/mixins/customRouter';
     
   const { stock } = useStockStore()
   const data = computed(() => stock.data)
   const loading = computed(() => stock.loading)
   const route = useRoute()
-  const router = useRouter();
+  const { push } = useCustomRouter()
 
   const { enableLink = false, label } = defineProps<{ enableLink?: boolean, label?: string }>()
 
@@ -49,11 +55,7 @@
       color: isHighVal ? 'red' : 'blue'
     }
   })
-
-  
-  
-  const goRoute = () => enableLink && router.push(route.fullPath + '/close')
-
+    
 </script>
 
 <style lang="scss" scoped>
