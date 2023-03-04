@@ -42,8 +42,9 @@
           적정주가 확인하기
         </div>
       </v-card-actions>
-    </v-card> 
+    </v-card>           
   </transition>  
+  
 </template>
 
 <script setup lang="ts">

@@ -105,6 +105,7 @@ export const useStockStore = defineStore('stock', () => {
   const request = async (payload: AsyncPayload): Promise<void> => {    
 
     const { state, url, callback } = payload
+    console.log(payload)
 
     const targetState = store[state]
     // asyncStates[state] = utils.loading()
@@ -125,7 +126,6 @@ export const useStockStore = defineStore('stock', () => {
       targetState.loading = false
       // asyncStates[state] = utils.error(error)
 
-      throw error
     } 
   }
 

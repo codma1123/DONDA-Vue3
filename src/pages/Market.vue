@@ -6,42 +6,15 @@
       </v-card-title>        
       <v-card-subtitle> 주식 시장이 어떻게 변하고 있는지 알아보세요. </v-card-subtitle>      
     </div>
-    <v-card
-      v-for="(content, i) in marketValuation.data"        
-      elevation="3"
-      :key="content.market"
-      class="MarketCard"      
-      :width="CONTENT_WIDTH"
-      :height="extendToggles[i] ? EXTEND_MARKET_HEIGHT : DEFAULT_MARKET_HEIGHT"
-      color="cardlayout"
-      @click="extension(i)"
-    >
-      <v-card-title> 
-        {{ content.market }}
-      </v-card-title>      
-      <v-card-text class="d-flex align-end justify-space-between">        
-        <div></div>
-        <div class="d-flex flex-column align-end">
-          <div>
-            <span v-font-size="20"> 
-              {{ computedMarket[i].close }} 
-            </span>
-            <span v-font-size="17" :class="['ml-3', computedMarket[i].colorClass]"> 
-              {{ computedMarket[i].prefixer}}{{ computedMarket[i].changes}}
-            </span>
-          </div>
-          <div>
-            전주 대비 {{ marketValuation.data[i].weeklyTrend }}%
-          </div>
-        </div>
-        
-      </v-card-text>
 
-      <v-card-actions v-if="extendToggles[i]">
-        추가 컨텐츠 ... 
-      </v-card-actions>
+    <v-divider class="mt-5"/>
 
-    </v-card>
+    <MarketCard 
+      v-for="(content, i) in marketValuation.data "
+      :title="content.market"
+      :content="computedMarket[i]"
+    />
+
   </div>
   <v-progress-circular 
     v-else
@@ -53,29 +26,28 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, ref } from "vue"
-  import { useLayout } from "@/mixins/layout";
+  import { computed } from "vue"
   import { useStockStore } from "@/store/stock"
-  import { MarketType, MarketTypes } from '@/models/stock' 
+  import { MarketTypes } from '@/models/stock' 
+  import MarketCard from "@/components/market/MarketCard.vue";
+
+  export interface ComputedMarket {
+    close: number;
+    changes: string;
+    prefixer: string;
+    colorClass: string;
+  }
   
   // consts
-  const marketTypes: MarketTypes[] = ['kospi', 'nasdaq', 'snp500', 'usdkrw']
-  const DEFAULT_MARKET_HEIGHT = 160
-  const EXTEND_MARKET_HEIGHT = 330
+  const marketTypes: MarketTypes[] = ['kospi', 'nasdaq', 'snp500', 'usdkrw']  
 
-  // uses
-  const { market, marketValuation, request } = useStockStore()
-  const { CONTENT_WIDTH } = useLayout()
-
-  // reactive values
-  const extendToggles = ref<boolean[]>(marketTypes.map(() => false))
-
-  const extension = (index: number) => extendToggles.value[index] = !extendToggles.value[index]
-
-  const computedMarket = computed<any>(() => {
+  // hooks
+  const { market, marketValuation } = useStockStore()
+    
+  const computedMarket = computed<ComputedMarket[]>(() => {
     const { data } = market
     return marketTypes.map(market => {
-      const recent = (data as MarketType)[market].values?.at(-1)
+      const recent = data[market].values?.at(-1)
       return {
         close: recent?.close ?? 0,
         changes: (recent?.changes ?? 0).toLocaleString(),
@@ -92,23 +64,17 @@
 <style lang="scss" scoped>
 $margin-size : 1rem;
 .MarketCard {  
+  padding: 0px !important;
   margin: $margin-size;
-  border-radius: 1.2rem;
-  padding-top: 10px;
-
-  overflow: hidden;
-    
-  cursor: pointer;
-  transition: height .8s ease-in-out;
-
-
-  &:first-child {
-    margin-top: 40px;
-  }
+  display: flex;
+  height: 120px;
+  align-items: start;
+  cursor: default;
+  overflow: hidden;      
 }
 
 .Title {
-  margin-top: 75px;
+  margin-top: 50px;
   margin-left: 15px;
 }
 

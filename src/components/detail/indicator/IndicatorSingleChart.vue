@@ -69,12 +69,12 @@
           {
             label: title,
             data: chartData,
-            borderWidth: 3
+            borderWidth: 2,
           },
           {
             label: '섹터평균',
             data: sectorData,
-            borderWidth: 3
+            borderWidth: 2
           }
         ]
       },

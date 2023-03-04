@@ -23,7 +23,7 @@
   import ProgressCircular from "@/components/global/ProgressCircular.vue"
   import MainStocks from "@/components/home/MainStocks.vue"
 
-  const { market, marketValuation, rank } = useStockStore()
+  const { market, marketValuation, rank, fetchMarket } = useStockStore()
   const loading = computed<boolean>(() => (!market.loading && !marketValuation.loading && !rank.loading))
 
 </script>

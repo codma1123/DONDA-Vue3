@@ -122,7 +122,9 @@ $margin: 1rem;
     transition-delay: .25s;
   }
 
-  .innerMore {
+  .innerMore,
+  .innerMore-absolute
+   {
     transition: opacity 0.3s ease-in-out;
     transition-delay: 1s;
   }
@@ -134,7 +136,8 @@ $margin: 1rem;
     opacity: 0;
   }
 
-  .innerMore {
+  .innerMore,
+  .innerMore-absolute {
     opacity: 0;
   }
 }

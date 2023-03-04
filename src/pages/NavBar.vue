@@ -46,7 +46,7 @@
   <!-- 자동완성 창 -->
   <div v-if="!searchBarToggle" class="AutoCompleteContents">
     <transition name="slide-up">
-      <div v-if="autoCompleteContents" ref="autoCompleteContentsRef"> 
+      <div v-if="autoCompleteContents" ref="autoCompleteContentsRef" class="area"> 
         <div
           v-for="[code, title], i in autoCompleteContents" 
           :key="code"
@@ -56,10 +56,8 @@
           rounded="xl"
           @mousedown="push('/detail/' + code)"
         >
-          <!-- <div class="divider"></div> -->
-          <span class="title"> {{ title }} </span>
-          <span class="code"> {{ code }} </span>
-          
+          <div class="title"> {{ title }} </div>
+          <div class="code"> {{ code }} </div>          
         </div>
       </div>
     </transition>
@@ -113,7 +111,7 @@
   const maxCursorLength = computed(() => filteredAutoCompleteContents.value?.length)
 
   const autoCompleteContents = computed(() => {
-    return searchBarContent.value === '' ? null : filteredAutoCompleteContents.value     
+    return searchBarContent.value === '' ? null : filteredAutoCompleteContents.value
   })
   
   const filteredAutoCompleteContents = computed(() => {
@@ -198,6 +196,10 @@
   }
 }
 
+.scrollBase {
+  overflow-y: scroll;
+}
+
 .SearchBtn {
   position: absolute;
   right: 50px;
@@ -231,17 +233,16 @@
 
 .AutoCompleteContents {
   background-color: #333333;
-  max-height: 200px;
   width: 150px;
   overflow-x: auto;
-  overflow-y: scroll;
   position: absolute;
   top: 60px;
   margin-left: 175px;
   z-index: 101;  
   
   .AutoCompleteContent {
-    padding: .25rem;
+    padding: .5rem;
+    font-size: 10px;
     overflow-x: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -253,13 +254,12 @@
 
     }
     .title {
-      font-size: 18px;
+      font-size: 17px;
     }
 
     .code {
       opacity: .8;
-      font-size: 13px;
-      margin-left: .25rem;
+      font-size: 13px;      
     }
   }
 
@@ -268,6 +268,9 @@
   }
 }
 
+.area {
+  
+}
 
 
 </style>

@@ -9,16 +9,16 @@
     > 
 
       <v-card-title class="innerTitle">
-          <div class="d-flex">
-            <v-chip label variant="text">
-              <v-icon start class="mr-3">mdi-newspaper-variant-multiple-outline</v-icon> 
-              뉴스
-            </v-chip>
-          </div>
-          <div class="innerMore">
-            최근 뉴스 확인하기
-          </div>
-        </v-card-title>      
+        <div class="d-flex">
+          <v-chip label variant="text">
+            <v-icon start class="mr-3">mdi-newspaper-variant-multiple-outline</v-icon> 
+            뉴스
+          </v-chip>
+        </div>
+        <div class="innerMore">
+          최근 뉴스 확인하기
+        </div>
+      </v-card-title>      
       <!-- <StockNewsContent 
         v-for="(content, i) in contents"
         :key="i"
