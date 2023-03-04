@@ -2,6 +2,7 @@
   <transition name="fade">
     <v-sheet 
       class="NavBar" 
+      id="navbar"
       width="430"
       min-height="45"        
       ref="navBar"
@@ -28,7 +29,7 @@
               ref="searchBar"
               absolute
               :autofocus="searchBarAutoFocus"
-              variant="underlined"
+              variant="underlined"            
               @blur="onSearchBarBlur"
               @keydown="onSearchBarKeydown"
               v-model="searchBarContent"
@@ -58,6 +59,7 @@
           <!-- <div class="divider"></div> -->
           <span class="title"> {{ title }} </span>
           <span class="code"> {{ code }} </span>
+          
         </div>
       </div>
     </transition>
@@ -65,7 +67,7 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, Ref, ref } from 'vue';
+  import { computed, onMounted, Ref, ref } from 'vue';
   import { useStockStore } from '@/store/stock';
   import { getKeyByValue } from '@/mixins/tools';
   import { useCustomRouter } from '@/mixins/customRouter';
@@ -94,7 +96,7 @@
   const searchBarContent = ref<string>('')
   const searchTableEntries = computed(() => Object.entries(searchTable.data))
 
-  const onSearchBarBlur = (e: any) => {
+  const onSearchBarBlur = () => {
     searchBarToggle.value = true
     currentCursor.value = 0
   }
@@ -124,6 +126,7 @@
     if (PREVENT_KEYS.includes(e.key)) e.preventDefault()    
     if (!FILTERING_KEYS.includes(e.key)) return
     
+    
     KeyBoardEventMap[e.key](currentCursor)
     autoCompleteContentsRef.value?.focus()
     refreshScroll()
@@ -142,8 +145,7 @@
 
     'ArrowDown': cursor => {
       if(cursor.value === maxCursorLength.value) return      
-      cursor.value++
-      
+      cursor.value++      
     },
 
     'Enter': cursor => {
@@ -164,8 +166,14 @@
       push(`/detail/${code}`)
       searchBarContent.value = ''
       searchBarToggle.value = true
-    }
+    }    
   }
+
+  onMounted(() => {
+    window.addEventListener('keydown', (e: KeyboardEvent) => {
+      if(e.key === 'Escape') onSearchBarBlur()      
+    })
+  })
 
 </script>
 
@@ -230,9 +238,7 @@
   position: absolute;
   top: 60px;
   margin-left: 175px;
-  z-index: 101;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
+  z-index: 101;  
   
   .AutoCompleteContent {
     padding: .25rem;

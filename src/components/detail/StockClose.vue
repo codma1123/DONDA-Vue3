@@ -1,7 +1,7 @@
 <template>
   <transition name="fade" :duration="2400">
     <v-card
-      v-if="(!loading && data)"
+      v-if="!loading && data"
       class="CardLayout"
       color="cardlayout"
       elevation="0"
@@ -13,8 +13,8 @@
             <v-icon 
               start 
               class="mr-3"
-             :color="trend.color" 
-             :icon="trend.icon" 
+              :color="trend.color" 
+              :icon="trend.icon" 
             />
             종가
           </v-chip>
@@ -37,7 +37,7 @@
   import { useStockStore } from '@/store/stock';
   import { computed } from 'vue'
   import { priceFormatter } from '@/mixins/tools';
-  import { useRoute, useRouter } from 'vue-router';
+  import { useRoute } from 'vue-router';
   import { useCustomRouter } from '@/mixins/customRouter';
     
   const { stock } = useStockStore()
