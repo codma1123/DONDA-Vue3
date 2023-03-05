@@ -11,7 +11,11 @@
     </v-card> -->
     
     <!-- <StockEvaluationLineChart /> -->
-    <StockEvaluationText :delay="400" @inner-more-callback="dialog = true">
+    <StockEvaluationText 
+      :delay="400" 
+      @inner-more-callback="innerMoreCallback"
+      textType="저평가"
+    >
       <template #title>
         {{ evaluation.value }}% {{ evaluation.text }}되었습니다.
       </template>
@@ -25,9 +29,13 @@
     <StockEvaluationText :delay="1000" />
     
     <!-- {{  stockEvaluation.data  }} -->
-    <v-dialog width="300" min-height="400" v-model="dialog">
-      <v-card>
-        ㅎㅇㅎㅇ
+    <v-dialog 
+      width="300" 
+      min-height="400" 
+      v-model="dialog"
+    >
+      <v-card height="100%">
+        <EvaluationDialogContents :contentType="dialogType" />
       </v-card>
     </v-dialog>
   </div> 
@@ -42,12 +50,14 @@
   import StockEvaluationInfo from '@/components/detail/evaluation/EvaluationInfo.vue'
   import StockEvaluationLineChart from '@/components/detail/evaluation/EvaluationLineChart.vue'
   import StockEvaluationText from '@/components/detail/evaluation/EvaluationText.vue'
+  import EvaluationDialogContents from '@/components/detail/evaluation/EvaluationDialogContent'
   
 
   const { stockEvaluation, stockEvaluationDaily, stock, stockGraphAll } = useStockStore()  
   const loading = computed(() => !stockEvaluation.loading && !stock.loading)
 
   const dialog = ref<boolean>(false)
+  const dialogType = ref<string | Event>('')
   
   const evaluation = computed(() => {
     const close = stock.data.close
@@ -60,6 +70,11 @@
       value: (Math.abs((close - evaluationClose) /  evaluationClose * 100)).toFixed(1)
     }
   })
+
+  const innerMoreCallback = (e: Event | string) => {
+    dialog.value = true
+    dialogType.value = e
+  }
   
 </script>
 
