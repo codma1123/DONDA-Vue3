@@ -64,18 +64,20 @@ export type DondaType = IStockEvaluationDailyResponse
 export type StocksType = IStockResponse[]
 
 export type MarketType = {
-	[marketType in MarketTypes]: {
-		labels?: string[]
-		values?: {
-			type?: MarketTypes
-			open?: number
-			close?: number
-			high?: number
-			low?: number
-			changes?: number
-			volume?: number
-		}[]
-	}
+	[marketType in MarketTypes]: MarketValues
+}
+
+export type MarketValues = {
+  labels: string[]
+  values: {
+    type: MarketTypes
+    open: number
+    close: number
+    high: number
+    low: number
+    changes: number
+    volume: number
+  }[]
 }
 
 export type MarketValuationType = MarketValuationResponse

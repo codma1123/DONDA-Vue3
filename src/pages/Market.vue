@@ -1,21 +1,22 @@
 <template>
   <div v-if="(!market.loading && !marketValuation.loading)">    
-    <div class="Title">
-      <v-card-title v-font-size="25">
-        시장 동향
-      </v-card-title>        
-      <v-card-subtitle> 주식 시장이 어떻게 변하고 있는지 알아보세요. </v-card-subtitle>      
-    </div>
+    <v-card-title class="mt-15 ml-4">
+      시장 동향
+    </v-card-title>  
+    <v-card-subtitle class="ml-4"> 
+      주식 시장이 어떻게 변하고 있는지 알아보세요. 
+    </v-card-subtitle>      
 
-    <v-divider class="mt-5"/>
+    <v-divider class="mt-5 ml-4 mr-4"/>
 
     <MarketCard 
       v-for="(content, i) in marketValuation.data "
       :title="content.market"
       :content="computedMarket[i]"
+      :chartData="market.data[marketTypes[i]]"
     />
-
   </div>
+
   <v-progress-circular 
     v-else
     class="ProgressCircular" 
@@ -23,6 +24,7 @@
     color="white"
     :value="100"
   />
+
 </template>
 
 <script setup lang="ts">
@@ -56,6 +58,7 @@
       }
     })
   })
+
 
 
 

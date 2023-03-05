@@ -28,10 +28,8 @@
   import { useCustomRouter } from '@/mixins/customRouter'
   import { useLayout } from '@/mixins/layout'
   import { useStockStore } from '@/store/stock';
-  import { onMounted } from 'vue';
 
   const { CONTENT_WIDTH } = useLayout()
   const { push } = useCustomRouter()
-  const { fetchMarket } = useStockStore()  
   
 </script>
