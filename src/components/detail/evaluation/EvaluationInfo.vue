@@ -7,7 +7,7 @@
     <v-card-text class="d-flex">
       <div>
         <v-card-subtitle class="closeIcon" @click="push(`/detail/${stock.data.code}/close`)">
-          현재 주가 <v-icon>mdi-information</v-icon>
+          현재 주가 <v-icon size="small">mdi-information</v-icon>
         </v-card-subtitle>
     
         <v-card-text v-font-size="35">
@@ -26,6 +26,7 @@
         <v-card-subtitle>
           적정 주가      
         </v-card-subtitle>
+
         <v-card-text v-font-size="35">
           <number 
             :from="0"

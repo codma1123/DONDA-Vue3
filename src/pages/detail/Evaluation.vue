@@ -11,9 +11,18 @@
     </v-card> -->
     
     <!-- <StockEvaluationLineChart /> -->
-    <StockEvaluationText :delay="400" />
-    <StockEvaluationText :delay="700"/>
-    <StockEvaluationText :delay="1000"/>
+    <StockEvaluationText :delay="400">
+      <template #title>
+        {{ evaluation.value }}% {{ evaluation.text }}되었습니다.
+      </template>
+      <template #subtitle>
+        {{ evaluation.text }}?
+      </template>
+    </StockEvaluationText>
+
+
+    <StockEvaluationText :delay="700" />
+    <StockEvaluationText :delay="1000" />
 
     <!-- {{  stockEvaluation.data  }} -->
 
@@ -34,8 +43,16 @@
   const { stockEvaluation, stockEvaluationDaily, stock, stockGraphAll } = useStockStore()
   const loading = computed(() => !stockEvaluation.loading && !stock.loading)
   
-  onMounted(() => {
-    console.log(stockEvaluation.data)
+  const evaluation = computed(() => {
+    const close = stock.data.close
+    const evaluationClose = stockEvaluation.data['S-rim'].at(-1) as number
+    const highVal = close > evaluationClose
+
+    return {
+      text: highVal ? '고평가' : '저평가',
+      textClass: highVal ? 'blue-text' : 'red-text',
+      value: (Math.abs((close - evaluationClose) /  evaluationClose * 100)).toFixed(1)
+    }
   })
   
 </script>

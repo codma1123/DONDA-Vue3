@@ -1,6 +1,5 @@
 <template>
-
-  <transition name="fade" :duration="props.delay">
+  <transition name="fade" :duration="props.delay + 300">
     <v-card 
       v-if="!animationLoading"
       class="CardLayout"
@@ -8,18 +7,19 @@
       elevation="0"
     >
       <v-card-title class="innerTitle">
-        {{ evaluation.value }}% {{ evaluation.text }}되었습니다.
+        <slot name="title"></slot>
+
         <div class="innerMore">
-          저평가?
+          <slot name="subtitle"></slot>
         </div>
+
       </v-card-title>      
     </v-card>
   </transition>
 </template>
 
 <script setup lang="ts">
-import { useStockStore } from '@/store/stock';
-import { computed, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
   interface EvaluationTextProp {
     delay: number
@@ -27,22 +27,9 @@ import { computed, onMounted, ref } from 'vue';
 
   const props = withDefaults(defineProps<EvaluationTextProp>(), { delay: 2000 })
 
-  const { stock, stockEvaluation } = useStockStore()
   const animationLoading = ref<boolean>(true)
 
-  const evaluation = computed(() => {
-    const close = stock.data.close
-    const evaluationClose = stockEvaluation.data['S-rim'].at(-1) as number
-    const highVal = close > evaluationClose
-
-    return {
-      text: highVal ? '고평가' : '저평가',
-      textClass: highVal ? 'blue-text' : 'red-text',
-      value: (Math.abs((close - evaluationClose) /  evaluationClose * 100)).toFixed(1)
-    }
-  })
-
-  onMounted(() => {
+  onMounted(() => {    
     setTimeout(() => {
       animationLoading.value = false
     }, props.delay)
@@ -58,6 +45,7 @@ import { computed, onMounted, ref } from 'vue';
 
 .innerTitle {
   padding-top: 10px;
+  font-size: 15px;
 }
 
 .innerMore {
