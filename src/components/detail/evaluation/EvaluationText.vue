@@ -9,7 +9,7 @@
       <v-card-title class="innerTitle">
         <slot name="title"></slot>
 
-        <div class="innerMore">
+        <div class="innerMore" @click="(e) => emit('innerMoreCallback', e)">
           <slot name="subtitle"></slot>
         </div>
 
@@ -26,6 +26,9 @@ import { onMounted, ref } from 'vue';
   }
 
   const props = withDefaults(defineProps<EvaluationTextProp>(), { delay: 2000 })
+  const emit = defineEmits<{
+    (target: 'innerMoreCallback', e: Event): void
+  }>()
 
   const animationLoading = ref<boolean>(true)
 
@@ -34,6 +37,10 @@ import { onMounted, ref } from 'vue';
       animationLoading.value = false
     }, props.delay)
   })
+
+  const callback = () => {
+    console.log('hihi')
+  }
    
 
 </script>

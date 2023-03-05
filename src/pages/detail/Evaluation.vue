@@ -11,7 +11,7 @@
     </v-card> -->
     
     <!-- <StockEvaluationLineChart /> -->
-    <StockEvaluationText :delay="400">
+    <StockEvaluationText :delay="400" @inner-more-callback="dialog = true">
       <template #title>
         {{ evaluation.value }}% {{ evaluation.text }}되었습니다.
       </template>
@@ -23,16 +23,20 @@
 
     <StockEvaluationText :delay="700" />
     <StockEvaluationText :delay="1000" />
-
+    
     <!-- {{  stockEvaluation.data  }} -->
-
-
+    <v-dialog width="300" min-height="400" v-model="dialog">
+      <v-card>
+        ㅎㅇㅎㅇ
+      </v-card>
+    </v-dialog>
   </div> 
+
 </template>
 
 <script setup lang="ts">
 
-  import { computed, onMounted } from 'vue'
+  import { computed, onMounted, ref } from 'vue'
   import { useStockStore } from '@/store/stock'
   import StockTitle from '@/components/detail/StockTitle.vue'
   import StockEvaluationInfo from '@/components/detail/evaluation/EvaluationInfo.vue'
@@ -40,8 +44,10 @@
   import StockEvaluationText from '@/components/detail/evaluation/EvaluationText.vue'
   
 
-  const { stockEvaluation, stockEvaluationDaily, stock, stockGraphAll } = useStockStore()
+  const { stockEvaluation, stockEvaluationDaily, stock, stockGraphAll } = useStockStore()  
   const loading = computed(() => !stockEvaluation.loading && !stock.loading)
+
+  const dialog = ref<boolean>(false)
   
   const evaluation = computed(() => {
     const close = stock.data.close
