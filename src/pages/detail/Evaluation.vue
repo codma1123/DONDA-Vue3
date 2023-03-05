@@ -7,14 +7,18 @@
     <StockEvaluationInfo />
 
     <!-- <v-card class="CardLayout" elevation="0">
-      <StockEvaluationChart propKey="detail"/>
+      <StockEvaluationChart propKey="detail"/>    
     </v-card> -->
-
+    
     <!-- <StockEvaluationLineChart /> -->
-    <StockEvaluationText />
+    <StockEvaluationText :delay="400" />
+    <StockEvaluationText :delay="700"/>
+    <StockEvaluationText :delay="1000"/>
+
+    <!-- {{  stockEvaluation.data  }} -->
 
 
-  </div>
+  </div> 
 </template>
 
 <script setup lang="ts">
