@@ -20,14 +20,15 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
+import { DialogType } from './EvaluationDialogContent';
 
   interface EvaluationTextProp {
     delay: number
-    textType?: string
+    textType?: DialogType
   }
 
   interface EvaluationTextEmit {
-    (target: 'innerMoreCallback', e: Event | string): void
+    (target: 'innerMoreCallback', e: DialogType): void
   } 
 
   const props = withDefaults(defineProps<EvaluationTextProp>(), { delay: 2000, textType: '저평가' })

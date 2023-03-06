@@ -34,7 +34,7 @@
       min-height="400" 
       v-model="dialog"
     >
-      <v-card height="100%">
+      <v-card min-height="400">
         <EvaluationDialogContents :contentType="dialogType" />
       </v-card>
     </v-dialog>
@@ -50,14 +50,14 @@
   import StockEvaluationInfo from '@/components/detail/evaluation/EvaluationInfo.vue'
   import StockEvaluationLineChart from '@/components/detail/evaluation/EvaluationLineChart.vue'
   import StockEvaluationText from '@/components/detail/evaluation/EvaluationText.vue'
-  import EvaluationDialogContents from '@/components/detail/evaluation/EvaluationDialogContent'
+  import EvaluationDialogContents, { DialogType } from '@/components/detail/evaluation/EvaluationDialogContent'
   
 
   const { stockEvaluation, stockEvaluationDaily, stock, stockGraphAll } = useStockStore()  
   const loading = computed(() => !stockEvaluation.loading && !stock.loading)
 
   const dialog = ref<boolean>(false)
-  const dialogType = ref<string | Event>('')
+  const dialogType = ref<DialogType | undefined>()
   
   const evaluation = computed(() => {
     const close = stock.data.close
@@ -71,7 +71,7 @@
     }
   })
 
-  const innerMoreCallback = (e: Event | string) => {
+  const innerMoreCallback = (e: DialogType) => {
     dialog.value = true
     dialogType.value = e
   }

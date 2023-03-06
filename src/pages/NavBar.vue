@@ -234,6 +234,7 @@
 .AutoCompleteContents {
   background-color: #333333;
   width: 150px;
+  max-height: 240px;
   overflow-x: auto;
   position: absolute;
   top: 60px;
