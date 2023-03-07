@@ -55,18 +55,6 @@
   const stockClose = computed(() => stock.data.close)
   const date = computed(() => stock.data.date)
   const evaluationClose = computed(() => stockEvaluation.data['S-rim'].at(-1))
-
-  const evaluation = computed(() => {
-    const close = stock.data.close
-    const evaluationClose = stockEvaluation.data['S-rim'].at(-1) as number
-    const highVal = close > evaluationClose
-
-    return {
-      text: highVal ? '고평가' : '저평가',
-      textClass: highVal ? 'text-blue' : 'text-red',
-      value: (Math.abs((close - evaluationClose) /  evaluationClose * 100)).toFixed(1)
-    }
-  })
   
   const push = (link: string) => router.push(link)
   const priceFormat = (price: number) => '₩' + Number(price.toFixed(0)).toLocaleString()
