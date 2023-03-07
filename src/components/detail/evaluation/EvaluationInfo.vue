@@ -13,7 +13,7 @@
         <v-card-text v-font-size="35">
           <number 
             :from="0"
-            :to="stockClose"
+            :to="props.close"
             :format="priceFormat"
             :duration="1.2"
             :delay="0"
@@ -30,7 +30,7 @@
         <v-card-text v-font-size="35">
           <number 
             :from="0"
-            :to="evaluationClose"
+            :to="props.evaluationClose"
             :format="priceFormat"
             :duration="1.4"
             :delay="0"
@@ -48,14 +48,18 @@
   import { computed } from 'vue'
   import { useRouter } from 'vue-router';
 
+  interface EvaluationInfoProp {
+    close: number
+    evaluationClose: number
+  }
 
-  const { stock, stockEvaluation } = useStockStore()
+  const props = defineProps<EvaluationInfoProp>()
+
+  const { stock } = useStockStore()
   const router = useRouter()
 
-  const stockClose = computed(() => stock.data.close)
-  const date = computed(() => stock.data.date)
-  const evaluationClose = computed(() => stockEvaluation.data['S-rim'].at(-1))
-  
+  const date = computed(() => stock.data.date)  
+
   const push = (link: string) => router.push(link)
   const priceFormat = (price: number) => '₩' + Number(price.toFixed(0)).toLocaleString()
   

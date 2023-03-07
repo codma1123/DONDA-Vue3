@@ -4,7 +4,10 @@
     <!-- Title -->
     <StockTitle />
 
-    <StockEvaluationInfo />
+    <StockEvaluationInfo 
+      :close="close"
+      :evaluationClose="evaluationClose"
+      />
 
     <StockEvaluationText 
       :delay="400" 
@@ -20,7 +23,18 @@
     </StockEvaluationText>
 
 
-    <StockEvaluationText :delay="700" />
+    <StockEvaluationText 
+      :delay="700"
+      @inner-more-callback="innerMoreCallback"
+      textType="상승여력"
+    >
+      <template #title>
+        {{ possible }}
+      </template>
+      <template #subtitle>
+        상승여력?
+      </template>
+    </StockEvaluationText>
     <StockEvaluationText :delay="1000" />
     
     <v-dialog 
@@ -46,21 +60,23 @@
   import EvaluationDialogContents, { DialogType } from '@/components/detail/evaluation/EvaluationDialogContent'
   
 
-  const { stockEvaluation, stockEvaluationDaily, stock, stockGraphAll } = useStockStore()  
+  const { stockEvaluation, stock } = useStockStore()  
   const loading = computed(() => !stockEvaluation.loading && !stock.loading)
 
   const dialog = ref<boolean>(false)
   const dialogType = ref<DialogType | undefined>()
+
+  const close = computed(() => stock.data.close)
+  const evaluationClose = computed(() => stockEvaluation.data['S-rim'].at(-1) as number)
+  const possible = computed(() => close.value - evaluationClose.value)
   
   const evaluation = computed(() => {
-    const close = stock.data.close
-    const evaluationClose = stockEvaluation.data['S-rim'].at(-1) as number
-    const highVal = close > evaluationClose
+    const highVal = close.value > evaluationClose.value
 
     return {
       text: highVal ? '고평가' : '저평가',
       textClass: highVal ? 'blue-text' : 'red-text',
-      value: (Math.abs((close - evaluationClose) /  evaluationClose * 100)).toFixed(1)
+      value: (Math.abs((close.value - evaluationClose.value) /  evaluationClose.value * 100)).toFixed(1)
     }
   })
 
