@@ -1,10 +1,13 @@
 import { h, VNode } from "vue"
-import { VCardTitle, VCardSubtitle, VCardText } from "vuetify/components"
+import { VCardTitle, VCardText, VDivider } from "vuetify/components"
 
 const contentsObj = {
   '저평가': {
     title: '저평가? 고평가?',
-    text: h(VCardText, () => '어쩌구 저쩌구..')
+    text: h('div', [
+      h('div', '저평가라면, 현재 기업의 주가가 적정 주가에 비해 낮게 책정된것으로 판단됩니다.'),
+      h('div', { class: 'mt-3' }, '고평가라면, 현재 기업의 주가가 적정 주가에 비해 높게 책정된것으로 판단됩니다.')
+    ])
   }
 } as const
 
@@ -26,8 +29,9 @@ const EvaluationDialogContents = ({ contentType }: EvaluationDialogContentProp):
       { class: 'dialog-title' },
       () => title
     ),
+    h(VDivider),
     h(
-      VCardSubtitle,
+      VCardText,
       { class: 'dialog-subtitle' },
       () => text
     )

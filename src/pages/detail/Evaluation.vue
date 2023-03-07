@@ -6,11 +6,6 @@
 
     <StockEvaluationInfo />
 
-    <!-- <v-card class="CardLayout" elevation="0">
-      <StockEvaluationChart propKey="detail"/>    
-    </v-card> -->
-    
-    <!-- <StockEvaluationLineChart /> -->
     <StockEvaluationText 
       :delay="400" 
       @inner-more-callback="innerMoreCallback"
@@ -28,13 +23,12 @@
     <StockEvaluationText :delay="700" />
     <StockEvaluationText :delay="1000" />
     
-    <!-- {{  stockEvaluation.data  }} -->
     <v-dialog 
-      width="300" 
-      min-height="400" 
+      max-width="400"
+      min-height="200" 
       v-model="dialog"
     >
-      <v-card min-height="400">
+      <v-card min-height="200" max-width="400" rounded="xl">
         <EvaluationDialogContents :contentType="dialogType" />
       </v-card>
     </v-dialog>
@@ -44,11 +38,10 @@
 
 <script setup lang="ts">
 
-  import { computed, onMounted, ref } from 'vue'
+  import { computed, ref } from 'vue'
   import { useStockStore } from '@/store/stock'
   import StockTitle from '@/components/detail/StockTitle.vue'
   import StockEvaluationInfo from '@/components/detail/evaluation/EvaluationInfo.vue'
-  import StockEvaluationLineChart from '@/components/detail/evaluation/EvaluationLineChart.vue'
   import StockEvaluationText from '@/components/detail/evaluation/EvaluationText.vue'
   import EvaluationDialogContents, { DialogType } from '@/components/detail/evaluation/EvaluationDialogContent'
   
