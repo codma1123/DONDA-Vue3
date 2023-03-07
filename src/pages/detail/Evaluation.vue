@@ -29,11 +29,11 @@
       textType="상승여력"
     >
       <template #title>
-        {{ possible }}
+        {{ priceFormat(Math.abs(possible)) }} 만큼 {{  possibleText }}이 있습니다.
       </template>
       <template #subtitle>
-        상승여력?
-      </template>
+        {{ possibleText }}?
+      </template> 
     </StockEvaluationText>
     <StockEvaluationText :delay="1000" />
     
@@ -68,7 +68,11 @@
 
   const close = computed(() => stock.data.close)
   const evaluationClose = computed(() => stockEvaluation.data['S-rim'].at(-1) as number)
+
   const possible = computed(() => close.value - evaluationClose.value)
+  const possibleText = computed<'상승여력' | '하락여력'>(() => possible.value > 0 ? '상승여력': '하락여력')
+
+  const priceFormat = (price: number) => '₩' + Number(price.toFixed(0)).toLocaleString()
   
   const evaluation = computed(() => {
     const highVal = close.value > evaluationClose.value
