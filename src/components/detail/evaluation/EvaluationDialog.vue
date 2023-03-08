@@ -9,7 +9,7 @@
       rounded="xl"
     >
       <EvaluationDialogContents :contentType="dialogType" />
-      <v-card-actions class="text-end">
+      <v-card-actions class="d-flex flex-row-reverse">
         <v-btn @click="emit('disableDialog')">
           닫기
         </v-btn>
@@ -33,9 +33,4 @@ import EvaluationDialogContents, { DialogType } from './EvaluationDialogContent'
 
   const emit = defineEmits<EvaluationDialogEmits>()
   
-
 </script>
-
-<style scoped>
-
-</style>
