@@ -11,7 +11,10 @@ const contentsObj = {
   },
   '상승여력': {
     title: '상승여력? 하락여럭?',
-    text: h('div', 'text..')
+    text: h('div', [
+      h('div', '상승 여력 수치만큼 주가가 상승할 가능성이 있습니다..'),
+      h('div', { class: 'mt-3' }, '하락 여럭 수치만큼 주가가 하락할 가능성이 있습니다.')
+    ])
   }
 } as const
 

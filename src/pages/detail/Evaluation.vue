@@ -36,16 +36,13 @@
       </template> 
     </StockEvaluationText>
     <StockEvaluationText :delay="1000" />
+
+    <EvaluationDialog
+      v-model="dialog" 
+      :dialogType="dialogType"
+      @disable-dialog="dialog = false"
+     />
     
-    <v-dialog 
-      max-width="400"
-      min-height="200" 
-      v-model="dialog"
-    >
-      <v-card min-height="200" max-width="400" rounded="xl">
-        <EvaluationDialogContents :contentType="dialogType" />
-      </v-card>
-    </v-dialog>
   </div> 
 
 </template>
@@ -58,6 +55,7 @@
   import StockEvaluationInfo from '@/components/detail/evaluation/EvaluationInfo.vue'
   import StockEvaluationText from '@/components/detail/evaluation/EvaluationText.vue'
   import EvaluationDialogContents, { DialogType } from '@/components/detail/evaluation/EvaluationDialogContent'
+  import EvaluationDialog from '@/components/detail/evaluation/EvaluationDialog.vue'
   
 
   const { stockEvaluation, stock } = useStockStore()  
