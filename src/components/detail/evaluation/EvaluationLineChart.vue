@@ -7,7 +7,7 @@
   import { priceCompactFormatter } from '@/mixins/tools';
   import { myCrossHair } from '@/plugins/chart';
   import { useStockStore } from '@/store/stock';
-  import { Chart, TooltipItem } from 'chart.js'
+  import { Chart, ChartOptions, TooltipItem } from 'chart.js'
   import { onMounted, ref } from 'vue';
 
   const { stockEvaluation, stockGraphAll, stock } = useStockStore()
@@ -19,7 +19,8 @@
   const { id } = withDefaults(defineProps<EvaluationLineChartProp>(), { id: 'evaluationLineChart' })
   
   const chart = ref<Chart>()
-  const options = {
+
+  const options: ChartOptions<'line'> = {
     interaction: {
       mode: 'index',
       intersect: false,
@@ -52,7 +53,6 @@
         }
       },
 
-      myCrossHair: true,
     },
 
     scales: {
@@ -66,12 +66,12 @@
         border: { display: false },  
         grid: { display: false },
         ticks: {
-          callback: (value: number) => priceCompactFormatter.format(value),
+          callback: (_, value: number) => priceCompactFormatter.format(value),
           color: 'white'
         }
       }
     }
-  } as any
+  }
 
   const renderChart = () => {
     const ctx = document.getElementById(id)
