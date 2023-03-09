@@ -4,7 +4,7 @@
       elevation="0"
       class="CardLayout"
       color="cardlayout"
-      @click="goRoute"
+      @click="push(`/detail/${stock.data.code}/news`)"
       v-if="loading"
     > 
 
@@ -36,43 +36,12 @@
 
 <script setup lang="ts">
   import { useStockStore } from '@/store/stock';
-  import { computed, ref } from 'vue';
+  import { computed } from 'vue';
 
-  import StockNewsContent from '@/components/detail/StockNewsContent.vue';
-  import ProgressCircular from '@/components/global/ProgressCircular.vue';
-  import Observer from '@/components/global/Observer.vue';
   import { useCustomRouter } from '@/mixins/customRouter';
-  import router from '@/router';
-
-  const contentsCount = ref<number>(3)
-  const contentCountLoad = ref<boolean>(true)
 
   const { news, stock } = useStockStore()
   const { push } = useCustomRouter()  
   const loading = computed(() => !news.loading)
   
-
-  const loadMore = (): void => {        
-    if(contentsCount.value > news.data.length - 5) {
-      contentCountLoad.value = false
-      return
-    }
-
-    new Promise(resolve => {
-        setTimeout(() => {
-        contentsCount.value += 3
-        resolve(contentsCount.value)
-      }, 500)      
-    })
-  }
- 
-  const goRoute = () => {
-    const code = `/detail/${stock.data.code}/news`
-    push(code)
-  }
-    
 </script>
-
-<style scoped>
-
-</style>

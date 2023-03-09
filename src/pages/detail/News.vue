@@ -28,11 +28,14 @@
   import StockTitle from '@/components/detail/StockTitle.vue'
   import Observer from '@/components/global/Observer.vue';
   import { useAppStore } from '@/store/app'
+  import { delayFunc } from '@/mixins/tools';
 
   const NEWS_CONTENTS_LENGTH = 8
 
   const { news, stock } = useStockStore()
   const { scrollReset } = useAppStore()
+
+  const load = delayFunc(500)
 
   const contentsCount = ref<number>(NEWS_CONTENTS_LENGTH)
   const contentCountLoad = ref<boolean>(true)
@@ -45,6 +48,8 @@
       contentCountLoad.value = false
       return
     }
+
+    load(() => { contentsCount.value += 3 })
 
     new Promise(resolve => {
         setTimeout(() => {

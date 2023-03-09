@@ -15,6 +15,15 @@ export const priceCompactFormatter = new Intl.NumberFormat('ko-KR', {
 
 export const getKeyByValue = (obj: any, value: string) => Object.keys(obj).find(key => obj[key] === value)
 
-export const delay = (time: number) => new Promise<void>(resolve => setTimeout(() => resolve(), time))
+export const delayFunc = (delay: number = 1000) => {
+  type EffectType = () => void
+  return (effect: EffectType) => {
+    return new Promise<void>(() => {
+      setTimeout(() => {
+        effect()
+      }, delay)
+    })
+  }
+}
 
 
