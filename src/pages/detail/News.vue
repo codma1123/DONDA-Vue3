@@ -1,21 +1,18 @@
 <template>
-  <div class="DetailLayout">
-    <div v-if="loading">
+  <div class="DetailLayout" v-if="loading">
+    <StockTitle />
 
-      <StockTitle />
+    <v-divider />
 
-      <v-divider />
-
-      <StockNewsContent 
-        v-for="(content, i) in contents.slice(0, contentsCount)"
-        :key="i"
-        :content="content"
-      />
-      
-      <div class="d-flex justify-center align-center">
-        <ProgressCircular v-if="contentCountLoad" class="mb-2 mt-4"/>      
+    <StockNewsContent 
+      v-for="(content, i) in contents.slice(0, contentsCount)"
+      :key="i"
+      :content="content"
+    />
+    
+    <div class="d-flex justify-center align-center">
+      <ProgressCircular v-if="contentCountLoad" class="mb-2 mt-4"/>      
       <Observer v-if="contentCountLoad" @triggerIntersected="loadMore"/>
-      </div>
     </div>
   </div>
 </template>
@@ -50,19 +47,8 @@
     }
 
     load(() => { contentsCount.value += 3 })
-
-    new Promise(resolve => {
-        setTimeout(() => {
-        contentsCount.value += 3
-        resolve(contentsCount.value)
-      }, 500)      
-    })
   }
 
   onMounted(() => scrollReset())
 
 </script>
-
-<style scoped>
-
-</style>
