@@ -56,6 +56,7 @@
   import StockEvaluationText from '@/components/detail/evaluation/EvaluationText.vue'
   import EvaluationDialogContents, { DialogType } from '@/components/detail/evaluation/EvaluationDialogContent'
   import EvaluationDialog from '@/components/detail/evaluation/EvaluationDialog.vue'
+import EvaluationChart from '@/components/detail/evaluation/EvaluationChart.vue'
   
 
   const { stockEvaluation, stock } = useStockStore()  

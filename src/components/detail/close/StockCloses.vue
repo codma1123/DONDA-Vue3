@@ -30,65 +30,46 @@
       </transition>
     </v-card-text>
 
+
     <v-expand-transition v-if="expandToggle">          
       <div class="d-flex flex-wrap">
+          <StockPriceTemplate 
+            :format="priceFormat"
+            :duration="2.2"
+            :delay="0"
+            :to="stockData.high"
+          >
+            <template #title>고가</template>
+          </StockPriceTemplate> 
 
-        <div class="price">
-          <v-card-subtitle> 고가 </v-card-subtitle>    
-          <span v-font-size="28" class="ml-5">
-            <number
-              :from="0"
-              :to="stockData.high"
-              :format="priceFormat"
-              :duration="2"
-              :delay="0"
-              easing="Power4.easeOut"
-            />   
-          </span>        
-        </div>
+        <StockPriceTemplate 
+          :format="priceFormat"
+          :duration="2"
+          :delay="0"
+          :to="stockData.low"
+        >
+          <template #title>저가</template>
+        </StockPriceTemplate>
 
-        <div class="price">
-          <v-card-subtitle> 저가 </v-card-subtitle>    
-            <span v-font-size="28" class="ml-5">
-              <number
-                :from="0"
-                :to="stockData.low"
-                :format="priceFormat"
-                :duration="2"
-                :delay="0"
-                easing="Power4.easeOut"
-              />   
-            </span>        
-        </div>
+        <StockPriceTemplate 
+          :format="priceFormat"
+          :duration="2"
+          :delay="0"
+          :to="stockData.open"
+        >
+          <template #title>시가</template>
+        </StockPriceTemplate> 
 
-        <div class="price">
-          <v-card-subtitle class="mt-3"> 시가 </v-card-subtitle>    
-            <span v-font-size="28" class="ml-5">
-              <number
-                :from="0"
-                :to="stockData.open"
-                :format="priceFormat"
-                :duration="2.2"
-                :delay="0"
-                easing="Power4.easeOut"
-              />   
-            </span>        
-        </div>
-
-        <div class="price">
-          <v-card-subtitle class="mt-3"> 거래량 </v-card-subtitle>    
-          <span v-font-size="28" class="ml-5">
-            <number
-              :from="0"
-              :to="stockData.volume"
-              :format="volumeFormat"
-              :duration="2.3"
-              :delay="0"
-              easing="Power4.easeOut"
-            />   
-          </span>        
-        </div>
-      </div>      
+        <StockPriceTemplate 
+          :format="priceFormat"
+          :duration="2"
+          :delay="0"
+          :to="stockData.volume"
+        >
+          <template #title>거래량</template>
+        </StockPriceTemplate> 
+      </div>
+                
     </v-expand-transition>
 
     <v-divider class="mt-5"/>
@@ -101,6 +82,7 @@
 <script setup lang="ts">
   import { StockType } from '@/models/stock';
   import { ref, onMounted, computed } from 'vue'
+  import StockPriceTemplate from './StockPriceTemplate.vue';
   
   const { stockData } = defineProps<{ stockData: StockType}>()
 
@@ -149,7 +131,5 @@
   transition: all 1s ease-out;
 }
 
-.price {
-  width: 180px;
-}
+
 </style>

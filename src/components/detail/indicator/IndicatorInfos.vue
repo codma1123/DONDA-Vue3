@@ -9,7 +9,9 @@
       :labels="labels"
       :chartData="epsChartData"
       :sectorData="epsSectorData"
-    />  
+    >
+     'Earnings Per Share'의 약자로, 기업의 순이익(당기순이익)을 유동주식수로 나눈 수치를 말합니다.
+    </IndicatorInfo>  
   
     <!-- BPS -->
     <IndicatorInfo 
@@ -18,7 +20,9 @@
       :labels="labels"
       :chartData="bpsChartData"
       :sectorData="bpsSectorData"
-    />  
+    >
+      'Book-value per share'의 약자로, : 주당 순자산가치는 기업의 순자산을 발행 주식수로 나눈 수치를 말합니다.
+    </IndicatorInfo>
   
     <!-- ROE -->
     <IndicatorInfo 
@@ -27,7 +31,9 @@
       :labels="labels"
       :chartData="roeChartData"
       :sectorData="roeSectorData"
-    />  
+    >  
+      'Return On Equity, ROE'의 약자로, 기업이 자본을 이용하여 얼마만큼의 이익을 냈는지를 나타내는 지표입니다, 당기순이익 값을 자본 값으로 나누어 구한다.
+    </IndicatorInfo>
   </div>
   <!-- EPS -->
 
