@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
   import { computed, onMounted, ref, onUnmounted, onBeforeUnmount } from 'vue';
-  import { Chart } from 'chart.js'
+  import { Chart, TooltipItem } from 'chart.js'
   import { GraphAllType } from '@/models/stock';
   import { priceCompactFormatter } from '@/mixins/tools';
   import { useStockStore } from '@/store/stock';
@@ -71,7 +71,7 @@
         cornerRadius: 15,
         bodyFont: { size: 12 },
         boxPadding: 5,
-        callbacks: { label: (ctx: any) => ctx.datasetIndex === 0 ? '₩' + ctx.formattedValue : ctx.formattedValue }
+        callbacks: { label: (ctx: TooltipItem<'line' | 'bar'>) => ctx.datasetIndex === 0 ? '₩' + ctx.formattedValue : ctx.formattedValue }
       },
 
       myCrossHair: true,

@@ -13,7 +13,8 @@
           <slot name="subtitle"></slot>
         </div>
 
-      </v-card-title>      
+      </v-card-title>
+      <slot></slot> 
     </v-card>
   </transition>
 </template>
@@ -47,10 +48,10 @@ import { DialogType } from './EvaluationDialogContent';
 <style scoped lang="scss">
 .CardLayout {
   margin-top: 20px !important;
+  padding: 20px 20px 0px 20px;  
 }
 
 .innerTitle {
-  padding-top: 10px;
   font-size: 15px;
 }
 

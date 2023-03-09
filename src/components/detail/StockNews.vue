@@ -19,16 +19,6 @@
           최근 뉴스 확인하기
         </div>
       </v-card-title>      
-      <!-- <StockNewsContent 
-        v-for="(content, i) in contents"
-        :key="i"
-        :content="content"
-      />
-      
-      <div class="d-flex justify-center align-center">
-        <ProgressCircular v-if="contentCountLoad" class="mb-2 mt-4"/>      
-        <Observer v-if="contentCountLoad" @triggerIntersected="loadMore"/>
-      </div> -->
     </v-card>
   </transition>
 </template>

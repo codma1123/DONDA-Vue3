@@ -155,3 +155,4 @@ function crosshairPoint(chart: any, mousemove: any) {
 
   ctx.closePath()
 }
+

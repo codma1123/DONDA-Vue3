@@ -1,67 +1,87 @@
 <template>
-  <canvas id="evaluationLineChart"></canvas>
+  <canvas :id="id" class="chart"></canvas>
 </template>
 
 <script setup lang="ts">
 
   import { priceCompactFormatter } from '@/mixins/tools';
+  import { myCrossHair } from '@/plugins/chart';
   import { useStockStore } from '@/store/stock';
-  import { Chart } from 'chart.js'
+  import { Chart, TooltipItem } from 'chart.js'
   import { onMounted, ref } from 'vue';
 
-  const { stockEvaluation, stockGraphAll } = useStockStore()
+  const { stockEvaluation, stockGraphAll, stock } = useStockStore()
 
+  interface EvaluationLineChartProp {
+    id: string
+  }
+
+  const { id } = withDefaults(defineProps<EvaluationLineChartProp>(), { id: 'evaluationLineChart' })
+  
   const chart = ref<Chart>()
   const options = {
+    interaction: {
+      mode: 'index',
+      intersect: false,
+    },
+
     plugins: { 
-      legend: { display: false },
+      legend: {
+        labels: {
+          color: 'white',
+          padding: 20,
+          font: {
+            size: 13,
+          }
+        }
+      },
+
       tooltip: {
         intersect: true,
         mode: 'index',
         backgroundColor: '#black',
         titleAlign: 'center',
-        bodyAlign: 'center',
+        bodyAlign: 'left',
         bodySpacing: 5,
         padding: 10,
         cornerRadius: 15,
         bodyFont: { size: 12 },
         boxPadding: 5,
-        callbacks: { label: (ctx: any) => ctx.datasetIndex === 0 ? '₩' + ctx.formattedValue : ctx.formattedValue }
+        callbacks: {
+          label: (ctx: TooltipItem<'line'>) => '₩' + ctx.formattedValue,
+        }
       },
+
+      myCrossHair: true,
     },
-    responsive: true,
 
     scales: {
       x: {
         border: { display: false },  
         grid: { display: false },
-        ticks: {
-          color: 'white'
-        }
+        ticks: { display: false }
       },
 
       y: {
         border: { display: false },  
         grid: { display: false },
         ticks: {
-          callback: (ctx: any) => priceCompactFormatter.format(ctx),
+          callback: (value: number) => priceCompactFormatter.format(value),
           color: 'white'
-
         }
       }
     }
-
-
   } as any
 
   const renderChart = () => {
-    const ctx = document.getElementById('evaluationLineChart') as HTMLCanvasElement
+    const ctx = document.getElementById(id)
+    if(!(ctx instanceof HTMLCanvasElement)) return
+
     const labels: string[] = stockEvaluation.data.date
     const srim: number[] = stockEvaluation.data['S-rim']
     const properPrice: number[] = stockEvaluation.data['proper-price']
     
     const stockData = labels.map((label: string) => stockGraphAll.data[label + '-24'])
-    console.log(stockData)
 
     chart.value = new Chart(ctx, {
       data: {
@@ -69,27 +89,36 @@
         datasets: [
           {
             type: 'line',
-            label: '',
+            label: 'S-rim',
             data: srim,
-            borderColor: '#1DE9B6',
-            backgroundColor: '#fff',          
-            pointBackgroundColor: '#fff',
-            pointRadius: 5,
-            pointHoverBorderColor: '#fff',
-            pointHoverBackgroundColor: '#1DE9B6',
-            pointHitRadius: 10
+            borderColor: '#fc035a',
+            backgroundColor: '#fff',
+            pointRadius: 0,
+            pointHitRadius: 50, 
           },
           {
             type: 'line',
-            label: '',
+            label: 'Proper-Price',
+            data: properPrice,
+            borderColor: '#0388fc',
+            backgroundColor: '#fff',
+            pointRadius: 0,
+            pointHitRadius: 50,        
+          },
+          {
+            type: 'line',
+            label: stock.data.name,            
             data: stockData,
-            borderColor: 'orange',
-            pointRadius: 5,
-            pointHitRadius: 10
+            fill: true,
+            borderColor: '#1DE9B6',
+            backgroundColor: '#1DE9B615',
+            pointRadius: 0,
+            pointHitRadius: 50,
           }
         ]
       },
-      options,             
+      options,
+      plugins: [myCrossHair]          
     })
   }
 
@@ -97,6 +126,8 @@
 
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.chart {
+  margin-bottom: 20px;
+}
 </style>

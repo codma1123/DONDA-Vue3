@@ -35,8 +35,17 @@
         {{ possibleText }}?
       </template> 
     </StockEvaluationText>
-    <StockEvaluationText :delay="1000" />
 
+
+    
+    
+    <StockEvaluationText>      
+      <EvaluationLineChart :id="'Srim'" /> 
+    </StockEvaluationText>
+
+
+
+    
     <EvaluationDialog
       v-model="dialog" 
       :dialogType="dialogType"
@@ -54,8 +63,9 @@
   import StockTitle from '@/components/detail/StockTitle.vue'
   import StockEvaluationInfo from '@/components/detail/evaluation/EvaluationInfo.vue'
   import StockEvaluationText from '@/components/detail/evaluation/EvaluationText.vue'
-  import EvaluationDialogContents, { DialogType } from '@/components/detail/evaluation/EvaluationDialogContent'
+  import { DialogType } from '@/components/detail/evaluation/EvaluationDialogContent'
   import EvaluationDialog from '@/components/detail/evaluation/EvaluationDialog.vue'
+  import EvaluationLineChart from '@/components/detail/evaluation/EvaluationLineChart.vue'
   
 
   const { stockEvaluation, stock } = useStockStore()  
