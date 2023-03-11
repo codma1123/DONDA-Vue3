@@ -9,7 +9,13 @@
       :labels="labels"
       :chartData="epsChartData"
       :sectorData="epsSectorData"
-    />  
+    >
+      <template #chip>
+        <IndicatorChip chipType="분기" />
+        <IndicatorChip chipType="분기" />
+      </template>
+
+    </IndicatorInfo>
   
     <!-- BPS -->
     <IndicatorInfo 
@@ -36,12 +42,16 @@
 <script setup lang="ts">
   import { IndicatorSectorType } from '@/models/stock';
   import { useStockStore } from '@/store/stock'
-  import { computed } from 'vue';
+  import { computed, reactive, ref } from 'vue';
+import IndicatorChip from './IndicatorChip';
   import IndicatorInfo from './IndicatorInfo.vue'
 
   const { stock, indicator, indicatorSector, indicatorDaily, indicatorSectorDaily } = useStockStore()
   const labels = computed<string[]>(() => [...indicator.data.eps.date].reverse())
   const title = computed(() => stock.data.name)
+  const attrTest = reactive<{ d: string}>({
+    d: 'test'
+  })
 
   const epsChartData = computed<number[]>(() => createChartData('eps'))
   const epsSectorData = computed<number[]>(() => createSectorData('sector_eps'))
