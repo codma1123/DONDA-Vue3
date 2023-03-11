@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, onMounted, ref, onUnmounted, onBeforeUnmount } from 'vue';
+  import { computed, onMounted, ref, onBeforeUnmount } from 'vue';
   import { Chart, TooltipItem } from 'chart.js'
   import { GraphAllType } from '@/models/stock';
   import { priceCompactFormatter } from '@/mixins/tools';

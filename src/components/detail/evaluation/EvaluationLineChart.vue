@@ -7,7 +7,7 @@
   import { priceCompactFormatter } from '@/mixins/tools';
   import { myCrossHair } from '@/plugins/chart';
   import { useStockStore } from '@/store/stock';
-  import { Chart, ChartOptions, TooltipItem } from 'chart.js'
+  import { Chart, ChartData, ChartDataset, ChartOptions, TooltipItem } from 'chart.js'
   import { onMounted, ref } from 'vue';
 
   const { stockEvaluation, stockGraphAll, stock } = useStockStore()
@@ -32,7 +32,7 @@
           color: 'white',
           padding: 20,
           font: {
-            size: 13,
+            size: 12
           }
         }
       },
@@ -65,10 +65,7 @@
       y: {
         border: { display: false },  
         grid: { display: false },
-        ticks: {
-          callback: (_, value: number) => priceCompactFormatter.format(value),
-          color: 'white'
-        }
+        ticks: { display: false }
       }
     }
   }
@@ -92,27 +89,34 @@
             label: 'S-rim',
             data: srim,
             borderColor: '#fc035a',
-            backgroundColor: '#fff',
             pointRadius: 0,
-            pointHitRadius: 50, 
+            borderWidth: 5,
+            pointHoverRadius: 8,
+            pointHitRadius: 50,
+            tension: .3
           },
           {
             type: 'line',
             label: 'Proper-Price',
             data: properPrice,
             borderColor: '#0388fc',
-            backgroundColor: '#fff',
             pointRadius: 0,
+            borderWidth: 5,
+            tension: .3,
+            pointHoverRadius: 8,
             pointHitRadius: 50,        
           },
           {
             type: 'line',
             label: stock.data.name,            
             data: stockData,
+            borderWidth: 5,
             fill: true,
+            tension: .3,
             borderColor: '#1DE9B6',
             backgroundColor: '#1DE9B615',
             pointRadius: 0,
+            pointHoverRadius: 8,
             pointHitRadius: 50,
           }
         ]
