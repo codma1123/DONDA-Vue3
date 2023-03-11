@@ -4,10 +4,9 @@
 
 <script setup lang="ts">
 
-  import { priceCompactFormatter } from '@/mixins/tools';
   import { myCrossHair } from '@/plugins/chart';
   import { useStockStore } from '@/store/stock';
-  import { Chart, ChartData, ChartDataset, ChartOptions, TooltipItem } from 'chart.js'
+  import { Chart, ChartOptions, TooltipItem } from 'chart.js'
   import { onMounted, ref } from 'vue';
 
   const { stockEvaluation, stockGraphAll, stock } = useStockStore()
@@ -20,7 +19,10 @@
   
   const chart = ref<Chart>()
 
-  const options: ChartOptions<'line'> = {
+  const CHART_TYPE = 'line' as const
+  type ChartType = typeof CHART_TYPE
+
+  const options: ChartOptions<ChartType> = {
     interaction: {
       mode: 'index',
       intersect: false,
@@ -49,10 +51,9 @@
         bodyFont: { size: 12 },
         boxPadding: 5,
         callbacks: {
-          label: (ctx: TooltipItem<'line'>) => '₩' + ctx.formattedValue,
+          label: (ctx: TooltipItem<ChartType>) => '₩' + ctx.formattedValue,
         }
       },
-
     },
 
     scales: {
@@ -74,18 +75,18 @@
     const ctx = document.getElementById(id)
     if(!(ctx instanceof HTMLCanvasElement)) return
 
-    const labels: string[] = stockEvaluation.data.date
-    const srim: number[] = stockEvaluation.data['S-rim']
-    const properPrice: number[] = stockEvaluation.data['proper-price']
+    const labels = stockEvaluation.data.date
+    const srim = stockEvaluation.data['S-rim']
+    const properPrice = stockEvaluation.data['proper-price']
     
-    const stockData = labels.map((label: string) => stockGraphAll.data[label + '-24'])
+    const stockData = labels.map(label => stockGraphAll.data[label + '-24'])
 
     chart.value = new Chart(ctx, {
       data: {
         labels,
         datasets: [
           {
-            type: 'line',
+            type: CHART_TYPE,
             label: 'S-rim',
             data: srim,
             borderColor: '#fc035a',
@@ -96,7 +97,7 @@
             tension: .3
           },
           {
-            type: 'line',
+            type: CHART_TYPE,
             label: 'Proper-Price',
             data: properPrice,
             borderColor: '#0388fc',
@@ -107,7 +108,7 @@
             pointHitRadius: 50,        
           },
           {
-            type: 'line',
+            type: CHART_TYPE,
             label: stock.data.name,            
             data: stockData,
             borderWidth: 5,
