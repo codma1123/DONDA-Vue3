@@ -2,10 +2,7 @@
   <v-sheet class="IndicatorInfoLayout">
     <v-card-title v-font-size="40" class="font-weight-bold">
       {{ propId }}
-      <span class="ml-1">
-        <slot name="chip">
-        </slot>    
-      </span>
+      <slot name="chip"></slot>    
     </v-card-title>
     
     <v-card-text>
@@ -33,11 +30,10 @@
 
   const { propId, labels, chartData, sectorData, title } = defineProps<IndicatorInfoProp>()
   
-
 </script>
 
 <style lang="scss" scoped>
   .IndicatorInfoLayout {
-    margin-bottom: 50px;
+    margin-bottom: 30px;
   }
 </style>

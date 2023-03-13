@@ -12,7 +12,7 @@
     >
       <template #chip>
         <IndicatorChip chipType="분기" />
-        <IndicatorChip chipType="분기" />
+        <IndicatorChip :chipType="getTrend(epsChartData)" />
       </template>
 
     </IndicatorInfo>
@@ -43,7 +43,7 @@
   import { IndicatorSectorType } from '@/models/stock';
   import { useStockStore } from '@/store/stock'
   import { computed, reactive, ref } from 'vue';
-  import IndicatorChip from './IndicatorChip';
+  import IndicatorChip, { ChipType } from './IndicatorChip';
   import IndicatorInfo from './IndicatorInfo.vue'
 
   const { stock, indicator, indicatorSector, indicatorDaily, indicatorSectorDaily } = useStockStore()
@@ -59,6 +59,8 @@
   const bpsSectorData = computed<number[]>(() => createSectorData('sector_bps'))
   const roeChartData = computed<number[]>(() => createChartData('roe'))
   const roeSectorData = computed<number[]>(() => createSectorData('sector_roe'))
+
+  const getTrend = (datas: number[]): ChipType => datas[0] > datas[3] ? '하락' : '상승'
 
   const createChartData = (indicatorType: string) => [...indicator.data[indicatorType].value].reverse()
   const createSectorData = (indicatorType: keyof IndicatorSectorType) => [...indicatorSector.data[indicatorType]].reverse() as number[]
