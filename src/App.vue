@@ -1,10 +1,10 @@
 <template>  
-  <v-layout>    
+  <v-layout>
     <v-main class="d-flex justify-center align-center">
       <router-view v-slot="{ Component }">
         <NavBar v-if="isNav"/>
         <v-sheet             
-          class="overflow-y-auto mt-5" 
+          class="overflow-y-auto mt-5"
           theme="dark"
           rounded="xl"
           :width="MAIN_WIDTH" 
@@ -47,6 +47,7 @@
   width: 0px;
 }
 
+
 body {
 background-color: #111111;
   // font-family: 'Hahmlet', serif;
@@ -59,7 +60,5 @@ background-color: #111111;
   top: 50%;
   left: 50%;
 }
-
-
 
 </style>

@@ -117,8 +117,9 @@
   
   const filteredAutoCompleteContents = computed(() => {
     currentCursor.value = 0
-    const reg = getRegExp(searchBarContent.value)
-    return searchTableEntries.value.filter(title => title[1].match(reg))
+    return searchTableEntries.value
+      .filter(title => title[1].match(getRegExp(searchBarContent.value)))
+      .slice(0, 4)
   })
   
   const onSearchBarKeydown = (e: KeyboardEvent) => {
@@ -177,9 +178,6 @@
 </script>
 
 <style lang="scss" scoped>
-::-webkit-scrollbar {
-  width: 3px !important;
-}
 
 .NavBar {
   position: fixed;
