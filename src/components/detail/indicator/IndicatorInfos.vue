@@ -43,7 +43,7 @@
   import { IndicatorSectorType } from '@/models/stock';
   import { useStockStore } from '@/store/stock'
   import { computed, reactive, ref } from 'vue';
-import IndicatorChip from './IndicatorChip';
+  import IndicatorChip from './IndicatorChip';
   import IndicatorInfo from './IndicatorInfo.vue'
 
   const { stock, indicator, indicatorSector, indicatorDaily, indicatorSectorDaily } = useStockStore()

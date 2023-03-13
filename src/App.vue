@@ -46,6 +46,7 @@
 ::-webkit-scrollbar {
   width: 0px;
 }
+
 body {
 background-color: #111111;
   // font-family: 'Hahmlet', serif;

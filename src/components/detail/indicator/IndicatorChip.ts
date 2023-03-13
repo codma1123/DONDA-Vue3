@@ -12,19 +12,16 @@ interface IndicatorChipProp {
   chipType: ChipType
 }
 
-const IndicatorChip = (props: IndicatorChipProp, context: ComponentInternalInstance): VNode => {
+const defaultChipAttrs = {
+  class: 'ml-2',
+  size: 'small',
+  label: true
+}
 
-    const content = ChipTypeMap[props.chipType]
-
-    return h(
-      VChip,
-      {
-        class: 'ml-2',
-        size: 'small',
-        label: true
-      },
-      content
-    )
+const IndicatorChip = (props: IndicatorChipProp, context: ComponentInternalInstance): VNode  => {    
+    const content = ChipTypeMap[props.chipType]    
+    
+    return h(VChip, defaultChipAttrs, content)
 }
 
 export default IndicatorChip

@@ -46,7 +46,7 @@
   <!-- 자동완성 창 -->
   <div v-if="!searchBarToggle" class="AutoCompleteContents">
     <transition name="slide-up">
-      <div v-if="autoCompleteContents" ref="autoCompleteContentsRef" class="area"> 
+      <div v-if="autoCompleteContents" ref="autoCompleteContentsRef">
         <div
           v-for="[code, title], i in autoCompleteContents" 
           :key="code"
@@ -55,6 +55,7 @@
           :class="['AutoCompleteContent', i + 1 === currentCursor ? 'active' : '']"
           rounded="xl"
           @mousedown="push('/detail/' + code)"
+          @mouseover="currentCursor = i + 1"
         >
           <div class="title"> {{ title }} </div>
           <div class="code"> {{ code }} </div>          
@@ -176,6 +177,10 @@
 </script>
 
 <style lang="scss" scoped>
+::-webkit-scrollbar {
+  width: 3px !important;
+}
+
 .NavBar {
   position: fixed;
   border-top-left-radius: 20px;
@@ -236,6 +241,9 @@
   width: 150px;
   max-height: 240px;
   overflow-x: auto;
+
+
+
   position: absolute;
   top: 60px;
   margin-left: 175px;
@@ -267,10 +275,6 @@
   .active {
     background-color: #666666;
   }
-}
-
-.area {
-  
 }
 
 
