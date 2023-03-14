@@ -15,13 +15,13 @@ const ChipTypeMap: Record<ChipType, ChipContent> = {
   '하락': {
     text: [
       h('p', '하락'), 
-      h(VIcon, { start: true, icon: 'mdi-trending-down', class: 'ml-1', color: 'blue'})
+      h(VIcon, { start: true, icon: 'mdi-trending-down', class: 'ml-1', color: 'blue' })
     ],
   },
   '상승': {
     text: [
       h('p', '상승'), 
-      h(VIcon, { start: true, icon: 'mdi-trending-up', class: 'ml-1', color: 'red'})
+      h(VIcon, { start: true, icon: 'mdi-trending-up', class: 'ml-1', color: 'red' })
     ],
   }
 }
@@ -45,7 +45,7 @@ const IndicatorChip = (props: IndicatorChipProp, context: ComponentInternalInsta
         ...attrs,
         ...defaultChipAttrs
       },
-       () => text
+      () => text
     )
 }
 

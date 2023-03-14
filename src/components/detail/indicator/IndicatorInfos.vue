@@ -14,6 +14,11 @@
         <IndicatorChip chipType="분기" />
         <IndicatorChip :chipType="getTrend(epsChartData)" />
       </template>
+      <template #description>
+        주당순이익(Earnings Per Shares) <br/>
+        기업의 순이익을 유통주식수로 나눈 수치를 말합니다. 일반적으로 주당순이익이 높을수록 주가에 좋은 영향을 줍니다.
+      </template>
+
 
     </IndicatorInfo>
   
