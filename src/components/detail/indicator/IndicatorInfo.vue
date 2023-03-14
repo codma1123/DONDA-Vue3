@@ -1,8 +1,7 @@
 <template>
   <v-card 
     class="IndicatorInfoLayout"
-    elevation="0" 
-    @click="toggle = !toggle"
+    elevation="0"     
   >
     <v-card-title v-font-size="40" class="font-weight-bold">
       {{ propId }}
@@ -22,10 +21,14 @@
         :sectorData="sectorData"
       />  
     </v-card-text>
-
     <v-card-actions class="d-flex flex-row-reverse actions">
-      <v-icon>{{ actionsIcon }}</v-icon>
-      {{ actionsText }}
+      <v-btn 
+        class="toggleBtn text-white"
+        variant="text" @click="toggle = !toggle"
+      >
+        {{ actionsText }}
+        <v-icon>{{ actionsIcon }}</v-icon>        
+      </v-btn>      
     </v-card-actions>
   </v-card>
 </template>
@@ -53,11 +56,8 @@
 <style lang="scss" scoped>
   .IndicatorInfoLayout {
     margin-bottom: 30px;
-    opacity: 1;
-
-    &:hover {
-      background-color: #333333;
-    }
+    opacity: 1;    
+    transition: height .5s ease-in;
   }
 
   .subtitle {
@@ -70,5 +70,11 @@
   .actions {
     font-size: 12px;
     opacity: .5;
+  }
+
+  .toggleBtn {
+    &:hover {
+      color: white;
+    }
   }
 </style>
