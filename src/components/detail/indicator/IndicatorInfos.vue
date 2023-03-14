@@ -24,7 +24,12 @@
       :labels="labels"
       :chartData="bpsChartData"
       :sectorData="bpsSectorData"
-    />  
+    >
+      <template #chip>
+        <IndicatorChip chipType="분기" />
+        <IndicatorChip :chipType="getTrend(bpsChartData)" />
+      </template>
+    </IndicatorInfo>
   
     <!-- ROE -->
     <IndicatorInfo 
@@ -33,7 +38,12 @@
       :labels="labels"
       :chartData="roeChartData"
       :sectorData="roeSectorData"
-    />  
+    >  
+      <template #chip>
+          <IndicatorChip chipType="분기" />
+          <IndicatorChip :chipType="getTrend(roeChartData)" />
+        </template>
+    </IndicatorInfo>
   </div>
   <!-- EPS -->
 
