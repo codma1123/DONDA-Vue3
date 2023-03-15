@@ -34,6 +34,11 @@
         <IndicatorChip chipType="분기" />
         <IndicatorChip :chipType="getTrend(bpsChartData)" />
       </template>
+      <template #description>
+        주당순자산(Bookvalue Per Shares) <br />
+        기업의 순자산을 발행한 유통주식수로 나눈 수치를 말합니다. BPS 아래로 주가가 형성되면, 현재 주가가 저평가되었다고 생각할 수 있습니다.
+      </template>
+
     </IndicatorInfo>
   
     <!-- ROE -->
@@ -45,9 +50,13 @@
       :sectorData="roeSectorData"
     >  
       <template #chip>
-          <IndicatorChip chipType="분기" />
-          <IndicatorChip :chipType="getTrend(roeChartData)" />
-        </template>
+        <IndicatorChip chipType="분기" />
+        <IndicatorChip :chipType="getTrend(roeChartData)" />
+      </template>
+      <template #description>
+        자기자본이익률(Return On Equity) <br />
+        당기 순이익을 평균자기자본으로 나눈 수치를 말합니다. 일반적으로 ROE가 높을수록 투자 수익률을 높힐 수 있습니다.
+      </template>
     </IndicatorInfo>
   </div>
   <!-- EPS -->
