@@ -6,7 +6,7 @@
     propId: string
     labels: string[]
     chartData: number[]
-    sectorData: number[]
+    sectorData?: number[]
     title: string
    }>()
 
@@ -61,25 +61,28 @@
   const renderChart = () => {
     const ctx = document.getElementById(propId) as HTMLCanvasElement
 
+    const datasets = [{
+      label: title,
+      data: chartData,
+      borderWidth: 2,
+    }]
+
+    if(sectorData) datasets.push({
+      label: '섹터평균',
+      data: sectorData,
+      borderWidth: 2
+    })
+
     chart.value = new Chart(ctx , {
       type: 'bar',
       data: {
         labels,
-        datasets: [
-          {
-            label: title,
-            data: chartData,
-            borderWidth: 2,
-          },
-          {
-            label: '섹터평균',
-            data: sectorData,
-            borderWidth: 2
-          }
-        ]
+        datasets
       },
       options
     })
+
+
   }
 
   onMounted(() => renderChart())

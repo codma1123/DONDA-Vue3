@@ -41,7 +41,7 @@
     propId: string
     labels: string[]
     chartData: number[]
-    sectorData: number[]
+    sectorData?: number[]
     title: string
   }
 

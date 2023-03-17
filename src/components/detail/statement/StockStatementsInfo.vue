@@ -2,39 +2,19 @@
 
   <v-divider />
 
-  <div v-if="loading">
-    <v-card
-      class="CardLayout"       
-      elevation="0"
+  <div>
+    <IndicatorInfo 
       v-for="(statementContent, index) in statementContents"
-      @click="expands[index] = !expands[index]"
-      :key="statementContent.type"       
+      :key="statementContent.type"
+      :labels="labels"
+      :propId="statementContent.type"
+      :title="statementContent.type"
+      :chartData="statementContent.chartData"
     >
-      <v-card-title v-font-size="35" class="font-weight-bold">
-        {{ statementContent.type }}
-      </v-card-title>
-
-        <StockStatementSimpleChart 
-          :type="statementContent.type"
-          :propKey="statementContent.type" 
-          :labels="labels"
-          :chartData="statementContent.chartData"
-        />
-
-
-      <v-expand-transition>
-        <div v-show="expands[index]">
-          <v-divider></v-divider>
-
-          <v-card-text>
-            expand contents
-          </v-card-text>
-        </div>
-      </v-expand-transition>
-
-    </v-card>
-    
+    </IndicatorInfo>
+     
   </div>
+
 </template>
 
 <script setup lang="ts">
@@ -44,6 +24,7 @@
   import * as utils from '@/utils'
   import StockStatementSimpleChart from '@/components/detail/statement/StockStatementSimpleChart.vue';
   import { useCustomRouter } from '@/mixins/customRouter';
+  import IndicatorInfo from '../indicator/IndicatorInfo.vue';
 
   type StatementTypes = 'type' |
     'asset' |
