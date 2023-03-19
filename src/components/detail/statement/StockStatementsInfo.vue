@@ -16,7 +16,7 @@
         <IndicatorChip :chipType="statementContent.chipFluctuation" />
       </template>
       <template #description>
-        
+
       </template>
     </IndicatorInfo>
      
@@ -53,9 +53,25 @@
     expand: boolean
     chipType: ChipType
     chipFluctuation: ChipType
+    description: string
   }
 
   const banish = ['equity_non', 'profit_non']
+
+  const statementDescriptionMap: Record<StatementTypes ,any> = {
+    'type': '',
+    'asset': '',
+    'cash': '',
+    'current_asset': '',
+    'ebitda': '',
+    'equity': '',
+    'equity_non': '',
+    'gross_margin': '',
+    'liability': '',
+    'profit': '',
+    'profit_non': '',
+    'revenue': ''
+  }
 
 
   const { statement, stock } = useStockStore()
@@ -77,7 +93,8 @@
         chartData,
         expand: false,
         chipType: '분기',
-        chipFluctuation: getTrend(chartData)
+        chipFluctuation: getTrend(chartData),
+        description: statementDescriptionMap[key]
       }
     })
 
