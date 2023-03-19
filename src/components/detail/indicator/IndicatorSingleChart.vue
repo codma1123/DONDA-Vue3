@@ -75,13 +75,9 @@
 
     chart.value = new Chart(ctx , {
       type: 'bar',
-      data: {
-        labels,
-        datasets
-      },
+      data: { labels, datasets },
       options
     })
-
 
   }
 
