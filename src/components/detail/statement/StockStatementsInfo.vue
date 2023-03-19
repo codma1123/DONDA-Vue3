@@ -101,16 +101,4 @@
   })
 
 
-
 </script>
-
-<style scoped>
-.CardLayout {
-  border-radius: 5px;
-}
-
-.ChartLayout {
-  
-}
-
-</style>
