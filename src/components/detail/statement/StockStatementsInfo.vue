@@ -26,29 +26,19 @@
 
 <script setup lang="ts">
   import { useStockStore } from '@/store/stock';
-  import { computed, onMounted, ref } from 'vue'
+  import { computed, ref } from 'vue'
   import _ from 'lodash'
   import * as utils from '@/utils'  
-  import { useCustomRouter } from '@/mixins/customRouter';
   import IndicatorInfo from '../indicator/IndicatorInfo.vue';
   import IndicatorChip, { ChipType } from '../indicator/IndicatorChip';
   import { getTrend } from '@/utils';
+  import { StockStatementElement } from '@/api/types';
 
-  type StatementTypes = 'type' |
-    'asset' |
-    'cash' |
-    'current_asset' |
-    'ebitda' |
-    'equity' |
-    'equity_non' |
-    'gross_margin' |
-    'liability' |
-    'profit' |
-    'profit_non' |
-    'revenue'
+  
+  type StatementInfoType = Omit<StockStatementElement, 'equity_non' | 'profit_non' | 'type'>
 
   type StatementContents = {
-    type: StatementTypes | string
+    type: string
     chartData: number[]
     expand: boolean
     chipType: ChipType
@@ -56,49 +46,35 @@
     description: string
   }
 
-  const banish = ['equity_non', 'profit_non']
-
-  const statementDescriptionMap: Record<StatementTypes ,any> = {
-    'type': '',
+  const statementDescriptionMap: { [k in keyof StatementInfoType]: any} = {
     'asset': '',
     'cash': '',
     'current_asset': '',
     'ebitda': '',
     'equity': '',
-    'equity_non': '',
     'gross_margin': '',
     'liability': '',
     'profit': '',
-    'profit_non': '',
     'revenue': ''
   }
 
-
   const { statement, stock } = useStockStore()
-
+  
   const loading = computed(() => !statement.loading && !stock.loading && !_.isEmpty(statement.data))
   const labels = computed<string[]>(() => [...statement.data.date.reverse()])
-  const expands = ref<boolean[]>([])
 
-  const statementContents = computed<StatementContents[]>(() => {
-    const keys = Object.keys(statement.data.data[0]).slice(1) as StatementTypes[]
-    const removedKeys = keys.filter(key => !banish.includes(key))
-
-    expands.value = keys.map(_ => false)
-
-    return removedKeys.map((key: StatementTypes): StatementContents => {
-      const chartData = [...statement.data.data.map(v => v[key] as number).reverse()]
+  const statementContents = computed<StatementContents[]>(() => {    
+    return Object.keys(statementDescriptionMap).map((key: string) => {      
+      const chartData = [...statement.data.data.map(v => v[key as keyof StatementInfoType] as number).reverse()]
       return {
         type: utils.toPascalCase(key),
         chartData,
         expand: false,
         chipType: '분기',
         chipFluctuation: getTrend(chartData),
-        description: statementDescriptionMap[key]
+        description: statementDescriptionMap[key as keyof StatementInfoType]
       }
     })
-
   })
-
 
 </script>
