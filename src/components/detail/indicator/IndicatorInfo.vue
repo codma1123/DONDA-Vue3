@@ -21,6 +21,7 @@
         :sectorData="sectorData"
       />  
     </v-card-text>
+    
     <v-card-actions class="d-flex flex-row-reverse actions">
       <v-btn 
         class="toggleBtn text-white"
