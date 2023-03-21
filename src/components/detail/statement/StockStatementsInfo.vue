@@ -2,7 +2,7 @@
 
   <v-divider />
 
-  <div>
+  <div v-if="loading">
     <IndicatorInfo 
       v-for="statementContent in statementContents"
       :key="statementContent.type"
@@ -26,7 +26,7 @@
 
 <script setup lang="ts">
   import { useStockStore } from '@/store/stock';
-  import { computed, ref } from 'vue'
+  import { computed } from 'vue'
   import _ from 'lodash'
   import * as utils from '@/utils'  
   import IndicatorInfo from '../indicator/IndicatorInfo.vue';
@@ -46,7 +46,7 @@
     description: string
   }
 
-  const statementDescriptionMap: { [k in keyof StatementInfoType]: any} = {
+  const statementDescriptionMap: { [k in keyof StatementInfoType | string]: any} = {
     'asset': '',
     'cash': '',
     'current_asset': '',
@@ -64,15 +64,15 @@
   const labels = computed<string[]>(() => [...statement.data.date.reverse()])
 
   const statementContents = computed<StatementContents[]>(() => {    
-    return Object.keys(statementDescriptionMap).map((key: string) => {      
-      const chartData = [...statement.data.data.map(v => v[key as keyof StatementInfoType] as number).reverse()]
+    return (Object.keys(statementDescriptionMap)).map((key: string) => {      
+      const chartData = [...statement.data.data.map(v => v[key as keyof StatementInfoType]).reverse()]
       return {
         type: utils.toPascalCase(key),
         chartData,
         expand: false,
         chipType: '분기',
         chipFluctuation: getTrend(chartData),
-        description: statementDescriptionMap[key as keyof StatementInfoType]
+        description: statementDescriptionMap[key]
       }
     })
   })
