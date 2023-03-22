@@ -1,39 +1,3 @@
-<template>
-  <v-card 
-    class="IndicatorInfoLayout"
-    elevation="0"     
-  >
-    <v-card-title v-font-size="40" class="font-weight-bold">
-      {{ propId }}
-      <slot name="chip"></slot>    
-    </v-card-title>
-
-    <div class="subtitle">
-      <slot name="description"></slot>
-    </div>
-    
-    <v-card-text v-if="toggle">
-      <IndicatorSingleChart 
-        :propId="propId"
-        :title="title"
-        :labels="labels"
-        :chartData="chartData"
-        :sectorData="sectorData"
-      />  
-    </v-card-text>
-    
-    <v-card-actions class="d-flex flex-row-reverse actions">
-      <v-btn 
-        class="toggleBtn text-white"
-        variant="text" @click="toggle = !toggle"
-      >
-        {{ actionsText }}
-        <v-icon>{{ actionsIcon }}</v-icon>        
-      </v-btn>      
-    </v-card-actions>
-  </v-card>
-</template>
-
 <script setup lang="ts">
   import IndicatorSingleChart from '@/components/detail/indicator/IndicatorSingleChart.vue'
   import { computed, ref } from 'vue';
@@ -54,6 +18,46 @@
   
 </script>
 
+<template>
+  <v-card 
+    class="IndicatorInfoLayout"
+    elevation="0"     
+  >
+    <v-card-title 
+      class="font-weight-bold"
+      v-font-size="40" 
+    >
+      {{ propId }}
+      <slot name="chip"></slot>    
+    </v-card-title>
+
+    <div class="subtitle">
+      <slot name="description"></slot>
+    </div>
+    
+    <v-card-text v-if="toggle">
+      <IndicatorSingleChart 
+        :propId="propId"
+        :title="title"
+        :labels="labels"
+        :chartData="chartData"
+        :sectorData="sectorData"
+      />  
+    </v-card-text>
+    
+    <v-card-actions class="actions">
+      <v-btn 
+        class="toggleBtn"
+        variant="text" 
+        @click="toggle = !toggle"
+      >
+        {{ actionsText }}
+        <v-icon>{{ actionsIcon }}</v-icon>        
+      </v-btn>      
+    </v-card-actions>
+  </v-card>
+</template>
+
 <style lang="scss" scoped>
   .IndicatorInfoLayout {
     margin-bottom: 30px;
@@ -71,6 +75,8 @@
   .actions {
     font-size: 12px;
     opacity: .5;
+    display: flex;
+    flex-direction: row-reverse;
   }
 
   .toggleBtn {
