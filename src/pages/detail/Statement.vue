@@ -4,7 +4,6 @@
     <StockTitle />
 
     <StockStatement />
-
   </div>
 </template>
 
@@ -20,7 +19,3 @@
   onMounted(() => scrollReset())
 
 </script>
-
-<style scoped lang="scss">
-
-</style>

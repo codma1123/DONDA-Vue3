@@ -28,8 +28,14 @@
         cornerRadius: 15,        
         bodyFont: { size: 12 },
         boxPadding: 5,
-      }
+      },
+
+      legend: {
+        display: false
+      },
     },
+
+    
 
     scales: {
       x: {

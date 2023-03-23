@@ -20,12 +20,12 @@
   const { stock, indicator, indicatorSector, indicatorDaily, indicatorSectorDaily } = useStockStore()
   const { scrollReset } = useAppStore()
 
-  const loading = computed(() => 
+  const loading = computed(() =>
     !stock.loading &&
     !indicator.loading &&
     !indicatorSector.loading &&
     !indicatorDaily.loading &&
-    !indicatorSectorDaily.loading 
+    !indicatorSectorDaily.loading
   )
 
   onMounted(() => scrollReset())
