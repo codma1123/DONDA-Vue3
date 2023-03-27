@@ -72,11 +72,7 @@
 
   const { stock, indicator, indicatorSector, indicatorDaily, indicatorSectorDaily } = useStockStore()
   const labels = computed<string[]>(() => [...indicator.data.eps.date].reverse())
-  const title = computed(() => stock.data.name)
-  const attrTest = reactive<{ d: string}>({
-    d: 'test'
-  })
-
+  const title = computed(() => stock.data.name)  
   const epsChartData = computed<number[]>(() => createChartData('eps'))
   const epsSectorData = computed<number[]>(() => createSectorData('sector_eps'))
   const bpsChartData = computed<number[]>(() => createChartData('bps'))
@@ -90,7 +86,3 @@
   const createSectorData = (indicatorType: keyof IndicatorSectorType) => [...indicatorSector.data[indicatorType]].reverse() as number[]
   
 </script>
-
-<style lang="scss">
-
-</style>
